@@ -11,6 +11,9 @@ var detailsTexture = 2.5;
 
 function createMuseum(scene){
 
+	//Extérieur
+	createGround(0,-hauteurMur/2,0,100,100);
+
 	//---Rez de chaussée
 	var offset = hauteurMur*0.0;  
 	//Murs extérieurs
@@ -20,27 +23,27 @@ function createMuseum(scene){
 	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
 	createWall(8,offset,-15,false,14,hauteurMur,epaisseurMur,false) ;
 	createWall(-8,offset,-15,false,14,hauteurMur,epaisseurMur,false) ;
-	//createDoor(0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
-	//createDoor(-0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
+	createDoor(0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
+	createDoor(-0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
 
 	//Murs et portes intérieures sur X
 	createWall(-11.5,offset,0,false,7,hauteurMur,epaisseurMur,true) ;
-	//createDoor(-7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
+	createDoor(-7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
 	createWall(-3.75,offset,0,false,6.5,hauteurMur,epaisseurMur,true) ;
-	//createDoor(0,offset,0,false,1,hauteurMur,epaisseurMur,true);
+	createDoor(0,offset,0,false,1,hauteurMur,epaisseurMur,true);
 	createWall(3.75,offset,0,false,6.5,hauteurMur,epaisseurMur,true) ;
-	//createDoor(7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
+	createDoor(7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
 	createWall(11.5,offset,0,false,7,hauteurMur,epaisseurMur,true) ;
 
 	//Murs et portes extérieures sur Z
 	createWall(-5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
-	//createDoor(-5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
+	createDoor(-5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
 	createWall(-5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
 	createWall(5,offset,9,true,12,hauteurMur,epaisseurMur,true) ;
-	//createDoor(5,offset,2.5,true,1,hauteurMur,epaisseurMur,true);
+	createDoor(5,offset,2.5,true,1,hauteurMur,epaisseurMur,true);
 	createWall(5,offset,1,true,2,hauteurMur,epaisseurMur,true) ;
 
-	createStairs(13,offset,-2.5,4,hauteurMur,5,20,scene) ;
+	createStairs(13,offset,-2.5,4,hauteurMur,5,20) ;
 	createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4);
 
 	//--Etage 1
@@ -59,6 +62,18 @@ function createMuseum(scene){
 	createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene);
 
 	return scene;
+}
+
+function createGround(x, y, z, width, height, scene) {
+
+	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10, scene);
+	ground.position = new BABYLON.Vector3(x,y,z) ;
+	ground.checkCollisions = true;
+	var mat = new BABYLON.StandardMaterial("materiau_ground",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/sol.png",scene);
+	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.vScale = width/detailsTexture;
+	ground.material = mat;
 }
 
 function createWall(x, y, z, vertical, width, height, depth, interieur, scene) {
@@ -122,17 +137,17 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
 	mat.diffuseTexture.vScale = 0.2;
 	wall.material = mat;
 
-	var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: depth}, scene);
+	/*var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: depth}, scene);
 	door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 	mat = new BABYLON.StandardMaterial("materiau_porte",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/door01.jpg",scene);
 	mat.diffuseTexture.uScale = 1.0;
 	mat.diffuseTexture.vScale = 1.0;
-	door.material = mat;
+	door.material = mat;*/
 
 	if (vertical) {
 		setRotation(wall,0,90,0);
-		setRotation(door,0,90,0);
+		//setRotation(door,0,90,0);
 	}
 }
 
