@@ -1,3 +1,8 @@
+// ---------------------------- //
+//   Application : Museum REV   //
+//   Author : Nicholas Brun     //
+//   File : utils.js    //
+// ---------------------------- //
 
 function setRotation(obj, angleX, angleY, angleZ){
   obj.rotation.x = angleX * Math.PI / 180;

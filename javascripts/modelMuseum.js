@@ -1,12 +1,18 @@
-var epaisseurMur = 0.1;
+// ---------------------------- //
+//   Application : Museum REV   //
+//   Author : Nicholas Brun     //
+//   File : modelMuseum.js      //
+// ---------------------------- //
+
+var epaisseurMur = 0.2;
 var hauteurMur = 3.0;
 var epaisseurSol = 0.1;
 var detailsTexture = 2.5;
 
 function createMuseum(scene){
   
-  var offset = hauteurMur*0.0;
   //---Rez de chaussée
+  var offset = hauteurMur*0.0;  
   //Murs extérieurs
   createFloor(0,offset-hauteurMur/2,0,30,epaisseurSol,30);
   createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
@@ -58,6 +64,8 @@ function createMuseum(scene){
   createAhri(4, y, z, scene);
   createJanna(8, y, z, scene);
   createMissFortune(12, y, z, scene);*/
+  
+  createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene);
   
   return scene;
 }

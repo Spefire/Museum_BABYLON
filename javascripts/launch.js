@@ -1,3 +1,9 @@
+// ---------------------------- //
+//   Application : Museum REV   //
+//   Author : Nicholas Brun     //
+//   File : launch.js           //
+// ---------------------------- //
+
 window.onload = init ;
 
 function init(){

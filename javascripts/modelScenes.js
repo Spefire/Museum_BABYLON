@@ -1,3 +1,8 @@
+// ---------------------------- //
+//   Application : Museum REV   //
+//   Author : Nicholas Brun     //
+//   File : modelScene.js       //
+// ---------------------------- //
 
 function createScene(engine){
   var scene = new BABYLON.Scene(engine,true) ; 
