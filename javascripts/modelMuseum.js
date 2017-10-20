@@ -34,11 +34,11 @@ function createMuseum(scene){
   createDoor(5,offset,2.5,true,1,hauteurMur,epaisseurMur,true);
   createWall(5,offset,1,true,2,hauteurMur,epaisseurMur,true) ;
 
-  createStairs(13,offset,-3.5,4,hauteurMur,5) ;
+  createStairs(13,offset,-2.5,4,hauteurMur,5,20,scene) ;
   createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4);
 
-  offset = hauteurMur*1.0;
   //--Etage 1
+  offset = hauteurMur*1.0;
   createFloor(0,offset-hauteurMur/2,7.5,30,epaisseurSol,15);
   createFence(0,offset-hauteurMur/4,0,false,22,hauteurMur/2);
   createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
@@ -46,17 +46,19 @@ function createMuseum(scene){
   createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
   createWall(0,offset,-15,false,30,hauteurMur,epaisseurMur,false) ;
 
-  offset = hauteurMur*2.0;
-  //--Etage 2
-  createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-  createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-  createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
-  createWall(0,offset,-15,false,30,hauteurMur,epaisseurMur,false) ;
-
-  offset = hauteurMur*3.0;
   //--Toit
-//   createRoof(0,offset-hauteurMur*0.5,0,30,epaisseurSol,30);
-
+  offset = hauteurMur*2.0;
+  createRoof(0,offset-hauteurMur*0.5,0,30,epaisseurSol,30);
+  
+  /*var y = -1.25;
+  var z = -14;
+  createSyndra(-12, y, z, scene);
+  createLux(-8, y, z, scene);
+  createSoraka(-4, y, z, scene);
+  createAhri(4, y, z, scene);
+  createJanna(8, y, z, scene);
+  createMissFortune(12, y, z, scene);*/
+  
   return scene;
 }
 
@@ -67,17 +69,16 @@ function createWall(x, y, z, vertical, width, height, depth, interieur, scene) {
   wall.checkCollisions = true;
   var mat = new BABYLON.StandardMaterial("materiau_mur",scene);
   if (interieur) {
-    mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
   } else {
-    mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
   }
   mat.diffuseTexture.uScale = width/detailsTexture;
   mat.diffuseTexture.vScale = 1.0;
   wall.material = mat;
   if (vertical) {
-    setRotation(wall,0,90,0);
+	setRotation(wall,0,90,0);
   }
-  return wall;
 }
 
 function createFence(x, y, z, vertical, width, height, scene) {
@@ -92,9 +93,8 @@ function createFence(x, y, z, vertical, width, height, scene) {
   mat.diffuseTexture.hasAlpha = true;
   fence.material = mat;
   if (vertical) {
-    setRotation(fence,0,90,0);
+	setRotation(fence,0,90,0);
   }
-  return fence;
 }
 
 function createFloor(x, y, z, width, height, depth, scene) {
@@ -107,7 +107,6 @@ function createFloor(x, y, z, width, height, depth, scene) {
   mat.diffuseTexture.uScale = width/detailsTexture;
   mat.diffuseTexture.vScale = width/detailsTexture;
   floor.material = mat;
-  return floor;
 }
 
 function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
@@ -116,9 +115,9 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
   wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
   var mat = new BABYLON.StandardMaterial("materiau_mur",scene);
   if (interieur) {
-    mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
   } else {
-    mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
   }
   mat.diffuseTexture.uScale = width/detailsTexture;var door = 
   mat.diffuseTexture.vScale = 0.2;
@@ -133,51 +132,72 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
   door.material = mat;
 
   if (vertical) {
-    setRotation(wall,0,90,0);
-    setRotation(door,0,90,0);
+	setRotation(wall,0,90,0);
+	setRotation(door,0,90,0);
   }
-  return door;
 }
 
-function createStairs(x, y, z, width, height, depth, scene) {
-  var nbMarches = 15;
-  for (var i = 1; i <= nbMarches; i++) {
-    var stairs = BABYLON.MeshBuilder.CreateBox("stairs", {width: width, height: i*height/nbMarches, depth: depth/nbMarches}, scene);
-    var posY = y-((nbMarches-i)/nbMarches)*(height/2);
-    var posZ = z+depth*((i-1)/nbMarches-1/4);
-    
-    stairs.position = new BABYLON.Vector3(x,posY,posZ) ;
-    stairs.checkCollisions = true;
-    var mat = new BABYLON.StandardMaterial("materiau_escaliers",scene);
-    mat.diffuseTexture = new BABYLON.Texture("assets/textures/parquet1.jpg",scene);
-    mat.diffuseTexture.uScale = width/detailsTexture;
-    mat.diffuseTexture.vScale = width/detailsTexture;
-    stairs.material = mat;
-  }
+function createStairs(x, y, z, width, height, depth, nb, scene) {
+	
+	var stairsArray = [];
+	for (var i = 0; i < nb; i++) {
+		var h = height*(nb-i)/nb;
+		var w = width;
+		var d = depth/nb;
+		var stair = BABYLON.MeshBuilder.CreateBox("stairs", {width: w, height: h, depth: d}, scene);
+
+		var posX = x;
+		var posY = y-i*height/(nb*2)
+		var posZ = z+depth/2-depth/(nb*2)-i*depth/nb
+
+		stair.position = new BABYLON.Vector3(posX,posY,posZ) ;
+
+		var mat = new BABYLON.StandardMaterial("materiau_escaliers",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/textures/parquet1.jpg",scene);
+		mat.diffuseTexture.uScale = width/detailsTexture;
+		mat.diffuseTexture.vScale = width/detailsTexture;
+		stair.material = mat;
+		stairsArray[i] = stair;
+	}
+	var stairs = BABYLON.Mesh.MergeMeshes(stairsArray);
+	stairs.checkCollisions = true;
+
+	/*var v1 = [x-width/2,y-height/2,z-depth/2] ;
+	var v2 = [x+width/2,y-height/2,z-depth/2] ;
+	var v3 = [x+width/2,y+height/2,z+depth/2] ;
+	var v4 = [x-width/2,y+height/2,z+depth/2] ;
+	var customMesh = new BABYLON.Mesh("custom", scene);
+	var positions = [v1[0], v1[1], v1[2], v2[0], v2[1], v2[2], v3[0], v3[1], v3[2], v1[0], v1[1], v1[2], v3[0], v3[1], v3[2], v4[0], v4[1], v4[2]];
+	var indices = [0, 1, 2, 3, 4, 5];
+	var vertexData = new BABYLON.VertexData();
+	vertexData.positions = positions;
+	vertexData.indices = indices;
+	vertexData.applyToMesh(customMesh);
+	customMesh.checkCollisions = true;*/
 }
 
 function createRoof(x, y, z, width, height, depth, scene) {
 
   var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth}, scene);
   roof.position = new BABYLON.Vector3(x,y,z) ;
+  roof.checkCollisions = true;
   var mat = new BABYLON.StandardMaterial("materiau_toit",scene);
   mat.diffuseTexture = new BABYLON.Texture("assets/textures/toit.jpg",scene);
   mat.diffuseTexture.uScale = width/detailsTexture;
   mat.diffuseTexture.vScale = width/detailsTexture;
   roof.material = mat;
-  return roof;
 }
 
 function createElevator(x, y, z, width, height, tickness, depth, scene) {
 
-  createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;//DONE
+  createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
   createDoor(x,y,z-depth/2,false,1.0,hauteurMur,epaisseurMur,false);
-  createWall(x+width/4+0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;//DONE
-  createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;//DONE
+  createWall(x+width/4+0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
+  createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;
 
-  createWall(x-width/4-0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;//DONE
+  createWall(x-width/4-0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
   createDoor(x,y+height,z+depth/2,false,1.0,hauteurMur,epaisseurMur,false);
-  createWall(x+width/4+0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;//DONE
+  createWall(x+width/4+0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
 
   createWall(x+width/2,y,z,true,width,height,tickness,false) ;
   createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
