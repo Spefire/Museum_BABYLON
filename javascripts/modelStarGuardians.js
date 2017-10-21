@@ -1,3 +1,8 @@
+// ------------------------------- //
+//   Application : Museum REV      //
+//   Author : Nicholas Brun        //
+//   File : modelStarGuardians.js  //
+// ------------------------------- //
 
 function createLux(x, y, z, scene) {
 	BABYLON.SceneLoader.ImportMesh("", "assets/models/lux/", "lux.obj", scene, function (meshes) {
