@@ -30,27 +30,27 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createPanel(8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,3) ;
 	createBigPanel(-10,offset-hauteurMur*0.15,-1,-45.0,widthRect*1.15,hauteurMur*0.65,depthRect,1) ;
 	createBigPanel(-6,offset-hauteurMur*0.15,14,45.0,widthRect*1.15,hauteurMur*0.65,depthRect,2) ;
-	createBigPanel(4,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,3) ;
+	createBigPanel(4,offset-hauteurMur*0.15,14,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,3) ;
 	createBigPanel(10,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,4) ;
 	createBigPanel(14,offset-hauteurMur*0.15,-9,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,5) ;
 	
 	createSquareBoard(-14.9,hRect,4,rotation270,heightRect,depthRect,1) ;
 	createSquareBoard(-14.9,hRect,7.5,rotation270,heightRect,depthRect,2) ;
 	createSquareBoard(-14.9,hRect,11,rotation270,heightRect,depthRect,3) ;
-	createSquareBoard(-5.1,hRect,4,rotation90,heightRect,depthRect,1) ;
-	createSquareBoard(-5.1,hRect,7.5,rotation90,heightRect,depthRect,4) ;
-	createSquareBoard(-5.1,hRect,11,rotation90,heightRect,depthRect,5) ;
+	createSquareBoard(-5.1,hRect,3,rotation90,heightRect,depthRect,1) ;
+	createSquareBoard(-5.1,hRect,6.5,rotation90,heightRect,depthRect,4) ;
+	createSquareBoard(-5.1,hRect,10,rotation90,heightRect,depthRect,5) ;
 	
-	createSquareBoard(-4.9,hRect,4,rotation270,heightRect,depthRect,4) ;
-	createSquareBoard(-4.9,hRect,7.5,rotation270,heightRect,depthRect,5) ;
-	createSquareBoard(-4.9,hRect,11,rotation270,heightRect,depthRect,1) ;
-	createSquareBoard(4.9,hRect,4,rotation90,heightRect,depthRect,1) ;
-	createSquareBoard(4.9,hRect,7.5,rotation90,heightRect,depthRect,2) ;
-	createSquareBoard(4.9,hRect,11,rotation90,heightRect,depthRect,3) ;
+	createSquareBoard(-4.9,hRect,3,rotation270,heightRect,depthRect,4) ;
+	createSquareBoard(-4.9,hRect,6.5,rotation270,heightRect,depthRect,5) ;
+	createSquareBoard(-4.9,hRect,10,rotation270,heightRect,depthRect,1) ;
+	createSquareBoard(4.9,hRect,3,rotation90,heightRect,depthRect,1) ;
+	createSquareBoard(4.9,hRect,6.5,rotation90,heightRect,depthRect,2) ;
+	createSquareBoard(4.9,hRect,10,rotation90,heightRect,depthRect,3) ;
 	
-	createSquareBoard(5.1,hRect,4,rotation270,heightRect,depthRect,2) ;
-	createSquareBoard(5.1,hRect,7.5,rotation270,heightRect,depthRect,1) ;
-	createSquareBoard(5.1,hRect,11,rotation270,heightRect,depthRect,5) ;
+	createSquareBoard(5.1,hRect,3,rotation270,heightRect,depthRect,2) ;
+	createSquareBoard(5.1,hRect,6.5,rotation270,heightRect,depthRect,1) ;
+	createSquareBoard(5.1,hRect,10,rotation270,heightRect,depthRect,5) ;
 	createSquareBoard(14.9,hRect,4,rotation90,heightRect,depthRect,4) ;
 	createSquareBoard(14.9,hRect,7.5,rotation90,heightRect,depthRect,3) ;
 	createSquareBoard(14.9,hRect,11,rotation90,heightRect,depthRect,2) ;

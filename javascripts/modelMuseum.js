@@ -39,9 +39,9 @@ function createMuseum(scene){
 	createWall(-5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
 	createDoor(-5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
 	createWall(-5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
-	createWall(5,offset,9,true,12,hauteurMur,epaisseurMur,true) ;
-	createDoor(5,offset,2.5,true,1,hauteurMur,epaisseurMur,true);
-	createWall(5,offset,1,true,2,hauteurMur,epaisseurMur,true) ;
+	createWall(5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
+	createDoor(5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
+	createWall(5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
 
 	createStairs(13,offset,-2.5,4,hauteurMur,5,20) ;
 	createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4);
