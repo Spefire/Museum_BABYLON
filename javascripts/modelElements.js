@@ -7,8 +7,8 @@
 function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene){
 	
 	var depthRect = epaisseurMur/4;
-	var heightRect = 0.75;
-	var widthRect = 1.0;
+	var heightRect = 0.9;
+	var widthRect = 1.2;
 	var rotation0 = 0.0;
 	var rotation90 = 90.0;
 	var rotation180 = 180.0;
@@ -89,10 +89,15 @@ function createRectBoard(x, y, z, rotation, width, height, depth, numBoard, scen
 	board.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_tableau",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/tableau_rect_0"+numBoard+".jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	board.material = mat;
 	setRotation(board,0,rotation,0);
+	
+	var indic = BABYLON.MeshBuilder.CreateBox("indic", {width: width/3, height: height/5, depth: depth}, scene);
+	indic.position = new BABYLON.Vector3(x-width/4,y-2*height/3,z) ;
+	var mat = new BABYLON.StandardMaterial("indic_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/barreau2.jpg",scene);
+	indic.material = mat;
+	setRotation(indic,0,rotation,0);
 }
 
 function createSquareBoard(x, y, z, rotation, height, depth, numBoard, scene) {
@@ -101,10 +106,15 @@ function createSquareBoard(x, y, z, rotation, height, depth, numBoard, scene) {
 	board.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_tableau",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/tableau_carre_0"+numBoard+".jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	board.material = mat;
 	setRotation(board,0,rotation,0);
+	
+	var indic = BABYLON.MeshBuilder.CreateBox("indic", {width: height/3, height: height/5, depth: depth}, scene);
+	indic.position = new BABYLON.Vector3(x,y-2*height/3,z) ;
+	var mat = new BABYLON.StandardMaterial("indic_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/barreau2.jpg",scene);
+	indic.material = mat;
+	setRotation(indic,0,rotation,0);
 }
 
 function createBanc(x, y, z, width, height, depth, sens, scene) {
@@ -113,16 +123,12 @@ function createBanc(x, y, z, width, height, depth, sens, scene) {
 	bancUp.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_bancUp",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/moquette.jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	bancUp.material = mat;
 	
 	var bancDown = BABYLON.MeshBuilder.CreateBox("bancDown", {width: width*0.8, height: height*0.7, depth: depth*0.9}, scene);
 	bancDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_bancDown",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/wood.jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	bancDown.material = mat;
 }
 
@@ -132,8 +138,6 @@ function createPanel(x, y, z, rotation, width, height, depth, numPanel, scene) {
 	panel.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("panel_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	panel.material = mat;
 	setRotation(panel,0,rotation,0);
 }
@@ -144,8 +148,6 @@ function createBigPanel(x, y, z, rotation, width, height, depth, numPanel, scene
 	stick.position = new BABYLON.Vector3(x,y-height/4,z) ;
 	var mat = new BABYLON.StandardMaterial("stick_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	stick.material = mat;
 	setRotation(stick,0,rotation,0);
 	
@@ -153,8 +155,6 @@ function createBigPanel(x, y, z, rotation, width, height, depth, numPanel, scene
 	panel.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("panel_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	panel.material = mat;
 	setRotation(panel,20,rotation,0);
 }
