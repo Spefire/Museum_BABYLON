@@ -30,7 +30,7 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createPanel(8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,3) ;
 	createBigPanel(-10,offset-hauteurMur*0.15,-1,-45.0,widthRect*1.15,hauteurMur*0.65,depthRect,1) ;
 	createBigPanel(-6,offset-hauteurMur*0.15,14,45.0,widthRect*1.15,hauteurMur*0.65,depthRect,2) ;
-	createBigPanel(4,offset-hauteurMur*0.15,14,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,3) ;
+	createBigPanel(4,offset-hauteurMur*0.15,14,45.0,widthRect*1.15,hauteurMur*0.65,depthRect,3) ;
 	createBigPanel(10,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,4) ;
 	createBigPanel(14,offset-hauteurMur*0.15,-9,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,5) ;
 	
