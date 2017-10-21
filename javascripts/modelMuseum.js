@@ -27,13 +27,13 @@ function createMuseum(scene){
 	createDoor(-0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
 
 	//Murs et portes intérieures sur X
-	createWall(-11.5,offset,0,false,7,hauteurMur,epaisseurMur,true) ;
-	createDoor(-7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
-	createWall(-3.75,offset,0,false,6.5,hauteurMur,epaisseurMur,true) ;
-	createDoor(0,offset,0,false,1,hauteurMur,epaisseurMur,true);
-	createWall(3.75,offset,0,false,6.5,hauteurMur,epaisseurMur,true) ;
-	createDoor(7.5,offset,0,false,1,hauteurMur,epaisseurMur,true);
-	createWall(11.5,offset,0,false,7,hauteurMur,epaisseurMur,true) ;
+	createWall(-12,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
+	createDoor(-8,offset,0,false,2,hauteurMur,epaisseurMur,true);
+	createWall(-4,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
+	createDoor(0,offset,0,false,2,hauteurMur,epaisseurMur,true);
+	createWall(4,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
+	createDoor(8,offset,0,false,2,hauteurMur,epaisseurMur,true);
+	createWall(12,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
 
 	//Murs et portes extérieures sur Z
 	createWall(-5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
