@@ -57,15 +57,19 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createRectBoard(6,hRect,14.9,rotation0,widthRect,heightRect,depthRect,5) ;
 	createRectBoard(10,hRect,14.9,rotation0,widthRect,heightRect,depthRect,1) ;
 	createRectBoard(14,hRect,14.9,rotation0,widthRect,heightRect,depthRect,2) ;
+	var heightBanc = 0.9;
+	var hBanc = offset-hauteurMur/2+heightBanc/2;
+	createBanc(-9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,1,scene);
+	createBanc(9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,-1,scene);
 
-	var y = -1.25;
+	/*var y = -1.25;
 	var z = -14;
 	createSyndra(-12, y, z, scene);
 	createLux(-8, y, z, scene);
 	createSoraka(-4, y, z, scene);
 	createAhri(4, y, z, scene);
 	createJanna(8, y, z, scene);
-	createMissFortune(12, y, z, scene);
+	createMissFortune(12, y, z, scene);*/
 	
 	return scene;
 }
@@ -92,4 +96,23 @@ function createSquareBoard(x, y, z, rotation, height, depth, numBoard, scene) {
 	mat.diffuseTexture.vScale = 1.0;
 	board.material = mat;
 	setRotation(board,0,rotation,0);
+}
+
+function createBanc(x, y, z, width, height, depth, sens, scene) {
+	
+	var bancUp = BABYLON.MeshBuilder.CreateBox("bancUp", {width: width, height: height*0.3, depth: depth}, scene);
+	bancUp.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
+	var mat = new BABYLON.StandardMaterial("materiau_bancUp",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/moquette.jpg",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	bancUp.material = mat;
+	
+	var bancDown = BABYLON.MeshBuilder.CreateBox("bancDown", {width: width*0.8, height: height*0.7, depth: depth*0.9}, scene);
+	bancDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
+	var mat = new BABYLON.StandardMaterial("materiau_bancDown",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/wood.jpg",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	bancDown.material = mat;
 }
