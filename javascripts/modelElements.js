@@ -25,6 +25,15 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createRectBoard(8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,1) ;
 	createRectBoard(12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,2) ;
 	
+	createPanel(-8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,1) ;
+	createPanel(0,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,2) ;
+	createPanel(8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,3) ;
+	createBigPanel(-10,offset-hauteurMur*0.15,-1,-45.0,widthRect*1.15,hauteurMur*0.65,depthRect,1) ;
+	createBigPanel(-6,offset-hauteurMur*0.15,14,45.0,widthRect*1.15,hauteurMur*0.65,depthRect,2) ;
+	createBigPanel(4,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,3) ;
+	createBigPanel(10,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,4) ;
+	createBigPanel(14,offset-hauteurMur*0.15,-9,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,5) ;
+	
 	createSquareBoard(-14.9,hRect,4,rotation270,heightRect,depthRect,1) ;
 	createSquareBoard(-14.9,hRect,7.5,rotation270,heightRect,depthRect,2) ;
 	createSquareBoard(-14.9,hRect,11,rotation270,heightRect,depthRect,3) ;
@@ -115,4 +124,37 @@ function createBanc(x, y, z, width, height, depth, sens, scene) {
 	mat.diffuseTexture.uScale = 1.0;
 	mat.diffuseTexture.vScale = 1.0;
 	bancDown.material = mat;
+}
+
+function createPanel(x, y, z, rotation, width, height, depth, numPanel, scene) {
+
+	var panel = BABYLON.MeshBuilder.CreateBox("panel", {width: width, height: height, depth: depth}, scene);
+	panel.position = new BABYLON.Vector3(x,y,z) ;
+	var mat = new BABYLON.StandardMaterial("panel_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	panel.material = mat;
+	setRotation(panel,0,rotation,0);
+}
+
+function createBigPanel(x, y, z, rotation, width, height, depth, numPanel, scene) {
+
+	var stick = BABYLON.MeshBuilder.CreateBox("stick", {width: depth, height: height/2, depth: depth}, scene);
+	stick.position = new BABYLON.Vector3(x,y-height/4,z) ;
+	var mat = new BABYLON.StandardMaterial("stick_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	stick.material = mat;
+	setRotation(stick,0,rotation,0);
+	
+	var panel = BABYLON.MeshBuilder.CreateBox("panel", {width: width, height: height, depth: depth}, scene);
+	panel.position = new BABYLON.Vector3(x,y,z) ;
+	var mat = new BABYLON.StandardMaterial("panel_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/textures/"+numPanel+".jpg",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	panel.material = mat;
+	setRotation(panel,20,rotation,0);
 }
