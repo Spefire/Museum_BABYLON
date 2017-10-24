@@ -17,13 +17,13 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	//---Rez de chaussée
 	var offset = hauteurMur*0.0;
 	var hRect = offset+hauteurMur*0.2;
-	createRectBoard(-12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,1) ;
-	createRectBoard(-8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,2) ;
-	createRectBoard(-3,hRect,14.9,rotation0,widthRect,heightRect,depthRect,3) ;
-	createRectBoard(0,hRect,14.9,rotation0,widthRect,heightRect,depthRect,4) ;
-	createRectBoard(3,hRect,14.9,rotation0,widthRect,heightRect,depthRect,5) ;
-	createRectBoard(8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,1) ;
-	createRectBoard(12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,2) ;
+	createRectBoard(-12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",1) ;
+	createRectBoard(-8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",2) ;
+	createRectBoard(-3,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"axelle",1) ;
+	createRectBoard(0,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"axelle",2) ;
+	createRectBoard(3,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"axelle",3) ;
+	/*createRectBoard(8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,1) ;
+	createRectBoard(12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,2) ;*/
 	
 	createPanel(-8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,1) ;
 	createPanel(0,offset+hauteurMur*0.4,-0.1,rotation0,widthRect,hauteurMur*0.2,depthRect,2) ;
@@ -34,26 +34,26 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createBigPanel(10,offset-hauteurMur*0.15,1,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,4) ;
 	createBigPanel(14,offset-hauteurMur*0.15,-9,rotation90+45.0,widthRect*1.15,hauteurMur*0.65,depthRect,5) ;
 	
-	createSquareBoard(-14.9,hRect,4,rotation270,heightRect,depthRect,1) ;
-	createSquareBoard(-14.9,hRect,7.5,rotation270,heightRect,depthRect,2) ;
-	createSquareBoard(-14.9,hRect,11,rotation270,heightRect,depthRect,3) ;
-	createSquareBoard(-5.1,hRect,3,rotation90,heightRect,depthRect,1) ;
-	createSquareBoard(-5.1,hRect,6.5,rotation90,heightRect,depthRect,4) ;
-	createSquareBoard(-5.1,hRect,10,rotation90,heightRect,depthRect,5) ;
+	createSquareBoard(-14.9,hRect,4,rotation270,heightRect,depthRect,"eric",1) ;
+	createSquareBoard(-14.9,hRect,7.5,rotation270,heightRect,depthRect,"eric",2) ;
+	createSquareBoard(-14.9,hRect,11,rotation270,heightRect,depthRect,"eric",3) ;
+	createSquareBoard(-5.1,hRect,3,rotation90,heightRect,depthRect,"eric",4) ;
+	createSquareBoard(-5.1,hRect,6.5,rotation90,heightRect,depthRect,"eric",5) ;
+	createSquareBoard(-5.1,hRect,10,rotation90,heightRect,depthRect,"eric",6) ;
 	
-	createSquareBoard(-4.9,hRect,3,rotation270,heightRect,depthRect,4) ;
-	createSquareBoard(-4.9,hRect,6.5,rotation270,heightRect,depthRect,5) ;
-	createSquareBoard(-4.9,hRect,10,rotation270,heightRect,depthRect,1) ;
-	createSquareBoard(4.9,hRect,3,rotation90,heightRect,depthRect,1) ;
-	createSquareBoard(4.9,hRect,6.5,rotation90,heightRect,depthRect,2) ;
-	createSquareBoard(4.9,hRect,10,rotation90,heightRect,depthRect,3) ;
+	createSquareBoard(-4.9,hRect,3,rotation270,heightRect,depthRect,"axelle",1) ;
+	createSquareBoard(-4.9,hRect,6.5,rotation270,heightRect,depthRect,"axelle",2) ;
+	createSquareBoard(-4.9,hRect,10,rotation270,heightRect,depthRect,"axelle",3) ;
+	createSquareBoard(4.9,hRect,3,rotation90,heightRect,depthRect,"axelle",4) ;
+	createSquareBoard(4.9,hRect,6.5,rotation90,heightRect,depthRect,"axelle",5) ;
+	createSquareBoard(4.9,hRect,10,rotation90,heightRect,depthRect,"axelle",6) ;
 	
-	createSquareBoard(5.1,hRect,3,rotation270,heightRect,depthRect,2) ;
+	/*createSquareBoard(5.1,hRect,3,rotation270,heightRect,depthRect,2) ;
 	createSquareBoard(5.1,hRect,6.5,rotation270,heightRect,depthRect,1) ;
 	createSquareBoard(5.1,hRect,10,rotation270,heightRect,depthRect,5) ;
 	createSquareBoard(14.9,hRect,4,rotation90,heightRect,depthRect,4) ;
 	createSquareBoard(14.9,hRect,7.5,rotation90,heightRect,depthRect,3) ;
-	createSquareBoard(14.9,hRect,11,rotation90,heightRect,depthRect,2) ;
+	createSquareBoard(14.9,hRect,11,rotation90,heightRect,depthRect,2) ;*/
 
 	//--Etage 1
 	offset = hauteurMur*1.0;
@@ -83,12 +83,12 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	return scene;
 }
 
-function createRectBoard(x, y, z, rotation, width, height, depth, numBoard, scene) {
+function createRectBoard(x, y, z, rotation, width, height, depth, name, numBoard, scene) {
 
 	var board = BABYLON.MeshBuilder.CreateBox("board", {width: width, height: height, depth: depth}, scene);
 	board.position = new BABYLON.Vector3(x,y,z) ;
-	var mat = new BABYLON.StandardMaterial("materiau_tableau",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/tableau_rect_0"+numBoard+".jpg",scene);
+	var mat = new BABYLON.StandardMaterial("board_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/tableaux/"+name+"_rect_0"+numBoard+".jpg",scene);
 	board.material = mat;
 	setRotation(board,0,rotation,0);
 	
@@ -100,12 +100,12 @@ function createRectBoard(x, y, z, rotation, width, height, depth, numBoard, scen
 	setRotation(indic,0,rotation,0);
 }
 
-function createSquareBoard(x, y, z, rotation, height, depth, numBoard, scene) {
+function createSquareBoard(x, y, z, rotation, height, depth, name, numBoard, scene) {
 
 	var board = BABYLON.MeshBuilder.CreateBox("board", {width: height, height: height, depth: depth}, scene);
 	board.position = new BABYLON.Vector3(x,y,z) ;
-	var mat = new BABYLON.StandardMaterial("materiau_tableau",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/tableau_carre_0"+numBoard+".jpg",scene);
+	var mat = new BABYLON.StandardMaterial("board_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/tableaux/"+name+"_carr_0"+numBoard+".jpg",scene);
 	board.material = mat;
 	setRotation(board,0,rotation,0);
 	
