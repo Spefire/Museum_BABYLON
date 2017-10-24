@@ -21,10 +21,21 @@ function createMuseum(scene){
 	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
 	createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
 	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
-	createWall(8,offset,-15,false,14,hauteurMur,epaisseurMur,false) ;
-	createWall(-8,offset,-15,false,14,hauteurMur,epaisseurMur,false) ;
+	
+	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-9,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
+	createWall(-6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-4,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createWall(-2,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;	
+	
 	createDoor(0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
 	createDoor(-0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
+	
+	createWall(2,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(4,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createWall(6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(9,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
+	createWall(13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
 
 	//Murs et portes intérieures sur X
 	createWall(-12,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
@@ -51,9 +62,20 @@ function createMuseum(scene){
 	createFloor(0,offset-hauteurMur/2,7.5,30,epaisseurSol,15);
 	createFence(0,offset-hauteurMur/4,0,false,22,hauteurMur/2);
 	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-	createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
+	createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;	
 	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
-	createWall(0,offset,-15,false,30,hauteurMur,epaisseurMur,false) ;
+	
+	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-9,offset,-15,false,4,hauteurMur,epaisseurMur,true) ;
+	createWall(-6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-4,offset,-15,false,2,hauteurMur,epaisseurMur,true) ;
+	
+	createWall(0,offset,-15,false,6,hauteurMur,epaisseurMur,false) ;
+	
+	createGlassWall(4,offset,-15,false,2,hauteurMur,epaisseurMur,true) ;
+	createWall(6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(9,offset,-15,false,4,hauteurMur,epaisseurMur,true) ;
+	createWall(13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
 
 	//--Toit
 	offset = hauteurMur*2.0;
@@ -137,6 +159,41 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
 	if (vertical) {
 		setRotation(wall,0,90,0);
 		//setRotation(door,0,90,0);
+	}
+}
+
+function createGlassWall(x, y, z, vertical, width, height, depth, upper, scene) {
+
+	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: depth}, scene);
+	if (upper) {
+		wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
+	} else {
+		wall.position = new BABYLON.Vector3(x,y-0.4*height,z) ;
+	}
+	var mat = new BABYLON.StandardMaterial("wall_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
+	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.vScale = 0.2;
+	wall.material = mat;
+	wall.checkCollisions = true;
+
+	var glass = BABYLON.MeshBuilder.CreateBox("glass", {width: width, height: height*0.8, depth: depth}, scene);
+	if (upper) {
+		glass.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
+	} else {
+		glass.position = new BABYLON.Vector3(x,y+0.1*height,z) ;
+	}
+	mat = new BABYLON.StandardMaterial("glass_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png",scene);
+	mat.alpha = 0.25;
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	glass.material = mat;
+	glass.checkCollisions = true;
+
+	if (vertical) {
+		setRotation(wall,0,90,0);
+		setRotation(glass,0,90,0);
 	}
 }
 
