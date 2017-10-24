@@ -53,11 +53,11 @@ function createCamera(scene){
 
 function createLight(scene){
 	var ambLight = new BABYLON.HemisphericLight("ambLight", new BABYLON.Vector3(0, 1, 0), scene);
-	ambLight.diffuse = new BABYLON.Color3(0.4, 0.4, 0.4);
+	ambLight.diffuse = new BABYLON.Color3(0.5, 0.5, 0.5);
 	ambLight.specular = new BABYLON.Color3(0, 0, 0);
 	ambLight.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 	var dirLight = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(1, -1, 1), scene);
-	dirLight.diffuse = new BABYLON.Color3(0.6, 0.6, 0.6);
+	dirLight.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
 	dirLight.specular = new BABYLON.Color3(0.3, 0.3, 0.3);
 	dirLight.groundColor = new BABYLON.Color3(0, 0, 0);
 	return ambLight;
