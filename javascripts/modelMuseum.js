@@ -87,8 +87,14 @@ function createMuseum(scene){
 
 	//--Toit
 	offset = hauteurMur*2.0;
-	createRoof(0,offset-hauteurMur*0.5,0,30,epaisseurSol,30);
-
+	createRoof(0,offset-hauteurMur*0.5,-6,30,epaisseurSol,18);
+	createRoof(-12,offset-hauteurMur*0.5,7,6,epaisseurSol,8);
+	createGlassRoof(-5.5,offset-hauteurMur*0.5,7,7,epaisseurSol,8);
+	createRoof(0,offset-hauteurMur*0.5,7,4,epaisseurSol,8);
+	createGlassRoof(5.5,offset-hauteurMur*0.5,7,7,epaisseurSol,8);
+	createRoof(12,offset-hauteurMur*0.5,7,6,epaisseurSol,8);
+	createRoof(0,offset-hauteurMur*0.5,13,30,epaisseurSol,4);
+	
 	createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene);
 
 	return scene;
@@ -237,6 +243,18 @@ function createRoof(x, y, z, width, height, depth, scene) {
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/roof.jpg",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
+	roof.material = mat;
+}
+
+function createGlassRoof(x, y, z, width, height, depth, scene) {
+	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth}, scene);
+	roof.position = new BABYLON.Vector3(x,y,z) ;
+	roof.checkCollisions = true;
+	var mat = new BABYLON.StandardMaterial("roof_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png",scene);
+	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.vScale = width/detailsTexture;
+	mat.alpha = 0.25;
 	roof.material = mat;
 }
 
