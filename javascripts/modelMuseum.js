@@ -19,7 +19,11 @@ function createMuseum(scene){
 	//Murs extérieurs
 	createFloor(0,offset-hauteurMur/2,0,30,epaisseurSol,30);
 	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-	createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
+	
+	createWall(-15,offset,4,true,22,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-15,offset,-9,true,4,hauteurMur,epaisseurMur,false) ;
+	createWall(-15,offset,-13,true,4,hauteurMur,epaisseurMur,false) ;
+	
 	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
 	
 	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
@@ -62,7 +66,11 @@ function createMuseum(scene){
 	createFloor(0,offset-hauteurMur/2,7.5,30,epaisseurSol,15);
 	createFence(0,offset-hauteurMur/4,0,false,22,hauteurMur/2);
 	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-	createWall(-15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;	
+	
+	createWall(-15,offset,4,true,22,hauteurMur,epaisseurMur,false) ;
+	createGlassWall(-15,offset,-9,true,4,hauteurMur,epaisseurMur,true) ;
+	createWall(-15,offset,-13,true,4,hauteurMur,epaisseurMur,false) ;
+	
 	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
 	
 	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
