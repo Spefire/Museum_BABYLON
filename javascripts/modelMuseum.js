@@ -69,8 +69,8 @@ function createGround(x, y, z, width, height, scene) {
 	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10, scene);
 	ground.position = new BABYLON.Vector3(x,y,z) ;
 	ground.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_ground",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/sol.png",scene);
+	var mat = new BABYLON.StandardMaterial("ground_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
 	ground.material = mat;
@@ -81,11 +81,11 @@ function createWall(x, y, z, vertical, width, height, depth, interieur, scene) {
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: depth}, scene);
 	wall.position = new BABYLON.Vector3(x,y,z) ;
 	wall.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_mur",scene);
+	var mat = new BABYLON.StandardMaterial("wall_mat",scene);
 	if (interieur) {
-		mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg",scene);
 	} else {
-		mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
 	}
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = 1.0;
@@ -100,14 +100,15 @@ function createFence(x, y, z, vertical, width, height, scene) {
 	var fence = BABYLON.MeshBuilder.CreatePlane("fence", {width: width, height: height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
 	fence.position = new BABYLON.Vector3(x,y,z) ;
 	fence.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_barriere",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/fence.png",scene);
+	var mat = new BABYLON.StandardMaterial("fence_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = 1.0;
 	mat.diffuseTexture.hasAlpha = true;
 	fence.material = mat;
+	setRotation(fence,0,180,0);
 	if (vertical) {
-		setRotation(fence,0,90,0);
+		setRotation(fence,0,270,0);
 	}
 }
 
@@ -116,8 +117,8 @@ function createFloor(x, y, z, width, height, depth, scene) {
 	var floor = BABYLON.MeshBuilder.CreateBox("floor", {width: width, height: height, depth: depth}, scene);
 	floor.position = new BABYLON.Vector3(x,y,z) ;
 	floor.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_parquet",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/parquet.jpg",scene);
+	var mat = new BABYLON.StandardMaterial("floor_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/floor.jpg",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
 	floor.material = mat;
@@ -127,13 +128,13 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
 
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: depth}, scene);
 	wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
-	var mat = new BABYLON.StandardMaterial("materiau_mur",scene);
+	var mat = new BABYLON.StandardMaterial("wall_mat",scene);
 	if (interieur) {
-		mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur1.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg",scene);
 	} else {
-		mat.diffuseTexture = new BABYLON.Texture("assets/textures/mur.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
 	}
-	mat.diffuseTexture.uScale = width/detailsTexture;var door = 
+	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = 0.2;
 	wall.material = mat;
 
@@ -164,8 +165,8 @@ function createStairs(x, y, z, width, height, depth, nb, scene) {
 		var posZ = z+depth/2-depth/(nb*2)-i*depth/nb
 		stair.position = new BABYLON.Vector3(posX,posY,posZ) ;
 
-		var mat = new BABYLON.StandardMaterial("materiau_escaliers",scene);
-		mat.diffuseTexture = new BABYLON.Texture("assets/textures/parquet1.jpg",scene);
+		var mat = new BABYLON.StandardMaterial("stairs_mat",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg",scene);
 		mat.diffuseTexture.uScale = width/detailsTexture;
 		mat.diffuseTexture.vScale = width/detailsTexture;
 		stair.material = mat;
@@ -179,8 +180,8 @@ function createRoof(x, y, z, width, height, depth, scene) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth}, scene);
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_toit",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/toit.jpg",scene);
+	var mat = new BABYLON.StandardMaterial("roof_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/roof.jpg",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
 	roof.material = mat;
