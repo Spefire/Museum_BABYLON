@@ -53,6 +53,17 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 			i--;
 		}
 	}
+	
+	//Bushes
+	var heightB = 1;
+	var rotation0 = 0.0;
+	var rotation90 = 90.0;
+	createBush(-9,offset+heightB/2-0.1,-15.5,rotation0,heightB*5,heightB,1);
+	createBush(-4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
+	createBush(4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
+	createBush(9,offset+heightB/2-0.1,-15.5,rotation0,heightB*5,heightB,1);
+	createBush(-15.5,offset+heightB/2-0.1,-9,rotation90,heightB*5,heightB,1);
+	
 	return scene;
 }
 
@@ -71,7 +82,7 @@ function createGround(x, y, z, width, height, scene) {
 function createTree(x, y, z, width, height, numTree, scene) {
 
 	var mat = new BABYLON.StandardMaterial("tree_mat",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/arbre0"+numTree+".png",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/tree0"+numTree+".png",scene);
 	mat.diffuseTexture.uScale = 1.0;
 	mat.diffuseTexture.vScale = 1.0;
 	mat.diffuseTexture.hasAlpha = true;
@@ -85,4 +96,23 @@ function createTree(x, y, z, width, height, numTree, scene) {
 	tree02.position = new BABYLON.Vector3(x,y,z) ;
 	tree02.material = mat;
 	setRotation(tree02,0,-45,0);
+}
+
+function createBush(x, y, z, rotation, width, height, numBush, scene) {
+
+	var mat = new BABYLON.StandardMaterial("bush_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/bush0"+numBush+".png",scene);
+	mat.diffuseTexture.uScale = 1.0;
+	mat.diffuseTexture.vScale = 1.0;
+	mat.diffuseTexture.hasAlpha = true;
+
+	var bush01 = BABYLON.MeshBuilder.CreatePlane("bush01", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	bush01.position = new BABYLON.Vector3(x,y,z) ;
+	bush01.material = mat;
+	setRotation(bush01,0,15+rotation,0);
+	
+	var bush02 = BABYLON.MeshBuilder.CreatePlane("bush02", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	bush02.position = new BABYLON.Vector3(x,y,z) ;
+	bush02.material = mat;
+	setRotation(bush02,0,-15+rotation,0);
 }
