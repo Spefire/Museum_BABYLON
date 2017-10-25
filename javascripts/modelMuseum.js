@@ -199,7 +199,7 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper, scene) 
 	}
 	mat = new BABYLON.StandardMaterial("glass_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png",scene);
-	mat.alpha = 0.25;
+	mat.alpha = 0.4;
 	mat.diffuseTexture.uScale = 1.0;
 	mat.diffuseTexture.vScale = 1.0;
 	glass.material = mat;
@@ -254,7 +254,7 @@ function createGlassRoof(x, y, z, width, height, depth, scene) {
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png",scene);
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
-	mat.alpha = 0.25;
+	mat.alpha = 0.4;
 	roof.material = mat;
 }
 

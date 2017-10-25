@@ -25,6 +25,7 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	createRectBoard(8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"robert",1) ;
 	createRectBoard(12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"robert",2) ;
 	
+	createPanel(0,offset+hauteurMur,-15.1,rotation0,widthRect*2.5,hauteurMur*0.4,depthRect,"main") ;
 	createPanel(-8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect*0.8,hauteurMur*0.2,depthRect,"eric") ;
 	createPanel(0,offset+hauteurMur*0.4,-0.1,rotation0,widthRect*0.8,hauteurMur*0.2,depthRect,"axelle") ;
 	createPanel(8,offset+hauteurMur*0.4,-0.1,rotation0,widthRect*0.8,hauteurMur*0.2,depthRect,"robert") ;
