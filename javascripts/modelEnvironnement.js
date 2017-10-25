@@ -11,7 +11,7 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 	
 	//Tree 01
 	var heightT01 = 7;
-	var nbT01 = 75;
+	var nbT01 = 50;
 	for (var i = 0; i < nbT01; i++) {
 		var angle = getRandomAngle();
 		if (testAngle(angle)){
@@ -26,7 +26,7 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 	
 	//Tree 02
 	var heightT02 = 5;
-	var nbT02 = 75;
+	var nbT02 = 50;
 	for (var i = 0; i < nbT02; i++) {
 		var angle = getRandomAngle();
 		if (testAngle(angle)) {
@@ -41,7 +41,7 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 	
 	//Tree 03
 	var heightT03 = 5;
-	var nbT03 = 75;
+	var nbT03 = 50;
 	for (var i = 0; i < nbT03; i++) {
 		var angle = getRandomAngle();
 		if (testAngle(angle)) {

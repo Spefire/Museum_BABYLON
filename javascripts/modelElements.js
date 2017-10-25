@@ -15,7 +15,7 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	var rotation270 = 270.0;
 	
 	//---Rez de chaussée
-	var offset = hauteurMur*0.0;
+	/*var offset = hauteurMur*0.0;
 	var hRect = offset+hauteurMur*0.2;
 	createRectBoard(-12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",1) ;
 	createRectBoard(-8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",2) ;
@@ -72,7 +72,7 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	var heightBanc = 0.9;
 	var hBanc = offset-hauteurMur/2+heightBanc/2;
 	createBanc(-9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,1,scene);
-	createBanc(9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,-1,scene);
+	createBanc(9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,-1,scene);*/
 
 	return scene;
 }
