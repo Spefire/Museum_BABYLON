@@ -6,15 +6,52 @@
 
 function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene){
 	
-	createGround(0,-hauteurMur/2,0,100,100);
+	var offset = -hauteurMur/2;
+	createGround(0,offset,0,100,100);
 	
 	//Tree 01
-	var heightT01 = 6;
-	var nbT01 = 20;
+	var heightT01 = 7;
+	var nbT01 = 75;
 	for (var i = 0; i < nbT01; i++) {
-		var x = getRandomInt(-20, 20);
-		var z = getRandomInt(-25, -20);
-		createTree(x,0+heightT01/4,z,heightT01/2,heightT01);
+		var angle = getRandomAngle();
+		if (testAngle(angle)){
+			var radius = getRandomInt(-40, -30);
+			var x = Math.cos(angle)*radius;
+			var z = Math.sin(angle)*radius;
+			createTree(x,offset+heightT01/2,z,heightT01/2,heightT01,1);
+		} else {
+			i--;
+		}
+	}
+	
+	//Tree 02
+	var heightT02 = 5;
+	var nbT02 = 75;
+	for (var i = 0; i < nbT02; i++) {
+		var angle = getRandomAngle();
+		if (testAngle(angle)) {
+			var radius = getRandomInt(-40, -30);
+			var x = Math.cos(angle)*radius;
+			var z = Math.sin(angle)*radius;
+			createTree(x,offset+heightT02/2,z,heightT02,heightT02,2);
+		} else {
+			i--;
+		}
+	}
+	
+	//Tree 03
+	var heightT03 = 5;
+	var nbT03 = 75;
+	for (var i = 0; i < nbT03; i++) {
+		var angle = getRandomAngle();
+		if (testAngle(angle)) {
+			var radius = getRandomInt(-40, -30);
+			var x = Math.cos(angle)*radius;
+			var z = Math.sin(angle)*radius;
+			createTree(x,offset+heightT03/2,z,heightT03,heightT03,3);
+		} else {
+			i--;
+		}
 	}
 	return scene;
 }
@@ -31,10 +68,10 @@ function createGround(x, y, z, width, height, scene) {
 	ground.material = mat;
 }
 
-function createTree(x, y, z, width, height, scene) {
+function createTree(x, y, z, width, height, numTree, scene) {
 
 	var mat = new BABYLON.StandardMaterial("tree_mat",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/arbre01.png",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/arbre0"+numTree+".png",scene);
 	mat.diffuseTexture.uScale = 1.0;
 	mat.diffuseTexture.vScale = 1.0;
 	mat.diffuseTexture.hasAlpha = true;
