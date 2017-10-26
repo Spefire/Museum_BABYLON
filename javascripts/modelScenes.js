@@ -29,7 +29,7 @@ function createSkybox(scene) {
 }
 
 function createCamera(scene){
-	var camera = new BABYLON.FreeCamera("cam",new BABYLON.Vector3(0, 1, -14), scene) ;
+	var camera = new BABYLON.FreeCamera("cam",new BABYLON.Vector3(0, 1, -35), scene) ;
 	camera.ellipsoid = new BABYLON.Vector3(0.25, 1, 0.25);
 	camera.setTarget(BABYLON.Vector3.Zero());
 	camera.keysLeft = [81, 37]; //Q et <-
@@ -42,12 +42,6 @@ function createCamera(scene){
 	camera.maxZ = 10000;
 	camera.applyGravity = true;
 	camera.checkCollisions = true;
-
-	/*var hitbox = BABYLON.Mesh.CreateSphere("hitbox", 16, 0.5, scene);
-	hitbox.position = new BABYLON.Vector3(0, 1, -5);
-	hitbox.checkCollisions = true;
-	hitbox.parent = camera;*/
-
 	return camera;
 }
 
