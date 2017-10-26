@@ -15,8 +15,12 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	var rotation270 = 270.0;
 	
 	//---Rez de chaussée
-	/*var offset = hauteurMur*0.0;
+	var offset = hauteurMur*0.0;
 	var hRect = offset+hauteurMur*0.2;
+
+	createSculpture01(4,offset,0,1,scene) ;
+	createSculpture02(-4,offset,0,1,scene) ;
+	
 	createRectBoard(-12,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",1) ;
 	createRectBoard(-8,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"eric",2) ;
 	createRectBoard(-3,hRect,14.9,rotation0,widthRect,heightRect,depthRect,"axelle",1) ;
@@ -72,8 +76,8 @@ function createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTex
 	var heightBanc = 0.9;
 	var hBanc = offset-hauteurMur/2+heightBanc/2;
 	createBanc(-9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,1,scene);
-	createBanc(9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,-1,scene);*/
-
+	createBanc(9,hBanc,8,1.25*heightBanc,heightBanc,4*heightBanc,-1,scene);
+	
 	return scene;
 }
 
@@ -120,13 +124,13 @@ function createBanc(x, y, z, width, height, depth, sens, scene) {
 	var bancUp = BABYLON.MeshBuilder.CreateBox("bancUp", {width: width, height: height*0.3, depth: depth}, scene);
 	bancUp.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_bancUp",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/moquette.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg",scene);
 	bancUp.material = mat;
 	
 	var bancDown = BABYLON.MeshBuilder.CreateBox("bancDown", {width: width*0.8, height: height*0.7, depth: depth*0.9}, scene);
 	bancDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_bancDown",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/wood.jpg",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wood.jpg",scene);
 	bancDown.material = mat;
 }
 
@@ -155,4 +159,137 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name, scene) {
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigpanel_"+name+".jpg",scene);
 	panel.material = mat;
 	setRotation(panel,20,rotation,0);
+}
+
+function createSculpture01(x, y, z, size, scene) {
+
+	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8}, scene);
+	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
+	
+	var structureTop = BABYLON.MeshBuilder.CreateBox("structureTop", {width: size*0.4, height: size*0.4, depth: size*5.1}, scene);
+	structureTop.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
+	setRotation(structureTop,0,90,0);
+	
+	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0}, scene);
+	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
+	
+	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0}, scene);
+	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
+		
+	var mat = new BABYLON.StandardMaterial("structure_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg",scene);
+	var matElement = new BABYLON.StandardMaterial("structure_element_mat",scene);
+	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg",scene);
+	matElement.diffuseTexture.uScale = 2.0;
+	matElement.diffuseTexture.vScale = 1.0;
+	structure.material = mat;
+	structureTop.material = matElement;
+	structureLeft.material = matElement;
+	structureRight.material = matElement;
+	
+	var sphere01 = BABYLON.MeshBuilder.CreateSphere("sphere01", {diameter: size*1.4}, scene);
+	sphere01.position = new BABYLON.Vector3(x,y-size*0.7,z-size*1.5) ;
+	sphere01.material = matElement;
+	
+	var sphere02 = BABYLON.MeshBuilder.CreateSphere("sphere02", {diameter: size*0.6}, scene);
+	sphere02.position = new BABYLON.Vector3(x,y+size*0.3,z-size*1.5) ;
+	sphere02.material = matElement;
+	
+	var sphere03 = BABYLON.MeshBuilder.CreateSphere("sphere03", {diameter: size*0.2}, scene);
+	sphere03.position = new BABYLON.Vector3(x,y+size*0.7,z-size*1.5) ;
+	sphere03.material = matElement;
+	
+	var sphere11 = BABYLON.MeshBuilder.CreateSphere("sphere11", {diameter: size*0.6}, scene);
+	sphere11.position = new BABYLON.Vector3(x+size*1.75,y-size*1.1,z-size*1.5) ;
+	sphere11.material = matElement;
+	
+	var sphere12 = BABYLON.MeshBuilder.CreateSphere("sphere12", {diameter: size*0.2}, scene);
+	sphere12.position = new BABYLON.Vector3(x+size*1.75,y-size*0.7,z-size*1.5) ;
+	sphere12.material = matElement;
+	
+	var sphere21 = BABYLON.MeshBuilder.CreateSphere("sphere21", {diameter: size*0.6}, scene);
+	sphere21.position = new BABYLON.Vector3(x-size*1.75,y-size*1.1,z-size*1.5) ;
+	sphere21.material = matElement;
+	
+	var sphere22 = BABYLON.MeshBuilder.CreateSphere("sphere22", {diameter: size*0.2}, scene);
+	sphere22.position = new BABYLON.Vector3(x-size*1.75,y-size*0.7,z-size*1.5) ;
+	sphere22.material = matElement;
+	
+	var mat = new BABYLON.StandardMaterial("structure_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg",scene);
+	structure.material = mat;
+}
+
+function createSculpture02(x, y, z, size, scene) {
+
+	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8}, scene);
+	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
+	
+	var structureTop = BABYLON.MeshBuilder.CreateBox("structureTop", {width: size*0.4, height: size*0.4, depth: size*5.1}, scene);
+	structureTop.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
+	setRotation(structureTop,0,90,0);
+	
+	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0}, scene);
+	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
+	
+	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0}, scene);
+	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
+		
+	var mat = new BABYLON.StandardMaterial("structure_mat",scene);
+	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg",scene);
+	var matElement = new BABYLON.StandardMaterial("structure_element_mat",scene);
+	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg",scene);
+	matElement.diffuseTexture.uScale = 2.0;
+	matElement.diffuseTexture.vScale = 1.0;
+	structure.material = mat;
+	structureTop.material = matElement;
+	structureLeft.material = matElement;
+	structureRight.material = matElement;
+	
+	for (var i = 0; i < 9; i++) {
+		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25}, scene);
+		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
+		box.material = matElement;
+		var keys = []; 
+		keys.push({
+			frame: 0,
+			value: 0
+		});
+		keys.push({
+			frame: 500,
+			value: (20*i)* 18*2*Math.PI/360
+		});
+		keys.push({
+			frame: 1000,
+			value: 0
+		});
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		animationBox.setKeys(keys);
+		box.animations = [];
+		box.animations.push(animationBox);
+		scene.beginAnimation(box, 0, 1000, true);
+	}
+	for (var i = 9; i < 19; i++) {
+		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25}, scene);
+		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
+		box.material = matElement;		
+		var keys = []; 
+		keys.push({
+			frame: 0,
+			value: 0
+		});
+		keys.push({
+			frame: 500,
+			value: (360-20*i)* 18*2*Math.PI/360
+		});
+		keys.push({
+			frame: 1000,
+			value: 0
+		});
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		animationBox.setKeys(keys);
+		box.animations = [];
+		box.animations.push(animationBox);
+		scene.beginAnimation(box, 0, 1000, true);
+	}
 }
