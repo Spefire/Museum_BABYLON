@@ -1,15 +1,16 @@
 // ------------------------------- //
 //   Application : Museum REV      //
 //   Author : Nicholas Brun        //
-//   File : modelEnvironnement.js  //
+//   File : modelEnvironment.js  //
 // ------------------------------- //
 
-function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene){
+function createEnvironment(scene){
 	
-	var offset = -hauteurMur/2;
+	//----- Environnement -----
+	var offset = -wallHeight/2;
+	//Sol herbeux
 	createGround(0,offset,0,100,100);
-	
-	//Tree 01
+	//Arbres de type 01
 	var heightT01 = 7;
 	var nbT01 = 50;
 	for (var i = 0; i < nbT01; i++) {
@@ -22,9 +23,8 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 		} else {
 			i--;
 		}
-	}
-	
-	//Tree 02
+	}	
+	//Arbres de type 02
 	var heightT02 = 5;
 	var nbT02 = 50;
 	for (var i = 0; i < nbT02; i++) {
@@ -38,8 +38,7 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 			i--;
 		}
 	}
-	
-	//Tree 03
+	//Arbres de type 03
 	var heightT03 = 5;
 	var nbT03 = 50;
 	for (var i = 0; i < nbT03; i++) {
@@ -53,11 +52,8 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 			i--;
 		}
 	}
-	
-	//Bushes
+	//Buissons
 	var heightB = 1;
-	var rotation0 = 0.0;
-	var rotation90 = 90.0;
 	createBush(-9,offset+heightB/2-0.1,-15.5,rotation0,heightB*5,heightB,1);
 	createBush(-4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
 	createBush(4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
@@ -67,51 +63,47 @@ function createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsText
 	return scene;
 }
 
-function createGround(x, y, z, width, height, scene) {
+function createGround(x, y, z, width, height) {
 
-	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10, scene);
+	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10);
 	ground.position = new BABYLON.Vector3(x,y,z) ;
 	ground.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("ground_mat",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
-	mat.diffuseTexture.vScale = width/detailsTexture;
+	var mat = new BABYLON.StandardMaterial("ground_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg");
+	mat.diffuseTexture.uScale = width/textureSize;
+	mat.diffuseTexture.vScale = width/textureSize;
 	ground.material = mat;
 }
 
-function createTree(x, y, z, width, height, numTree, scene) {
+function createTree(x, y, z, width, height, numTree) {
 
-	var mat = new BABYLON.StandardMaterial("tree_mat",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/tree0"+numTree+".png",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
+	var mat = new BABYLON.StandardMaterial("tree_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/tree0"+numTree+".png");
 	mat.diffuseTexture.hasAlpha = true;
 
-	var tree01 = BABYLON.MeshBuilder.CreatePlane("tree01", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	var tree01 = BABYLON.MeshBuilder.CreatePlane("tree01", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	tree01.position = new BABYLON.Vector3(x,y,z) ;
 	tree01.material = mat;
 	setRotation(tree01,0,45,0);
 	
-	var tree02 = BABYLON.MeshBuilder.CreatePlane("tree02", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	var tree02 = BABYLON.MeshBuilder.CreatePlane("tree02", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	tree02.position = new BABYLON.Vector3(x,y,z) ;
 	tree02.material = mat;
 	setRotation(tree02,0,-45,0);
 }
 
-function createBush(x, y, z, rotation, width, height, numBush, scene) {
+function createBush(x, y, z, rotation, width, height, numBush) {
 
-	var mat = new BABYLON.StandardMaterial("bush_mat",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/bush0"+numBush+".png",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
+	var mat = new BABYLON.StandardMaterial("bush_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/vegetation/bush0"+numBush+".png");
 	mat.diffuseTexture.hasAlpha = true;
 
-	var bush01 = BABYLON.MeshBuilder.CreatePlane("bush01", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	var bush01 = BABYLON.MeshBuilder.CreatePlane("bush01", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	bush01.position = new BABYLON.Vector3(x,y,z) ;
 	bush01.material = mat;
 	setRotation(bush01,0,15+rotation,0);
 	
-	var bush02 = BABYLON.MeshBuilder.CreatePlane("bush02", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE}, scene);
+	var bush02 = BABYLON.MeshBuilder.CreatePlane("bush02", {width:width, height:height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	bush02.position = new BABYLON.Vector3(x,y,z) ;
 	bush02.material = mat;
 	setRotation(bush02,0,-15+rotation,0);

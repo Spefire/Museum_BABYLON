@@ -4,114 +4,121 @@
 //   File : modelMuseum.js      //
 // ---------------------------- //
 
-var epaisseurMur = 0.2;
-var hauteurMur = 3.0;
-var epaisseurSol = 0.1;
-var detailsTexture = 2.5;
+var wallTickness = 0.2;
+var wallHeight = 3.0;
+var floorTickness = 0.1;
+var textureSize = 2.5;
+var rotation0 = 0.0;
+var rotation90 = 90.0;
+var rotation180 = 180.0;
+var rotation270 = 270.0;
 
 function createMuseum(scene){
 
-	//Extérieur
-	createEnvironnement(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene);
+	//----- Extérieur -----
+	createEnvironment(scene);
 
-	//---Rez de chaussée
-	var offset = hauteurMur*0.0;  
-	//Murs extérieurs
-	createFloor(0,offset-hauteurMur/2,0,30,epaisseurSol,30);
-	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
-	
-	createWall(-15,offset,4,true,22,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-15,offset,-9,true,4,hauteurMur,epaisseurMur,false) ;
-	createWall(-15,offset,-13,true,4,hauteurMur,epaisseurMur,false) ;
-	
-	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
-	
-	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-9,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
-	createWall(-6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-4,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createWall(-2,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;	
-	
-	createDoor(0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
-	createDoor(-0.5,offset,-15,false,1,hauteurMur,epaisseurMur,false);
-	
-	createWall(2,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(4,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createWall(6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(9,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
-	createWall(13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
+	//----- Rez de chaussée ------
+	var offset = wallHeight*0.0;
 
-	//Murs et portes intérieures sur X
-	createWall(-12,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
-	createDoor(-8,offset,0,false,2,hauteurMur,epaisseurMur,true);
-	createWall(-4,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
-	createDoor(0,offset,0,false,2,hauteurMur,epaisseurMur,true);
-	createWall(4,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
-	createDoor(8,offset,0,false,2,hauteurMur,epaisseurMur,true);
-	createWall(12,offset,0,false,6,hauteurMur,epaisseurMur,true) ;
+	//Sol
+	createFloor(0,offset-wallHeight/2,0,30,floorTickness,30);
+	//Mur ouest
+	createWall(15,offset,0,true,30,wallHeight,wallTickness,false) ;
+	//Mur est
+	createWall(-15,offset,4,true,22,wallHeight,wallTickness,false) ;
+	createGlassWall(-15,offset,-9,true,4,wallHeight,wallTickness,false) ;
+	createWall(-15,offset,-13,true,4,wallHeight,wallTickness,false) ;
+	//Mur nord
+	createWall(0,offset,15,false,30,wallHeight,wallTickness,false) ;
+	//Mur sud
+	createWall(-13,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createGlassWall(-9,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createWall(-6,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createGlassWall(-4,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createWall(-2,offset,-15,false,2,wallHeight,wallTickness,false) ;	
+	createDoor(0.5,offset,-15,false,1,wallHeight,wallTickness,false);
+	createDoor(-0.5,offset,-15,false,1,wallHeight,wallTickness,false);
+	createWall(2,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createGlassWall(4,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createWall(6,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createGlassWall(9,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	//Murs interieurs sur Ox
+	createWall(-12,offset,0,false,6,wallHeight,wallTickness,true) ;
+	createDoor(-8,offset,0,false,2,wallHeight,wallTickness,true);
+	createWall(-4,offset,0,false,6,wallHeight,wallTickness,true) ;
+	createDoor(0,offset,0,false,2,wallHeight,wallTickness,true);
+	createWall(4,offset,0,false,6,wallHeight,wallTickness,true) ;
+	createDoor(8,offset,0,false,2,wallHeight,wallTickness,true);
+	createWall(12,offset,0,false,6,wallHeight,wallTickness,true) ;
+	//Murs interieurs sur Oz
+	createWall(-5,offset,14,true,2,wallHeight,wallTickness,true) ;
+	createDoor(-5,offset,12.5,true,1,wallHeight,wallTickness,true);
+	createWall(-5,offset,6,true,12,wallHeight,wallTickness,true) ;
+	createWall(5,offset,14,true,2,wallHeight,wallTickness,true) ;
+	createDoor(5,offset,12.5,true,1,wallHeight,wallTickness,true);
+	createWall(5,offset,6,true,12,wallHeight,wallTickness,true) ;
+	//Escaliers et ascensceur
+	createStairs(13,offset,-2.5,4,wallHeight,5,20) ;
+	createElevator(-13,offset,-2,4,wallHeight,wallTickness, 4, scene);
 
-	//Murs et portes extérieures sur Z
-	createWall(-5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
-	createDoor(-5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
-	createWall(-5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
-	createWall(5,offset,14,true,2,hauteurMur,epaisseurMur,true) ;
-	createDoor(5,offset,12.5,true,1,hauteurMur,epaisseurMur,true);
-	createWall(5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
+	//----- Mezanine -----
+	offset = wallHeight*1.0;
+	
+	//Sol
+	createFloor(0,offset-wallHeight/2,7.5,30,floorTickness,15);
+	//Barriere
+	createFence(0,offset-wallHeight/4,0,false,22,wallHeight/2);
+	//Mur est
+	createWall(15,offset,0,true,30,wallHeight,wallTickness,false) ;
+	//Mur ouest
+	createWall(-15,offset,4,true,22,wallHeight,wallTickness,false) ;
+	createGlassWall(-15,offset,-9,true,4,wallHeight,wallTickness,true) ;
+	createWall(-15,offset,-13,true,4,wallHeight,wallTickness,false) ;
+	//Mur nord
+	createWall(0,offset,15,false,30,wallHeight,wallTickness,false) ;
+	//Mur sud
+	createWall(-13,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createGlassWall(-9,offset,-15,false,4,wallHeight,wallTickness,true) ;
+	createWall(-6,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createGlassWall(-4,offset,-15,false,2,wallHeight,wallTickness,true) ;
+	createWall(0,offset,-15,false,6,wallHeight,wallTickness,false) ;
+	createGlassWall(4,offset,-15,false,2,wallHeight,wallTickness,true) ;
+	createWall(6,offset,-15,false,2,wallHeight,wallTickness,false) ;
+	createGlassWall(9,offset,-15,false,4,wallHeight,wallTickness,true) ;
+	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
 
-	createStairs(13,offset,-2.5,4,hauteurMur,5,20) ;
-	createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4, scene);
-
-	//--Etage 1
-	offset = hauteurMur*1.0;
-	createFloor(0,offset-hauteurMur/2,7.5,30,epaisseurSol,15);
-	createFence(0,offset-hauteurMur/4,0,false,22,hauteurMur/2);
-	createWall(15,offset,0,true,30,hauteurMur,epaisseurMur,false) ;
+	//----- Toit -----
+	offset = wallHeight*2.0;
 	
-	createWall(-15,offset,4,true,22,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-15,offset,-9,true,4,hauteurMur,epaisseurMur,true) ;
-	createWall(-15,offset,-13,true,4,hauteurMur,epaisseurMur,false) ;
+	//Structure
+	createRoof(0,offset-wallHeight*0.5,-6,30,floorTickness,18);
+	createRoof(-12,offset-wallHeight*0.5,7,6,floorTickness,8);
+	createGlassRoof(-5.5,offset-wallHeight*0.5,7,7,floorTickness,8);
+	createRoof(0,offset-wallHeight*0.5,7,4,floorTickness,8);
+	createGlassRoof(5.5,offset-wallHeight*0.5,7,7,floorTickness,8);
+	createRoof(12,offset-wallHeight*0.5,7,6,floorTickness,8);
+	createRoof(0,offset-wallHeight*0.5,13,30,floorTickness,4);
 	
-	createWall(0,offset,15,false,30,hauteurMur,epaisseurMur,false) ;
-	
-	createWall(-13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-9,offset,-15,false,4,hauteurMur,epaisseurMur,true) ;
-	createWall(-6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(-4,offset,-15,false,2,hauteurMur,epaisseurMur,true) ;
-	
-	createWall(0,offset,-15,false,6,hauteurMur,epaisseurMur,false) ;
-	
-	createGlassWall(4,offset,-15,false,2,hauteurMur,epaisseurMur,true) ;
-	createWall(6,offset,-15,false,2,hauteurMur,epaisseurMur,false) ;
-	createGlassWall(9,offset,-15,false,4,hauteurMur,epaisseurMur,true) ;
-	createWall(13,offset,-15,false,4,hauteurMur,epaisseurMur,false) ;
-
-	//--Toit
-	offset = hauteurMur*2.0;
-	createRoof(0,offset-hauteurMur*0.5,-6,30,epaisseurSol,18);
-	createRoof(-12,offset-hauteurMur*0.5,7,6,epaisseurSol,8);
-	createGlassRoof(-5.5,offset-hauteurMur*0.5,7,7,epaisseurSol,8);
-	createRoof(0,offset-hauteurMur*0.5,7,4,epaisseurSol,8);
-	createGlassRoof(5.5,offset-hauteurMur*0.5,7,7,epaisseurSol,8);
-	createRoof(12,offset-hauteurMur*0.5,7,6,epaisseurSol,8);
-	createRoof(0,offset-hauteurMur*0.5,13,30,epaisseurSol,4);
-	
-	createElementsMuseum(epaisseurMur, hauteurMur, epaisseurSol, detailsTexture, scene);
+	//----- Elements du musée -----
+	createElementsMuseum(scene);
 
 	return scene;
 }
 
-function createWall(x, y, z, vertical, width, height, depth, interieur, scene) {
+function createWall(x, y, z, vertical, width, height, depth, interieur) {
 
-	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: depth}, scene);
+	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: depth});
 	wall.position = new BABYLON.Vector3(x,y,z) ;
 	wall.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("wall_mat",scene);
+	var mat = new BABYLON.StandardMaterial("wall_mat");
 	if (interieur) {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg");
 	} else {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
 	}
-	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
 	mat.diffuseTexture.vScale = 1.0;
 	wall.material = mat;
 	if (vertical) {
@@ -126,7 +133,7 @@ function createFence(x, y, z, vertical, width, height, scene) {
 	fence.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("fence_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
 	mat.diffuseTexture.vScale = 1.0;
 	mat.diffuseTexture.hasAlpha = true;
 	fence.material = mat;
@@ -143,8 +150,8 @@ function createFloor(x, y, z, width, height, depth, scene) {
 	floor.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("floor_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/floor.jpg",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
-	mat.diffuseTexture.vScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
+	mat.diffuseTexture.vScale = width/textureSize;
 	floor.material = mat;
 	return floor;
 }
@@ -159,21 +166,12 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
 	} else {
 		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
 	}
-	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
 	mat.diffuseTexture.vScale = 0.2;
 	wall.material = mat;
 
-	/*var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: depth}, scene);
-	door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
-	mat = new BABYLON.StandardMaterial("materiau_porte",scene);
-	mat.diffuseTexture = new BABYLON.Texture("assets/textures/door01.jpg",scene);
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
-	door.material = mat;*/
-
 	if (vertical) {
 		setRotation(wall,0,90,0);
-		//setRotation(door,0,90,0);
 	}
 }
 
@@ -187,7 +185,7 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper, scene) 
 	}
 	var mat = new BABYLON.StandardMaterial("wall_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
 	mat.diffuseTexture.vScale = 0.2;
 	wall.material = mat;
 	wall.checkCollisions = true;
@@ -227,8 +225,8 @@ function createStairs(x, y, z, width, height, depth, nb, scene) {
 
 		var mat = new BABYLON.StandardMaterial("stairs_mat",scene);
 		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg",scene);
-		mat.diffuseTexture.uScale = width/detailsTexture;
-		mat.diffuseTexture.vScale = width/detailsTexture;
+		mat.diffuseTexture.uScale = width/textureSize;
+		mat.diffuseTexture.vScale = width/textureSize;
 		stair.material = mat;
 		stairsArray[i] = stair;
 	}
@@ -242,8 +240,8 @@ function createRoof(x, y, z, width, height, depth, scene) {
 	roof.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("roof_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/roof.jpg",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
-	mat.diffuseTexture.vScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
+	mat.diffuseTexture.vScale = width/textureSize;
 	roof.material = mat;
 }
 
@@ -253,8 +251,8 @@ function createGlassRoof(x, y, z, width, height, depth, scene) {
 	roof.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("roof_mat",scene);
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png",scene);
-	mat.diffuseTexture.uScale = width/detailsTexture;
-	mat.diffuseTexture.vScale = width/detailsTexture;
+	mat.diffuseTexture.uScale = width/textureSize;
+	mat.diffuseTexture.vScale = width/textureSize;
 	mat.alpha = 0.4;
 	roof.material = mat;
 }
@@ -262,18 +260,18 @@ function createGlassRoof(x, y, z, width, height, depth, scene) {
 function createElevator(x, y, z, width, height, tickness, depth, scene) {
 
 	createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y,z-depth/2,false,1.0,hauteurMur,epaisseurMur,false);
+	createDoor(x,y,z-depth/2,false,1.0,wallHeight,wallTickness,false);
 	createWall(x+width/4+0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
 	createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;
 
 	createWall(x-width/4-0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y+height,z+depth/2,false,1.0,hauteurMur,epaisseurMur,false);
+	createDoor(x,y+height,z+depth/2,false,1.0,wallHeight,wallTickness,false);
 	createWall(x+width/4+0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
 
 	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
 
-	var floor = createFloor(x,y+height/2+0.1,z,width*0.85,epaisseurSol,depth*0.85);
+	var elevator = createFloor(x,y+height/2+0.1,z,width*0.85,floorTickness,depth*0.85);
 	var keys = []; 
 	keys.push({
 		frame: 0,
@@ -301,7 +299,7 @@ function createElevator(x, y, z, width, height, tickness, depth, scene) {
 	});
 	var animationBox = new BABYLON.Animation("myAnimation", "position.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	animationBox.setKeys(keys);
-	floor.animations = [];
-	floor.animations.push(animationBox);
-	scene.beginAnimation(floor, 0, 500, true);
+	elevator.animations = [];
+	elevator.animations.push(animationBox);
+	scene.beginAnimation(elevator, 0, 500, true);
 }
