@@ -161,31 +161,35 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 	setRotation(panel,20,rotation,0);
 }
 
-function createSculpture01(x, y, z, size) {
-	
+function createSculptureBase(x, y, z, size, matElement){
 	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
 	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
+	var mat = new BABYLON.StandardMaterial("structure_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
+	structure.material = mat;	
 	
 	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
 	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
 	setRotation(structureBottom,0,90,0);
+	structureBottom.material = matElement;
 	
 	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
+	structureLeft.material = matElement;
 	
 	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
-		
-	var mat = new BABYLON.StandardMaterial("structure_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
+	structureRight.material = matElement;
+}
+
+function createSculpture01(x, y, z, size) {
+	
 	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
 	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
 	matElement.diffuseTexture.uScale = 2.0;
 	matElement.diffuseTexture.vScale = 1.0;
-	structure.material = mat;
-	structureBottom.material = matElement;
-	structureLeft.material = matElement;
-	structureRight.material = matElement;
+	
+	createSculptureBase(x, y, z, size, matElement);
 	
 	var sphere01 = BABYLON.MeshBuilder.CreateSphere("sphere01", {diameter: size*1.4});
 	sphere01.position = new BABYLON.Vector3(x,y-size*0.7,z-size*1.5) ;
@@ -214,37 +218,16 @@ function createSculpture01(x, y, z, size) {
 	var sphere22 = BABYLON.MeshBuilder.CreateSphere("sphere22", {diameter: size*0.2});
 	sphere22.position = new BABYLON.Vector3(x-size*1.75,y-size*0.7,z-size*1.5) ;
 	sphere22.material = matElement;
-	
-	var mat = new BABYLON.StandardMaterial("structure_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	structure.material = mat;
 }
 
 function createSculpture02(x, y, z, size, scene) {
 
-	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
-	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
-	
-	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
-	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
-	setRotation(structureBottom,0,90,0);
-	
-	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0});
-	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
-	
-	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0});
-	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
-		
-	var mat = new BABYLON.StandardMaterial("structure_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
 	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
 	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
 	matElement.diffuseTexture.uScale = 2.0;
 	matElement.diffuseTexture.vScale = 1.0;
-	structure.material = mat;
-	structureBottom.material = matElement;
-	structureLeft.material = matElement;
-	structureRight.material = matElement;
+	
+	createSculptureBase(x, y, z, size, matElement);
 	
 	for (var i = 0; i < 9; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});

@@ -208,8 +208,6 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper) {
 	mat = new BABYLON.StandardMaterial("glass_mat");
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png");
 	mat.alpha = 0.4;
-	mat.diffuseTexture.uScale = 1.0;
-	mat.diffuseTexture.vScale = 1.0;
 	glass.material = mat;
 	glass.checkCollisions = true;
 
