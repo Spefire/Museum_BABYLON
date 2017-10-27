@@ -59,7 +59,7 @@ function createMuseum(scene){
 	createWall(5,offset,6,true,12,hauteurMur,epaisseurMur,true) ;
 
 	createStairs(13,offset,-2.5,4,hauteurMur,5,20) ;
-	createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4);
+	createElevator(-13,offset,-2,4,hauteurMur,epaisseurMur, 4, scene);
 
 	//--Etage 1
 	offset = hauteurMur*1.0;
@@ -146,6 +146,7 @@ function createFloor(x, y, z, width, height, depth, scene) {
 	mat.diffuseTexture.uScale = width/detailsTexture;
 	mat.diffuseTexture.vScale = width/detailsTexture;
 	floor.material = mat;
+	return floor;
 }
 
 function createDoor(x, y, z, vertical, width, height, depth, interieur, scene) {
@@ -272,5 +273,35 @@ function createElevator(x, y, z, width, height, tickness, depth, scene) {
 	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
 
-	createFloor(x,y+height/2,z,width,epaisseurSol,depth);
+	var floor = createFloor(x,y+height/2+0.1,z,width*0.85,epaisseurSol,depth*0.85);
+	var keys = []; 
+	keys.push({
+		frame: 0,
+		value: y+height/2
+	});
+	keys.push({
+		frame: 50,
+		value: y+height/2
+	});
+	keys.push({
+		frame: 200,
+		value: y-height/2-0.1
+	});
+	keys.push({
+		frame: 300,
+		value: y-height/2-0.1
+	});
+	keys.push({
+		frame: 450,
+		value: y+height/2
+	});
+	keys.push({
+		frame: 500,
+		value: y+height/2
+	});
+	var animationBox = new BABYLON.Animation("myAnimation", "position.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	animationBox.setKeys(keys);
+	floor.animations = [];
+	floor.animations.push(animationBox);
+	scene.beginAnimation(floor, 0, 500, true);
 }
