@@ -90,8 +90,17 @@ function createMuseum(scene){
 	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
 
 	//----- Toit -----
-	offset = wallHeight*2.0;
+	offset = wallHeight*1.75;
+	//Mur est
+	createWall(15,offset,0,true,30,wallHeight/2,wallTickness,false) ;
+	//Mur ouest
+	createWall(-15,offset,0,true,30,wallHeight/2,wallTickness,false) ;
+	//Mur nord
+	createWall(0,offset,15,false,30,wallHeight/2,wallTickness,false) ;
+	//Mur sud
+	createWall(0,offset,-15,false,30,wallHeight/2,wallTickness,false) ;
 	
+	offset = wallHeight*2.5;
 	//Structure
 	createRoof(0,offset-wallHeight*0.5,-6,30,floorTickness,18);
 	createRoof(-12,offset-wallHeight*0.5,7,6,floorTickness,8);
@@ -270,6 +279,8 @@ function createElevator(x, y, z, width, height, tickness, depth, scene) {
 
 	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
+	
+	createRoof(x,y+height*1.5,z,width,floorTickness,depth);
 
 	var elevator = createFloor(x,y+height/2+0.1,z,width*0.85,floorTickness,depth*0.85);
 	var keys = []; 
