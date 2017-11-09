@@ -64,7 +64,7 @@ function createMuseum(scene){
 	createDoor(5,offset,12.5,true,1,wallHeight,wallTickness,true);
 	createWall(5,offset,6,true,12,wallHeight,wallTickness,true) ;
 	//Escaliers et ascensceur
-	createStairs(13,offset,-2.5,4,wallHeight,5,20) ;
+	createStairs(13,offset,-2.5,4,wallHeight,5,15) ;
 	createElevator(-13,offset,-2,4,wallHeight,wallTickness, 4, scene);
 
 	//----- Mezanine -----
@@ -264,7 +264,7 @@ function createStairs(x, y, z, width, height, depth, nb) {
 		stair.position = new BABYLON.Vector3(posX,posY,posZ) ;
 
 		var mat = new BABYLON.StandardMaterial("stairs_mat");
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg");
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 		mat.diffuseTexture.uScale = width/textureSize;
 		mat.diffuseTexture.vScale = width/textureSize;
 		stair.material = mat;
@@ -325,7 +325,7 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	elevatorSupport.position = new BABYLON.Vector3(x,y-height/2,z) ;
 	elevatorSupport.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("elevator_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 	elevator.material = mat;
 	elevatorSupport.material = mat;
 		
@@ -423,7 +423,7 @@ function createButtonUpElevator(x, y, z, width, height, depth, call) {
 	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
 	buttonUp.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("buttonUp_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 	buttonUp.material = mat;
 	if (!call) {
 		setRotation(buttonUp,0,90,0);
@@ -436,7 +436,7 @@ function createButtonDownElevator(x, y, z, width, height, depth, call) {
 	var buttonDown = BABYLON.MeshBuilder.CreateBox("buttonDown", {width: width, height: height, depth: depth});
 	buttonDown.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("buttonDown_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 	buttonDown.material = mat;
 	if (!call) {
 		setRotation(buttonDown,0,90,0);

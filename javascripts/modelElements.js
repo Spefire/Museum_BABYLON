@@ -211,13 +211,13 @@ function createBench(x, y, z, width, height, depth, sens) {
 	var benchTop = BABYLON.MeshBuilder.CreateBox("benchTop", {width: width, height: height*0.3, depth: depth});
 	benchTop.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_benchTop");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 	benchTop.material = mat;
 	
 	var benchDown = BABYLON.MeshBuilder.CreateBox("benchDown", {width: width*0.8, height: height*0.7, depth: depth*0.9});
 	benchDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
 	var mat = new BABYLON.StandardMaterial("materiau_benchDown");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wood.jpg");
+	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/base.jpg");
 	benchDown.material = mat;
 }
 
