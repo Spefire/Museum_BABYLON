@@ -13,6 +13,10 @@ var rotation90 = 90.0;
 var rotation180 = 180.0;
 var rotation270 = 270.0;
 
+var framesPerSecond = 60;
+var elevatorIsMoving = false;
+var elevatorIsOnMezanine = false;
+
 function createMuseum(scene){
 
 	//----- Extérieur -----
@@ -60,7 +64,7 @@ function createMuseum(scene){
 	createDoor(5,offset,12.5,true,1,wallHeight,wallTickness,true);
 	createWall(5,offset,6,true,12,wallHeight,wallTickness,true) ;
 	//Escaliers et ascensceur
-	createStairs(13,offset,-2.5,4,wallHeight,5,20) ;
+	createStairs(13,offset,-2.5,4,wallHeight,5,15) ;
 	createElevator(-13,offset,-2,4,wallHeight,wallTickness, 4, scene);
 
 	//----- Mezanine -----
@@ -195,16 +199,15 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, activate
 		door.material = mat;
 
 		if (vertical) {
-			setRotation(wall,0,90,0);
 			setRotation(door,0,90,0);
 		}
 		
 		var conditionsAvant = new BABYLON.PredicateCondition(scene.actionManager, function () {
-			var dist = getDistance(camera.position, door.position)
+			var dist = getDistance(camera.position, door.position);
 			return (dist <= 5);
 		});
 		var conditionsApres = new BABYLON.PredicateCondition(scene.actionManager, function () {
-			var dist = getDistance(camera.position, door.position)
+			var dist = getDistance(camera.position, door.position);
 			return (dist > 5);
 		});
 		
@@ -247,7 +250,7 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper) {
 	}
 }
 
-function createStairs(x, y, z, width, height, depth, nb,) {
+function createStairs(x, y, z, width, height, depth, nb) {
 	var stairsArray = [];
 	for (var i = 0; i < nb; i++) {
 		var h = height*(nb-i)/nb;
@@ -261,7 +264,7 @@ function createStairs(x, y, z, width, height, depth, nb,) {
 		stair.position = new BABYLON.Vector3(posX,posY,posZ) ;
 
 		var mat = new BABYLON.StandardMaterial("stairs_mat");
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg");
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 		mat.diffuseTexture.uScale = width/textureSize;
 		mat.diffuseTexture.vScale = width/textureSize;
 		stair.material = mat;
@@ -271,7 +274,7 @@ function createStairs(x, y, z, width, height, depth, nb,) {
 	stairs.checkCollisions = true;
 }
 
-function createRoof(x, y, z, width, height, depth,) {
+function createRoof(x, y, z, width, height, depth) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
@@ -294,51 +297,149 @@ function createGlassRoof(x, y, z, width, height, depth) {
 	roof.material = mat;
 }
 
-function createElevator(x, y, z, width, height, tickness, depth, scene) {
+function createElevator(x, y, z, width, height, tickness, depth) {
 
-	createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y,z-depth/2,false,1.0,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
+	createWall(x-width/4-0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
+	createDoor(x,y,z-depth/2,false,2,wallHeight,wallTickness,false);
+	createWall(x+width/4+0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
+	
 	createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;
 
-	createWall(x-width/4-0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y+height,z+depth/2,false,1.0,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
+	createWall(x-width/4-0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
+	createDoor(x,y+height,z+depth/2,false,2,wallHeight,wallTickness,false);
+	createWall(x+width/4+0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
 
 	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
 	
 	createRoof(x,y+height*1.5,z,width,floorTickness,depth);
+	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.4,0.4,0.1,false);
+	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.4,0.4,0.1,false);
+	var buttonCallUp = createButtonUpElevator(x+width/3,y+height+0.2,z+depth/2+0.1,0.4,0.4,0.1,true);
+	var buttonCallDown = createButtonDownElevator(x+width/3,y+0.2,z-depth/2-0.1,0.4,0.4,0.1,true);
 
-	var elevator = createFloor(x,y+height/2+0.1,z,width*0.85,floorTickness,depth*0.85);
-	var keys = []; 
-	keys.push({
-		frame: 0,
-		value: y+height/2
+	var elevator = BABYLON.MeshBuilder.CreateBox("elevator", {width: width, height: floorTickness*1.1, depth: depth});
+	elevator.position = new BABYLON.Vector3(x,y-height/2,z) ;
+	elevator.checkCollisions = true;
+	var elevatorSupport = BABYLON.MeshBuilder.CreateBox("elevatorSupport", {width: width, height: floorTickness*1.1, depth: depth});
+	elevatorSupport.position = new BABYLON.Vector3(x,y-height/2,z) ;
+	elevatorSupport.checkCollisions = true;
+	var mat = new BABYLON.StandardMaterial("elevator_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
+	elevator.material = mat;
+	elevatorSupport.material = mat;
+		
+	var movingUp = function() {
+		////////////////////////
+		var keysElevator = []; 
+		keysElevator.push({
+			frame: 0,
+			value: y-height/2
+		});
+		keysElevator.push({
+			frame: framesPerSecond*6,
+			value: y+height/2
+		});
+		var keysButtons = []; 
+		keysButtons.push({
+			frame: 0,
+			value: y+0.2
+		});
+		keysButtons.push({
+			frame: framesPerSecond*6,
+			value: y+height+0.2
+		});
+		////////////////////////
+		elevatorIsMoving = true;
+		moveAnimations(keysElevator, keysButtons, true);
+	}
+	
+	var movingDown = function() {
+		////////////////////////
+		var keysElevator = []; 
+		keysElevator.push({
+			frame: 0,
+			value: y+height/2
+		});
+		keysElevator.push({
+			frame: framesPerSecond*6,
+			value: y-height/2
+		});
+		var keysButtons = []; 
+		keysButtons.push({
+			frame: 0,
+			value: y+height+0.2
+		});
+		keysButtons.push({
+			frame: framesPerSecond*6,
+			value: y+0.2
+		});
+		////////////////////////
+		elevatorIsMoving = true;
+		moveAnimations(keysElevator, keysButtons, false);
+	}
+	
+	var moveAnimations = function(keysElevator, keysButtons, elevatorWillBeOnMezanine) {
+		var animationElevator = new BABYLON.Animation("animationElevator", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+		animationElevator.setKeys(keysElevator);
+		var animationButtonUp = new BABYLON.Animation("animationButtonUp", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+		animationButtonUp.setKeys(keysButtons);
+		var animationButtonDown = new BABYLON.Animation("animationButtonDown", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+		animationButtonDown.setKeys(keysButtons);
+		////////////////////////
+		elevator.animations = [];
+		buttonUp.animations = [];
+		buttonDown.animations = [];
+		////////////////////////
+		elevator.animations.push(animationElevator);
+		buttonUp.animations.push(animationButtonUp);
+		buttonDown.animations.push(animationButtonDown);
+		////////////////////////
+		scene.beginAnimation(elevator, 0, framesPerSecond*6, false, 1.0, function() { elevatorIsMoving=false; elevatorIsOnMezanine=elevatorWillBeOnMezanine; });
+		scene.beginAnimation(buttonUp, 0, framesPerSecond*6, false);
+		scene.beginAnimation(buttonDown, 0, framesPerSecond*6, false);
+	}
+	
+	buttonUp.actionManager = new BABYLON.ActionManager(scene);
+	buttonDown.actionManager = new BABYLON.ActionManager(scene);
+	buttonCallUp.actionManager = new BABYLON.ActionManager(scene);
+	buttonCallDown.actionManager = new BABYLON.ActionManager(scene);
+	var conditionsMovingUp = new BABYLON.PredicateCondition(buttonUp.actionManager, function () {
+		return (!elevatorIsMoving && !elevatorIsOnMezanine);
 	});
-	keys.push({
-		frame: 50,
-		value: y+height/2
+	var conditionsMovingDown = new BABYLON.PredicateCondition(buttonDown.actionManager, function () {
+		return (!elevatorIsMoving && elevatorIsOnMezanine);
 	});
-	keys.push({
-		frame: 200,
-		value: y-height/2-0.1
-	});
-	keys.push({
-		frame: 300,
-		value: y-height/2-0.1
-	});
-	keys.push({
-		frame: 450,
-		value: y+height/2
-	});
-	keys.push({
-		frame: 500,
-		value: y+height/2
-	});
-	var animationBox = new BABYLON.Animation("myAnimation", "position.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-	animationBox.setKeys(keys);
-	elevator.animations = [];
-	elevator.animations.push(animationBox);
-	scene.beginAnimation(elevator, 0, 500, true);
+	var actionUp = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, movingUp, conditionsMovingUp);
+	var actionDown = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, movingDown, conditionsMovingDown);
+	buttonUp.actionManager.registerAction(actionUp);
+	buttonDown.actionManager.registerAction(actionDown);
+	buttonCallUp.actionManager.registerAction(actionUp);
+	buttonCallDown.actionManager.registerAction(actionDown);
+}
+
+function createButtonUpElevator(x, y, z, width, height, depth, call) {
+	
+	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
+	buttonUp.position = new BABYLON.Vector3(x,y,z) ;
+	var mat = new BABYLON.StandardMaterial("buttonUp_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
+	buttonUp.material = mat;
+	if (!call) {
+		setRotation(buttonUp,0,90,0);
+	}
+	return buttonUp;
+}
+
+function createButtonDownElevator(x, y, z, width, height, depth, call) {
+	
+	var buttonDown = BABYLON.MeshBuilder.CreateBox("buttonDown", {width: width, height: height, depth: depth});
+	buttonDown.position = new BABYLON.Vector3(x,y,z) ;
+	var mat = new BABYLON.StandardMaterial("buttonDown_mat");
+	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
+	buttonDown.material = mat;
+	if (!call) {
+		setRotation(buttonDown,0,90,0);
+	}
+	return buttonDown;
 }
