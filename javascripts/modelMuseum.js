@@ -246,7 +246,7 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper) {
 	}
 }
 
-function createStairs(x, y, z, width, height, depth, nb,) {
+function createStairs(x, y, z, width, height, depth, nb) {
 	var stairsArray = [];
 	for (var i = 0; i < nb; i++) {
 		var h = height*(nb-i)/nb;
@@ -270,7 +270,7 @@ function createStairs(x, y, z, width, height, depth, nb,) {
 	stairs.checkCollisions = true;
 }
 
-function createRoof(x, y, z, width, height, depth,) {
+function createRoof(x, y, z, width, height, depth) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
@@ -293,7 +293,7 @@ function createGlassRoof(x, y, z, width, height, depth) {
 	roof.material = mat;
 }
 
-function createElevator(x, y, z, width, height, tickness, depth, scene) {
+function createElevator(x, y, z, width, height, tickness, depth) {
 
 	createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
 	createDoor(x,y,z-depth/2,false,1.0,wallHeight,wallTickness,false);
@@ -350,7 +350,7 @@ function createElevator(x, y, z, width, height, tickness, depth, scene) {
 	scene.beginAnimation(elevator, 0, 500, true);
 }
 
-function createButtonUpElevator(x, y, z, width, height, depth, scene) {
+function createButtonUpElevator(x, y, z, width, height, depth) {
 	
 	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
 	buttonUp.position = new BABYLON.Vector3(x,y,z) ;

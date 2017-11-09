@@ -183,7 +183,7 @@ function definePaintingActions(name, numPainting, painting) {
 		case "robert":
 			descriptionLabel = "JM ROBERT";
 			break;
-		case "nielly":
+		case "francoise":
 			descriptionLabel = "Françoise NIELLY";
 			break;
 		}
