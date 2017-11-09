@@ -32,3 +32,11 @@ function testAngle(angle) {
 	}
 	return false;
 }
+
+function getDistance(posA, posB){
+	var x = posB.x - posA.x;
+	var y = posB.y - posA.y;
+	var z = posB.z - posA.z;
+	var dist = Math.sqrt(x*x+y*y+z*z);
+	return dist;
+}

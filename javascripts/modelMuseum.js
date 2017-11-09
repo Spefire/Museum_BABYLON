@@ -46,11 +46,11 @@ function createMuseum(scene){
 	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
 	//Murs interieurs sur Ox
 	createWall(-12,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(-8,offset,0,false,2,wallHeight,wallTickness,true);
+	createDoor(-8,offset,0,false,2,wallHeight,wallTickness,true,true);
 	createWall(-4,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(0,offset,0,false,2,wallHeight,wallTickness,true);
+	createDoor(0,offset,0,false,2,wallHeight,wallTickness,true,true);
 	createWall(4,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(8,offset,0,false,2,wallHeight,wallTickness,true);
+	createDoor(8,offset,0,false,2,wallHeight,wallTickness,true,true);
 	createWall(12,offset,0,false,6,wallHeight,wallTickness,true) ;
 	//Murs interieurs sur Oz
 	createWall(-5,offset,14,true,2,wallHeight,wallTickness,true) ;
@@ -165,7 +165,7 @@ function createFloor(x, y, z, width, height, depth) {
 	return floor;
 }
 
-function createDoor(x, y, z, vertical, width, height, depth, interieur) {
+function createDoor(x, y, z, vertical, width, height, depth, interieur, activated) {
 
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: depth},);
 	wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
@@ -178,9 +178,39 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur) {
 	mat.diffuseTexture.uScale = width/textureSize;
 	mat.diffuseTexture.vScale = 0.2;
 	wall.material = mat;
-
+	
 	if (vertical) {
 		setRotation(wall,0,90,0);
+	}
+	
+	if (activated) {
+		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: depth/2},);
+		door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
+		door.checkCollisions = true;
+		mat = new BABYLON.StandardMaterial("door_mat");
+		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png");
+		mat.diffuseTexture.uScale = 1.0;
+		mat.diffuseTexture.vScale = 0.8;
+		mat.diffuseTexture.hasAlpha = true;
+		door.material = mat;
+
+		if (vertical) {
+			setRotation(wall,0,90,0);
+			setRotation(door,0,90,0);
+		}
+		
+		var conditionsAvant = new BABYLON.PredicateCondition(scene.actionManager, function () {
+			var dist = getDistance(camera.position, door.position)
+			return (dist <= 5);
+		});
+		var conditionsApres = new BABYLON.PredicateCondition(scene.actionManager, function () {
+			var dist = getDistance(camera.position, door.position)
+			return (dist > 5);
+		});
+		
+		var actionAvant = new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnEveryFrameTrigger, door, "position.x", door.position.x-2, 2000, conditionsAvant);
+		var actionApres = new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnEveryFrameTrigger, door, "position.x", door.position.x, 2000, conditionsApres);
+		scene.actionManager.registerAction(actionAvant).then(actionApres);
 	}
 }
 
