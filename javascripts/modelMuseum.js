@@ -323,7 +323,6 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	elevator.material = mat;
 	
 	var movingUp = function() {
-		elevatorIsMoving = true;
 		////////////////////////
 		var keysElevator = []; 
 		keysElevator.push({
@@ -334,7 +333,6 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 			frame: framesPerSecond*6,
 			value: y+height/2
 		});
-		////////////////////////
 		var keysButtonUp = []; 
 		keysButtonUp.push({
 			frame: 0,
@@ -344,7 +342,6 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 			frame: framesPerSecond*6,
 			value: y+height+0.2
 		});
-		////////////////////////
 		var keysButtonDown = []; 
 		keysButtonDown.push({
 			frame: 0,
@@ -355,6 +352,45 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 			value: y+height-0.2
 		});
 		////////////////////////
+		elevatorIsMoving = true;
+		moveAnimations(keysElevator, keysButtonUp, keysButtonDown, true);
+	}
+	
+	var movingDown = function() {
+		////////////////////////
+		var keysElevator = []; 
+		keysElevator.push({
+			frame: 0,
+			value: y+height/2
+		});
+		keysElevator.push({
+			frame: framesPerSecond*6,
+			value: y-height/2
+		});
+		var keysButtonUp = []; 
+		keysButtonUp.push({
+			frame: 0,
+			value: y+height+0.2
+		});
+		keysButtonUp.push({
+			frame: framesPerSecond*6,
+			value: y+0.2
+		});
+		var keysButtonDown = []; 
+		keysButtonDown.push({
+			frame: 0,
+			value: y+height-0.2
+		});
+		keysButtonDown.push({
+			frame: framesPerSecond*6,
+			value: y-0.2
+		});
+		////////////////////////
+		elevatorIsMoving = true;
+		moveAnimations(keysElevator, keysButtonUp, keysButtonDown, false);
+	}
+	
+	var moveAnimations = function(keysElevator, keysButtonUp, keysButtonDown, elevatorWillBeOnMezanine) {
 		var animationElevator = new BABYLON.Animation("animationElevator", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 		animationElevator.setKeys(keysElevator);
 		var animationButtonUp = new BABYLON.Animation("animationButtonUp", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
@@ -370,17 +406,23 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 		buttonUp.animations.push(animationButtonUp);
 		buttonDown.animations.push(animationButtonDown);
 		////////////////////////
-		scene.beginAnimation(elevator, 0, framesPerSecond*6, false, 1.0, function() { elevatorIsMoving=false; elevatorIsOnMezanine=true; });
+		scene.beginAnimation(elevator, 0, framesPerSecond*6, false, 1.0, function() { elevatorIsMoving=false; elevatorIsOnMezanine=elevatorWillBeOnMezanine; });
 		scene.beginAnimation(buttonUp, 0, framesPerSecond*6, false);
 		scene.beginAnimation(buttonDown, 0, framesPerSecond*6, false);
 	}
 	
 	buttonUp.actionManager = new BABYLON.ActionManager(scene);
+	buttonDown.actionManager = new BABYLON.ActionManager(scene);
 	var conditionsMovingUp = new BABYLON.PredicateCondition(buttonUp.actionManager, function () {
 		return (!elevatorIsMoving && !elevatorIsOnMezanine);
 	});
+	var conditionsMovingDown = new BABYLON.PredicateCondition(buttonDown.actionManager, function () {
+		return (!elevatorIsMoving && elevatorIsOnMezanine);
+	});
 	var actionUp = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, movingUp, conditionsMovingUp);
+	var actionDown = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, movingDown, conditionsMovingDown);
 	buttonUp.actionManager.registerAction(actionUp);
+	buttonDown.actionManager.registerAction(actionDown);
 }
 
 function createButtonUpElevator(x, y, z, width, height, depth, yElevator, yHeight) {
