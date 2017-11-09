@@ -62,8 +62,7 @@ function createElementsMuseum(scene){
 	//----- Mezanine -----
 	offset = wallHeight*1.0;
 	hRect = offset+wallHeight*0.2;
-	var heightBench = 0.9;
-	var hBench = offset-wallHeight/2+heightBench/2;
+	var hBench = offset-wallHeight/2;
 	
 	//Tableaux
 	createRectPainting(-14.9,hRect,8,rotation270,widthRect,heightRect,depthRect,"francoise",1) ;
@@ -77,8 +76,8 @@ function createElementsMuseum(scene){
 	createSquarePainting(14.9,hRect,12.5,rotation90,heightRect,depthRect,"francoise",8) ;
 	createRectPainting(14.9,hRect,8,rotation90,widthRect,heightRect,depthRect,"francoise",2) ;
 	//Bancs
-	createBench(-9,hBench,8,1.25*heightBench,heightBench,4*heightBench,1);
-	createBench(9,hBench,8,1.25*heightBench,heightBench,4*heightBench,-1);
+	createBench(-9,hBench+0.5,8,1.25,0.75,4,1);
+	createBench(9,hBench+0.5,8,1.25,0.75,4,-1);
 	
 	return scene;
 }
@@ -210,12 +209,14 @@ function createBench(x, y, z, width, height, depth, sens) {
 	
 	var benchTop = BABYLON.MeshBuilder.CreateBox("benchTop", {width: width, height: height*0.3, depth: depth});
 	benchTop.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
+	benchTop.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("materiau_benchTop");
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
 	benchTop.material = mat;
 	
 	var benchDown = BABYLON.MeshBuilder.CreateBox("benchDown", {width: width*0.8, height: height*0.7, depth: depth*0.9});
 	benchDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
+	benchDown.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("materiau_benchDown");
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/base.jpg");
 	benchDown.material = mat;
@@ -251,21 +252,25 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 function createSculptureBase(x, y, z, size, matElement){
 	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
 	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
+	structure.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("structure_mat");
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	structure.material = mat;	
+	structure.material = mat;
 	
 	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
 	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
+	structureBottom.checkCollisions = true;
 	setRotation(structureBottom,0,90,0);
 	structureBottom.material = matElement;
 	
 	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
+	structureLeft.checkCollisions = true;
 	structureLeft.material = matElement;
 	
 	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
+	structureRight.checkCollisions = true;
 	structureRight.material = matElement;
 }
 
