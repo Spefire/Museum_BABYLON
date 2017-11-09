@@ -326,18 +326,18 @@ function createSculpture02(x, y, z, size) {
 			value: 0
 		});
 		keys.push({
-			frame: 500,
+			frame: framesPerSecond*8,
 			value: (20*i)* 18*2*Math.PI/360
 		});
 		keys.push({
-			frame: 1000,
+			frame: framesPerSecond*16,
 			value: 0
 		});
-		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 		animationBox.setKeys(keys);
 		box.animations = [];
 		box.animations.push(animationBox);
-		scene.beginAnimation(box, 0, 1000, true);
+		scene.beginAnimation(box, 0, framesPerSecond*16, true);
 	}
 	for (var i = 9; i < 19; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});
@@ -349,17 +349,17 @@ function createSculpture02(x, y, z, size) {
 			value: 0
 		});
 		keys.push({
-			frame: 500,
+			frame: framesPerSecond*8,
 			value: (360-20*i)* 18*2*Math.PI/360
 		});
 		keys.push({
-			frame: 1000,
+			frame: framesPerSecond*16,
 			value: 0
 		});
-		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 		animationBox.setKeys(keys);
 		box.animations = [];
 		box.animations.push(animationBox);
-		scene.beginAnimation(box, 0, 1000, true);
+		scene.beginAnimation(box, 0, framesPerSecond*16, true);
 	}
 }
