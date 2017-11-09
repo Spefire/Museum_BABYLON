@@ -7,7 +7,6 @@
 var wallHeight = 3.0;
 var wallTickness = 0.2;
 var floorTickness = 0.1;
-var textureSize = 2.5;
 var rotation0 = 0.0;
 var rotation90 = 90.0;
 var rotation180 = 180.0;
