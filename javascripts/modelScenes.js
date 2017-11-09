@@ -15,6 +15,7 @@ function createScene(engine){
 	createCamera(scene) ; 
 	createLight(scene) ;
 	createSkybox(scene);
+	createMaterials(scene);
 	scene.actionManager = new BABYLON.ActionManager(scene);
 	scene.gravity = new BABYLON.Vector3(0, -0.1, 0);
 	scene.collisionsEnabled = true;

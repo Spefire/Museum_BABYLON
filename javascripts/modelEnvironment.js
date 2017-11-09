@@ -64,15 +64,11 @@ function createEnvironment(scene){
 }
 
 function createGround(x, y, z, width, height) {
-
+	
 	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10);
 	ground.position = new BABYLON.Vector3(x,y,z) ;
 	ground.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("ground_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = width/textureSize;
-	ground.material = mat;
+	ground.material = mat_ground;
 }
 
 function createTree(x, y, z, width, height, numTree) {

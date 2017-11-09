@@ -210,16 +210,12 @@ function createBench(x, y, z, width, height, depth, sens) {
 	var benchTop = BABYLON.MeshBuilder.CreateBox("benchTop", {width: width, height: height*0.3, depth: depth});
 	benchTop.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
 	benchTop.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_benchTop");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
-	benchTop.material = mat;
+	benchTop.material = mat_iron;
 	
 	var benchDown = BABYLON.MeshBuilder.CreateBox("benchDown", {width: width*0.8, height: height*0.7, depth: depth*0.9});
 	benchDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
 	benchDown.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("materiau_benchDown");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/base.jpg");
-	benchDown.material = mat;
+	benchDown.material = mat_base;
 }
 
 function createPanel(x, y, z, rotation, width, height, depth, name) {
@@ -236,9 +232,7 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 
 	var stick = BABYLON.MeshBuilder.CreateBox("stick", {width: depth, height: height/2, depth: depth});
 	stick.position = new BABYLON.Vector3(x,y-height/4,z) ;
-	var mat = new BABYLON.StandardMaterial("stick_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	stick.material = mat;
+	stick.material = mat_bigbase;
 	setRotation(stick,0,rotation,0);
 	
 	var panel = BABYLON.MeshBuilder.CreateBox("panel", {width: width, height: height, depth: depth});
@@ -249,82 +243,70 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 	setRotation(panel,20,rotation,0);
 }
 
-function createSculptureBase(x, y, z, size, matElement){
+function createSculptureBase(x, y, z, size){
 	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
 	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
 	structure.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("structure_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	structure.material = mat;
+	structure.material = mat_marble;
 	
 	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
 	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
 	structureBottom.checkCollisions = true;
 	setRotation(structureBottom,0,90,0);
-	structureBottom.material = matElement;
+	structureBottom.material = mat_marble;
 	
 	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
 	structureLeft.checkCollisions = true;
-	structureLeft.material = matElement;
+	structureLeft.material = mat_marble;
 	
 	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
 	structureRight.checkCollisions = true;
-	structureRight.material = matElement;
+	structureRight.material = mat_marble;
 }
 
 function createSculpture01(x, y, z, size) {
 	
-	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
-	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
-	matElement.diffuseTexture.uScale = 2.0;
-	matElement.diffuseTexture.vScale = 1.0;
-	
-	createSculptureBase(x, y, z, size, matElement);
+	createSculptureBase(x, y, z, size);
 	
 	var sphere01 = BABYLON.MeshBuilder.CreateSphere("sphere01", {diameter: size*1.4});
 	sphere01.position = new BABYLON.Vector3(x,y-size*0.7,z-size*1.5) ;
-	sphere01.material = matElement;
+	sphere01.material = mat_marble;
 	
 	var sphere02 = BABYLON.MeshBuilder.CreateSphere("sphere02", {diameter: size*0.6});
 	sphere02.position = new BABYLON.Vector3(x,y+size*0.3,z-size*1.5) ;
-	sphere02.material = matElement;
+	sphere02.material = mat_marble;
 	
 	var sphere03 = BABYLON.MeshBuilder.CreateSphere("sphere03", {diameter: size*0.2});
 	sphere03.position = new BABYLON.Vector3(x,y+size*0.7,z-size*1.5) ;
-	sphere03.material = matElement;
+	sphere03.material = mat_marble;
 	
 	var sphere11 = BABYLON.MeshBuilder.CreateSphere("sphere11", {diameter: size*0.6});
 	sphere11.position = new BABYLON.Vector3(x+size*1.75,y-size*1.1,z-size*1.5) ;
-	sphere11.material = matElement;
+	sphere11.material = mat_marble;
 	
 	var sphere12 = BABYLON.MeshBuilder.CreateSphere("sphere12", {diameter: size*0.2});
 	sphere12.position = new BABYLON.Vector3(x+size*1.75,y-size*0.7,z-size*1.5) ;
-	sphere12.material = matElement;
+	sphere12.material = mat_marble;
 	
 	var sphere21 = BABYLON.MeshBuilder.CreateSphere("sphere21", {diameter: size*0.6});
 	sphere21.position = new BABYLON.Vector3(x-size*1.75,y-size*1.1,z-size*1.5) ;
-	sphere21.material = matElement;
+	sphere21.material = mat_marble;
 	
 	var sphere22 = BABYLON.MeshBuilder.CreateSphere("sphere22", {diameter: size*0.2});
 	sphere22.position = new BABYLON.Vector3(x-size*1.75,y-size*0.7,z-size*1.5) ;
-	sphere22.material = matElement;
+	sphere22.material = mat_marble;
 }
 
 function createSculpture02(x, y, z, size) {
 
-	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
-	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
-	matElement.diffuseTexture.uScale = 2.0;
-	matElement.diffuseTexture.vScale = 1.0;
-	
-	createSculptureBase(x, y, z, size, matElement);
+	createSculptureBase(x, y, z, size);
 	
 	for (var i = 0; i < 9; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});
 		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
-		box.material = matElement;
+		box.material = mat_marble;
 		var keys = []; 
 		keys.push({
 			frame: 0,
@@ -347,7 +329,7 @@ function createSculpture02(x, y, z, size) {
 	for (var i = 9; i < 19; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});
 		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
-		box.material = matElement;		
+		box.material = mat_marble;
 		var keys = []; 
 		keys.push({
 			frame: 0,

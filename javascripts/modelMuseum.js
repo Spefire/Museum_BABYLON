@@ -120,35 +120,24 @@ function createMuseum(scene){
 }
 
 function createWall(x, y, z, vertical, width, height, interieur) {
-
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: wallTickness});
 	wall.position = new BABYLON.Vector3(x,y,z) ;
 	wall.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("wall_mat");
 	if (interieur) {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg");
+		wall.material = mat_wallint;
 	} else {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
+		wall.material = mat_wall;
 	}
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = 1.0;
-	wall.material = mat;
 	if (vertical) {
 		setRotation(wall,0,90,0);
 	}
 }
 
 function createFence(x, y, z, vertical, width, height) {
-
 	var fence = BABYLON.MeshBuilder.CreatePlane("fence", {width: width, height: height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	fence.position = new BABYLON.Vector3(x,y,z) ;
 	fence.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("fence_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = 1.0;
-	mat.diffuseTexture.hasAlpha = true;
-	fence.material = mat;
+	fence.material = mat_fence;
 	setRotation(fence,0,180,0);
 	if (vertical) {
 		setRotation(fence,0,270,0);
@@ -156,32 +145,21 @@ function createFence(x, y, z, vertical, width, height) {
 }
 
 function createFloor(x, y, z, width, depth) {
-
 	var floor = BABYLON.MeshBuilder.CreateBox("floor", {width: width, height: floorTickness, depth: depth});
 	floor.position = new BABYLON.Vector3(x,y,z) ;
 	floor.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("floor_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/floor.jpg");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = width/textureSize;
-	floor.material = mat;
+	floor.material = mat_floor;
 	return floor;
 }
 
 function createDoor(x, y, z, vertical, width, height, interieur, activated) {
-
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: wallTickness},);
 	wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
-	var mat = new BABYLON.StandardMaterial("wall_mat");
 	if (interieur) {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg");
+		wall.material = mat_wallint;
 	} else {
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
+		wall.material = mat_wall;
 	}
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = 0.2;
-	wall.material = mat;
-	
 	if (vertical) {
 		setRotation(wall,0,90,0);
 	}
@@ -190,12 +168,7 @@ function createDoor(x, y, z, vertical, width, height, interieur, activated) {
 		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: wallTickness/2},);
 		door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 		door.checkCollisions = true;
-		mat = new BABYLON.StandardMaterial("door_mat");
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png");
-		mat.diffuseTexture.uScale = 1.0;
-		mat.diffuseTexture.vScale = 0.8;
-		mat.diffuseTexture.hasAlpha = true;
-		door.material = mat;
+		door.material = mat_fence;
 
 		if (vertical) {
 			setRotation(door,0,90,0);
@@ -224,11 +197,7 @@ function createGlassWall(x, y, z, vertical, width, height, upper) {
 	} else {
 		wall.position = new BABYLON.Vector3(x,y-0.4*height,z) ;
 	}
-	var mat = new BABYLON.StandardMaterial("wall_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = 0.2;
-	wall.material = mat;
+	wall.material = mat_wall;
 	wall.checkCollisions = true;
 
 	var glass = BABYLON.MeshBuilder.CreateBox("glass", {width: width, height: height*0.8, depth: wallTickness});
@@ -237,10 +206,7 @@ function createGlassWall(x, y, z, vertical, width, height, upper) {
 	} else {
 		glass.position = new BABYLON.Vector3(x,y+0.1*height,z) ;
 	}
-	mat = new BABYLON.StandardMaterial("glass_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png");
-	mat.alpha = 0.4;
-	glass.material = mat;
+	glass.material = mat_glass;
 	glass.checkCollisions = true;
 
 	if (vertical) {
@@ -261,12 +227,7 @@ function createStairs(x, y, z, width, height, depth, nb) {
 		var posY = y-i*height/(nb*2)
 		var posZ = z+depth/2-depth/(nb*2)-i*depth/nb
 		stair.position = new BABYLON.Vector3(posX,posY,posZ) ;
-
-		var mat = new BABYLON.StandardMaterial("stairs_mat");
-		mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
-		mat.diffuseTexture.uScale = width/textureSize;
-		mat.diffuseTexture.vScale = width/textureSize;
-		stair.material = mat;
+		stair.material = mat_iron;
 		stairsArray[i] = stair;
 	}
 	var stairs = BABYLON.Mesh.MergeMeshes(stairsArray);
@@ -279,23 +240,14 @@ function createRoof(x, y, z, width, depth) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: floorTickness, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("roof_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/roof.jpg");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = width/textureSize;
-	roof.material = mat;
+	roof.material = mat_roof;
 }
 
 function createGlassRoof(x, y, z, width, depth) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: floorTickness, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("roof_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = width/textureSize;
-	mat.alpha = 0.4;
-	roof.material = mat;
+	roof.material = mat_glass;
 }
 
 function createElevator(x, y, z, width, height, depth) {
@@ -325,10 +277,8 @@ function createElevator(x, y, z, width, height, depth) {
 	var elevatorSupport = BABYLON.MeshBuilder.CreateBox("elevatorSupport", {width: width, height: floorTickness*1.1, depth: depth});
 	elevatorSupport.position = new BABYLON.Vector3(x,y-height/2,z) ;
 	elevatorSupport.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("elevator_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
-	elevator.material = mat;
-	elevatorSupport.material = mat;
+	elevator.material = mat_iron;
+	elevatorSupport.material = mat_iron;
 		
 	var movingUp = function() {
 		////////////////////////
@@ -423,9 +373,7 @@ function createButtonUpElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
 	buttonUp.position = new BABYLON.Vector3(x,y,z) ;
-	var mat = new BABYLON.StandardMaterial("buttonUp_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
-	buttonUp.material = mat;
+	buttonUp.material = mat_iron;
 	if (!call) {
 		setRotation(buttonUp,0,90,0);
 	}
@@ -436,9 +384,7 @@ function createButtonDownElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonDown = BABYLON.MeshBuilder.CreateBox("buttonDown", {width: width, height: height, depth: depth});
 	buttonDown.position = new BABYLON.Vector3(x,y,z) ;
-	var mat = new BABYLON.StandardMaterial("buttonDown_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
-	buttonDown.material = mat;
+	buttonDown.material = mat_iron;
 	if (!call) {
 		setRotation(buttonDown,0,90,0);
 	}
