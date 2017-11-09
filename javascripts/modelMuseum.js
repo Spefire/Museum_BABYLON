@@ -312,8 +312,8 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
 	
 	createRoof(x,y+height*1.5,z,width,floorTickness,depth);
-	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z,0.5,0.4,0.1);
-	var buttonDown = createButtonDownElevator(x+width/2-0.1,y-0.2,z,0.5,0.4,0.1);
+	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.5,0.4,0.1,false);
+	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.5,0.4,0.1,false);
 
 	var elevator = BABYLON.MeshBuilder.CreateBox("elevator", {width: width, height: floorTickness*1.1, depth: depth});
 	elevator.position = new BABYLON.Vector3(x,y-height/2,z) ;
@@ -333,27 +333,18 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 			frame: framesPerSecond*6,
 			value: y+height/2
 		});
-		var keysButtonUp = []; 
-		keysButtonUp.push({
+		var keysButtons = []; 
+		keysButtons.push({
 			frame: 0,
 			value: y+0.2
 		});
-		keysButtonUp.push({
+		keysButtons.push({
 			frame: framesPerSecond*6,
 			value: y+height+0.2
 		});
-		var keysButtonDown = []; 
-		keysButtonDown.push({
-			frame: 0,
-			value: y-0.2
-		});
-		keysButtonDown.push({
-			frame: framesPerSecond*6,
-			value: y+height-0.2
-		});
 		////////////////////////
 		elevatorIsMoving = true;
-		moveAnimations(keysElevator, keysButtonUp, keysButtonDown, true);
+		moveAnimations(keysElevator, keysButtons, true);
 	}
 	
 	var movingDown = function() {
@@ -367,36 +358,27 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 			frame: framesPerSecond*6,
 			value: y-height/2
 		});
-		var keysButtonUp = []; 
-		keysButtonUp.push({
+		var keysButtons = []; 
+		keysButtons.push({
 			frame: 0,
 			value: y+height+0.2
 		});
-		keysButtonUp.push({
+		keysButtons.push({
 			frame: framesPerSecond*6,
 			value: y+0.2
 		});
-		var keysButtonDown = []; 
-		keysButtonDown.push({
-			frame: 0,
-			value: y+height-0.2
-		});
-		keysButtonDown.push({
-			frame: framesPerSecond*6,
-			value: y-0.2
-		});
 		////////////////////////
 		elevatorIsMoving = true;
-		moveAnimations(keysElevator, keysButtonUp, keysButtonDown, false);
+		moveAnimations(keysElevator, keysButtons, false);
 	}
 	
-	var moveAnimations = function(keysElevator, keysButtonUp, keysButtonDown, elevatorWillBeOnMezanine) {
+	var moveAnimations = function(keysElevator, keysButtons, elevatorWillBeOnMezanine) {
 		var animationElevator = new BABYLON.Animation("animationElevator", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 		animationElevator.setKeys(keysElevator);
 		var animationButtonUp = new BABYLON.Animation("animationButtonUp", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-		animationButtonUp.setKeys(keysButtonUp);
+		animationButtonUp.setKeys(keysButtons);
 		var animationButtonDown = new BABYLON.Animation("animationButtonDown", "position.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-		animationButtonDown.setKeys(keysButtonDown);
+		animationButtonDown.setKeys(keysButtons);
 		////////////////////////
 		elevator.animations = [];
 		buttonUp.animations = [];
@@ -425,24 +407,28 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	buttonDown.actionManager.registerAction(actionDown);
 }
 
-function createButtonUpElevator(x, y, z, width, height, depth, yElevator, yHeight) {
+function createButtonUpElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
 	buttonUp.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("buttonUp_mat");
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
 	buttonUp.material = mat;
-	setRotation(buttonUp,0,90,0);
+	if (!call) {
+		setRotation(buttonUp,0,90,0);
+	}
 	return buttonUp;
 }
 
-function createButtonDownElevator(x, y, z, width, height, depth) {
+function createButtonDownElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonDown = BABYLON.MeshBuilder.CreateBox("buttonDown", {width: width, height: height, depth: depth});
 	buttonDown.position = new BABYLON.Vector3(x,y,z) ;
 	var mat = new BABYLON.StandardMaterial("buttonDown_mat");
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/stairs.jpg");
 	buttonDown.material = mat;
-	setRotation(buttonDown,0,90,0);
+	if (!call) {
+		setRotation(buttonDown,0,90,0);
+	}
 	return buttonDown;
 }
