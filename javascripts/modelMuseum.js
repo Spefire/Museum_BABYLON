@@ -299,29 +299,36 @@ function createGlassRoof(x, y, z, width, height, depth) {
 
 function createElevator(x, y, z, width, height, tickness, depth) {
 
-	createWall(x-width/4-0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y,z-depth/2,false,1.0,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.25,y,z-depth/2,false,width/2-0.5,height,tickness,false) ;
+	createWall(x-width/4-0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
+	createDoor(x,y,z-depth/2,false,2,wallHeight,wallTickness,false);
+	createWall(x+width/4+0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
+	
 	createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;
 
-	createWall(x-width/4-0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
-	createDoor(x,y+height,z+depth/2,false,1.0,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.25,y+height,z+depth/2,false,width/2-0.5,height,tickness,false) ;
+	createWall(x-width/4-0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
+	createDoor(x,y+height,z+depth/2,false,2,wallHeight,wallTickness,false);
+	createWall(x+width/4+0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
 
 	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
 	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
 	
 	createRoof(x,y+height*1.5,z,width,floorTickness,depth);
-	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.5,0.4,0.1,false);
-	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.5,0.4,0.1,false);
+	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.4,0.4,0.1,false);
+	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.4,0.4,0.1,false);
+	var buttonCallUp = createButtonUpElevator(x+width/3,y+height+0.2,z+depth/2+0.1,0.4,0.4,0.1,true);
+	var buttonCallDown = createButtonDownElevator(x+width/3,y+0.2,z-depth/2-0.1,0.4,0.4,0.1,true);
 
 	var elevator = BABYLON.MeshBuilder.CreateBox("elevator", {width: width, height: floorTickness*1.1, depth: depth});
 	elevator.position = new BABYLON.Vector3(x,y-height/2,z) ;
 	elevator.checkCollisions = true;
+	var elevatorSupport = BABYLON.MeshBuilder.CreateBox("elevatorSupport", {width: width, height: floorTickness*1.1, depth: depth});
+	elevatorSupport.position = new BABYLON.Vector3(x,y-height/2,z) ;
+	elevatorSupport.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("elevator_mat");
 	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
 	elevator.material = mat;
-	
+	elevatorSupport.material = mat;
+		
 	var movingUp = function() {
 		////////////////////////
 		var keysElevator = []; 
@@ -395,6 +402,8 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	
 	buttonUp.actionManager = new BABYLON.ActionManager(scene);
 	buttonDown.actionManager = new BABYLON.ActionManager(scene);
+	buttonCallUp.actionManager = new BABYLON.ActionManager(scene);
+	buttonCallDown.actionManager = new BABYLON.ActionManager(scene);
 	var conditionsMovingUp = new BABYLON.PredicateCondition(buttonUp.actionManager, function () {
 		return (!elevatorIsMoving && !elevatorIsOnMezanine);
 	});
@@ -405,6 +414,8 @@ function createElevator(x, y, z, width, height, tickness, depth) {
 	var actionDown = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, movingDown, conditionsMovingDown);
 	buttonUp.actionManager.registerAction(actionUp);
 	buttonDown.actionManager.registerAction(actionDown);
+	buttonCallUp.actionManager.registerAction(actionUp);
+	buttonCallDown.actionManager.registerAction(actionDown);
 }
 
 function createButtonUpElevator(x, y, z, width, height, depth, call) {
