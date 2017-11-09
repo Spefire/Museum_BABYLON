@@ -302,6 +302,8 @@ function createElevator(x, y, z, width, height, depth) {
 		});
 		////////////////////////
 		elevatorIsMoving = true;
+		buttonUp.material = mat_buttonactif;
+		buttonCallUp.material = mat_buttonactif;
 		moveAnimations(keysElevator, keysButtons, true);
 	}
 	
@@ -327,6 +329,8 @@ function createElevator(x, y, z, width, height, depth) {
 		});
 		////////////////////////
 		elevatorIsMoving = true;
+		buttonDown.material = mat_buttonactif;
+		buttonCallDown.material = mat_buttonactif;
 		moveAnimations(keysElevator, keysButtons, false);
 	}
 	
@@ -346,7 +350,14 @@ function createElevator(x, y, z, width, height, depth) {
 		buttonUp.animations.push(animationButtonUp);
 		buttonDown.animations.push(animationButtonDown);
 		////////////////////////
-		scene.beginAnimation(elevator, 0, framesPerSecond*6, false, 1.0, function() { elevatorIsMoving=false; elevatorIsOnMezanine=elevatorWillBeOnMezanine; });
+		scene.beginAnimation(elevator, 0, framesPerSecond*6, false, 1.0, function() {
+			elevatorIsMoving=false;
+			buttonUp.material = mat_buttoninactif;
+			buttonDown.material = mat_buttoninactif;
+			buttonCallUp.material = mat_buttoninactif;
+			buttonCallDown.material = mat_buttoninactif;
+			elevatorIsOnMezanine=elevatorWillBeOnMezanine;
+		});
 		scene.beginAnimation(buttonUp, 0, framesPerSecond*6, false);
 		scene.beginAnimation(buttonDown, 0, framesPerSecond*6, false);
 	}
