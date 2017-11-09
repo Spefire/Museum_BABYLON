@@ -4,6 +4,8 @@
 //   File : modelElements.js    //
 // ---------------------------- //
 
+var nextToPainting = false;
+
 function createElementsMuseum(scene){
 	
 	var depthRect = wallTickness/4;
@@ -16,7 +18,7 @@ function createElementsMuseum(scene){
 
 	//Sculptures
 	createSculpture01(4,offset,0,1) ;
-	createSculpture02(-4,offset,0,1,scene) ;
+	createSculpture02(-4,offset,0,1) ;
 	//Panneaux indicatoires
 	createPanel(0,offset+wallHeight,-15.1,rotation0,widthRect*2.5,wallHeight*0.4,depthRect,"main") ;
 	createPanel(-8,offset+wallHeight*0.4,-0.1,rotation0,widthRect*0.8,wallHeight*0.2,depthRect,"eric") ;
@@ -100,6 +102,8 @@ function createRectPainting(x, y, z, rotation, width, height, depth, name, numPa
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/tab_"+name+".jpg");
 	indic.material = mat;
 	setRotation(indic,0,rotation,0);
+	
+	definePaintingActions(name, numPainting, painting);
 }
 
 function createSquarePainting(x, y, z, rotation, height, depth, name, numPainting) {
@@ -117,6 +121,89 @@ function createSquarePainting(x, y, z, rotation, height, depth, name, numPaintin
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/tab_"+name+".jpg");
 	indic.material = mat;
 	setRotation(indic,0,rotation,0);
+	
+	definePaintingActions(name, numPainting, painting);
+}
+
+function definePaintingActions(name, numPainting, painting) {
+	
+	//Liste des conditions pour l'affichage du nom, et de la description
+	var conditionsNameBefore = new BABYLON.PredicateCondition(scene.actionManager, function () {
+		var dist = getDistance(camera.position, painting.position);
+		if (!nextToPainting && (dist <= 2.5)) {
+			return true;
+		}
+		return false;
+	});
+	
+	var conditionsNameAfter = new BABYLON.PredicateCondition(scene.actionManager, function () {
+		var dist = getDistance(camera.position, painting.position)
+		return (dist > 2.5);
+	});
+	
+	//Liste des fonctions pour l'affichage du nom, et de la description
+	var displayName = function() {
+		var artistLabel;
+		switch(name) {
+		case "axelle":
+			artistLabel = "Axelle BOSLER";
+			break;
+		case "eric":
+			artistLabel = "Eric LE PAPE";
+			break;
+		case "robert":
+			artistLabel = "JM ROBERT";
+			break;
+		case "francoise":
+			artistLabel = "Françoise NIELLY";
+			break;
+		}
+		nextToPainting=true;
+		document.getElementById("infoPanel").style.display = "block";
+		document.getElementById("artistLabel").innerHTML = artistLabel;
+		document.getElementById("paintingLabel").innerHTML = "Tableau n°"+numPainting;
+	};
+	
+	var hideName = function() {
+		nextToPainting=false;
+		document.getElementById("infoPanel").style.display = "none";
+		document.getElementById("artistLabel").innerHTML = "";
+		document.getElementById("paintingLabel").innerHTML = "";
+	};	
+	
+	var displayDescription = function() {
+		var descriptionLabel;
+		switch(name) {
+		case "axelle":
+			descriptionLabel = "Axelle BOSLER";
+			break;
+		case "eric":
+			descriptionLabel = "Eric LE PAPE";
+			break;
+		case "robert":
+			descriptionLabel = "JM ROBERT";
+			break;
+		case "nielly":
+			descriptionLabel = "Françoise NIELLY";
+			break;
+		}
+		document.getElementById("descriptionLabel").innerHTML = "Ceci est la description du tableau de "+descriptionLabel+" que vous voyez actuellement.";
+	};
+	
+	var hideDescription = function() {
+		document.getElementById("descriptionLabel").innerHTML = "";
+	};
+		
+	//Application pour l'affichage du nom, et de la description
+	var actionNameBefore = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, displayName, conditionsNameBefore);
+	var actionNameAfter = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, hideName, conditionsNameAfter);
+	scene.actionManager.registerAction(actionNameBefore).then(actionNameAfter);
+	
+	var actionDescriptionBefore = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, displayDescription);
+	var actionDescriptionAfter = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, hideDescription);
+	painting.actionManager = new BABYLON.ActionManager(scene);
+	painting.actionManager.registerAction(actionDescriptionBefore);
+	painting.actionManager.registerAction(actionDescriptionAfter);
 }
 
 function createBench(x, y, z, width, height, depth, sens) {
@@ -220,7 +307,7 @@ function createSculpture01(x, y, z, size) {
 	sphere22.material = matElement;
 }
 
-function createSculpture02(x, y, z, size, scene) {
+function createSculpture02(x, y, z, size) {
 
 	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
 	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
