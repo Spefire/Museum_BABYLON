@@ -8,6 +8,8 @@ var textureSize = 2.5;
 
 var mat_base;
 var mat_iron;
+var mat_buttonactif;
+var mat_buttoninactif;
 var mat_bigbase;
 var mat_marble;
 var mat_wall;
@@ -24,6 +26,12 @@ function createMaterials(scene) {
 
 	mat_iron = new BABYLON.StandardMaterial("mat_iron");
 	mat_iron.diffuseTexture = new BABYLON.Texture("assets/batiment/iron.jpg");
+	
+	mat_buttonactif = new BABYLON.StandardMaterial("mat_buttonactif");
+	mat_buttonactif.diffuseTexture = new BABYLON.Texture("assets/batiment/button_actif.jpg");
+	
+	mat_buttoninactif = new BABYLON.StandardMaterial("mat_buttoninactif");
+	mat_buttoninactif.diffuseTexture = new BABYLON.Texture("assets/batiment/button_inactif.jpg");
 
 	mat_bigbase = new BABYLON.StandardMaterial("mat_bigbase");
 	mat_bigbase.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");

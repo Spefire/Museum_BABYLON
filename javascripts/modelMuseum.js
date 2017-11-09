@@ -168,7 +168,7 @@ function createDoor(x, y, z, vertical, width, height, interieur, activated) {
 		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: wallTickness/2},);
 		door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 		door.checkCollisions = true;
-		door.material = getMatFence(width,0.8);
+		door.material = getMatFence(textureSize,0.8);
 
 		if (vertical) {
 			setRotation(door,0,90,0);
@@ -266,8 +266,8 @@ function createElevator(x, y, z, width, height, depth) {
 	createWall(x+width/2,y+height,z,true,width,height,false) ;
 	
 	createRoof(x,y+height*1.5,z,width,depth);
-	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.4,0.4,0.1,false);
-	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.4,0.4,0.1,false);
+	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z+depth/4,0.4,0.4,0.1,false);
+	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z-depth/4,0.4,0.4,0.1,false);
 	var buttonCallUp = createButtonUpElevator(x+width/3,y+height+0.2,z+depth/2+0.1,0.4,0.4,0.1,true);
 	var buttonCallDown = createButtonDownElevator(x+width/3,y+0.2,z-depth/2-0.1,0.4,0.4,0.1,true);
 
@@ -373,9 +373,11 @@ function createButtonUpElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonUp = BABYLON.MeshBuilder.CreateBox("buttonUp", {width: width, height: height, depth: depth});
 	buttonUp.position = new BABYLON.Vector3(x,y,z) ;
-	buttonUp.material = mat_iron;
+	buttonUp.material = mat_buttoninactif;
 	if (!call) {
 		setRotation(buttonUp,0,90,0);
+	} else {
+		setRotation(buttonUp,0,180,0);
 	}
 	return buttonUp;
 }
@@ -384,9 +386,11 @@ function createButtonDownElevator(x, y, z, width, height, depth, call) {
 	
 	var buttonDown = BABYLON.MeshBuilder.CreateBox("buttonDown", {width: width, height: height, depth: depth});
 	buttonDown.position = new BABYLON.Vector3(x,y,z) ;
-	buttonDown.material = mat_iron;
+	buttonDown.material = mat_buttoninactif;
 	if (!call) {
-		setRotation(buttonDown,0,90,0);
+		setRotation(buttonDown,0,90,180);
+	} else {
+		setRotation(buttonDown,0,0,180);
 	}
 	return buttonDown;
 }
