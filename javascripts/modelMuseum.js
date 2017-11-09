@@ -195,16 +195,15 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, activate
 		door.material = mat;
 
 		if (vertical) {
-			setRotation(wall,0,90,0);
 			setRotation(door,0,90,0);
 		}
 		
 		var conditionsAvant = new BABYLON.PredicateCondition(scene.actionManager, function () {
-			var dist = getDistance(camera.position, door.position)
+			var dist = getDistance(camera.position, door.position);
 			return (dist <= 5);
 		});
 		var conditionsApres = new BABYLON.PredicateCondition(scene.actionManager, function () {
-			var dist = getDistance(camera.position, door.position)
+			var dist = getDistance(camera.position, door.position);
 			return (dist > 5);
 		});
 		
