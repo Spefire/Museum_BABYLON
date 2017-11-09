@@ -124,9 +124,9 @@ function createWall(x, y, z, vertical, width, height, interieur) {
 	wall.position = new BABYLON.Vector3(x,y,z) ;
 	wall.checkCollisions = true;
 	if (interieur) {
-		wall.material = mat_wallint;
+		wall.material = getMatWallInt(width,1.0);
 	} else {
-		wall.material = mat_wall;
+		wall.material = getMatWall(width,1.0);
 	}
 	if (vertical) {
 		setRotation(wall,0,90,0);
@@ -137,7 +137,7 @@ function createFence(x, y, z, vertical, width, height) {
 	var fence = BABYLON.MeshBuilder.CreatePlane("fence", {width: width, height: height, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	fence.position = new BABYLON.Vector3(x,y,z) ;
 	fence.checkCollisions = true;
-	fence.material = mat_fence;
+	fence.material = getMatFence(width,1.0);
 	setRotation(fence,0,180,0);
 	if (vertical) {
 		setRotation(fence,0,270,0);
@@ -148,7 +148,7 @@ function createFloor(x, y, z, width, depth) {
 	var floor = BABYLON.MeshBuilder.CreateBox("floor", {width: width, height: floorTickness, depth: depth});
 	floor.position = new BABYLON.Vector3(x,y,z) ;
 	floor.checkCollisions = true;
-	floor.material = mat_floor;
+	floor.material = getMatFloor(width);
 	return floor;
 }
 
@@ -156,9 +156,9 @@ function createDoor(x, y, z, vertical, width, height, interieur, activated) {
 	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: wallTickness},);
 	wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
 	if (interieur) {
-		wall.material = mat_wallint;
+		wall.material = getMatWallInt(width,0.2);
 	} else {
-		wall.material = mat_wall;
+		wall.material = getMatWall(width,0.2);
 	}
 	if (vertical) {
 		setRotation(wall,0,90,0);
@@ -168,7 +168,7 @@ function createDoor(x, y, z, vertical, width, height, interieur, activated) {
 		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: wallTickness/2},);
 		door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 		door.checkCollisions = true;
-		door.material = mat_fence;
+		door.material = getMatFence(width,0.8);
 
 		if (vertical) {
 			setRotation(door,0,90,0);
@@ -197,7 +197,7 @@ function createGlassWall(x, y, z, vertical, width, height, upper) {
 	} else {
 		wall.position = new BABYLON.Vector3(x,y-0.4*height,z) ;
 	}
-	wall.material = mat_wall;
+	wall.material = getMatWall(width,0.2);
 	wall.checkCollisions = true;
 
 	var glass = BABYLON.MeshBuilder.CreateBox("glass", {width: width, height: height*0.8, depth: wallTickness});
@@ -240,7 +240,7 @@ function createRoof(x, y, z, width, depth) {
 	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: floorTickness, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
-	roof.material = mat_roof;
+	roof.material = getMatRoof(width);
 }
 
 function createGlassRoof(x, y, z, width, depth) {

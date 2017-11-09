@@ -247,7 +247,7 @@ function createSculptureBase(x, y, z, size){
 	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
 	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
 	structure.checkCollisions = true;
-	structure.material = mat_marble;
+	structure.material = mat_base;
 	
 	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
 	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;

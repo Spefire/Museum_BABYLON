@@ -33,38 +33,56 @@ function createMaterials(scene) {
 	mat_marble.diffuseTexture.uScale = 2.0;
 	mat_marble.diffuseTexture.vScale = 1.0;
 
-	mat_wall = new BABYLON.StandardMaterial("mat_wall");
-	mat_wall.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
-	mat_wall.diffuseTexture.uScale = 30/textureSize;
-	mat_wall.diffuseTexture.vScale = 1.0;
-
-	mat_wallint = new BABYLON.StandardMaterial("mat_wallint");
-	mat_wallint.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg");
-	mat_wallint.diffuseTexture.uScale = 30/textureSize;
-	mat_wallint.diffuseTexture.vScale = 1.0;
-
-	mat_fence = new BABYLON.StandardMaterial("mat_fence");
-	mat_fence.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png");
-	mat_fence.diffuseTexture.uScale = 30/textureSize;
-	mat_fence.diffuseTexture.vScale = 1.0;
-	mat_fence.diffuseTexture.hasAlpha = true;
-
-	mat_floor = new BABYLON.StandardMaterial("mat_floor");
-	mat_floor.diffuseTexture = new BABYLON.Texture("assets/batiment/floor.jpg");
-	mat_floor.diffuseTexture.uScale = 30/textureSize;
-	mat_floor.diffuseTexture.vScale = 30/textureSize;
-
 	mat_glass = new BABYLON.StandardMaterial("mat_glass");
 	mat_glass.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png");
 	mat_glass.alpha = 0.4;
+}
 
+function getMatWall(width, speHeight) {
+	mat_wall = new BABYLON.StandardMaterial("mat_wall");
+	mat_wall.diffuseTexture = new BABYLON.Texture("assets/batiment/wall.jpg");
+	mat_wall.diffuseTexture.uScale = width/textureSize;
+	mat_wall.diffuseTexture.vScale = speHeight;
+	return mat_wall;
+}
+
+function getMatWallInt(width, speHeight) {
+	mat_wallint = new BABYLON.StandardMaterial("mat_wallint");
+	mat_wallint.diffuseTexture = new BABYLON.Texture("assets/batiment/wall_int.jpg");
+	mat_wallint.diffuseTexture.uScale = width/textureSize;
+	mat_wallint.diffuseTexture.vScale = speHeight;
+	return mat_wallint;
+}
+
+function getMatFence(width, speHeight) {
+	mat_fence = new BABYLON.StandardMaterial("mat_fence");
+	mat_fence.diffuseTexture = new BABYLON.Texture("assets/batiment/fence.png");
+	mat_fence.diffuseTexture.uScale = width/textureSize;
+	mat_fence.diffuseTexture.vScale = speHeight;
+	mat_fence.diffuseTexture.hasAlpha = true;
+	return mat_fence;
+}
+
+function getMatFloor(width) {
+	mat_floor = new BABYLON.StandardMaterial("mat_floor");
+	mat_floor.diffuseTexture = new BABYLON.Texture("assets/batiment/floor.jpg");
+	mat_floor.diffuseTexture.uScale = width/textureSize;
+	mat_floor.diffuseTexture.vScale = width/textureSize;
+	return mat_floor;
+}
+
+function getMatRoof(width) {
 	mat_roof = new BABYLON.StandardMaterial("mat_roof");
 	mat_roof.diffuseTexture = new BABYLON.Texture("assets/batiment/roof.jpg");
-	mat_roof.diffuseTexture.uScale = 30/textureSize;
-	mat_roof.diffuseTexture.vScale = 30/textureSize;
+	mat_roof.diffuseTexture.uScale = width/textureSize;
+	mat_roof.diffuseTexture.vScale = width/textureSize;
+	return mat_roof;
+}
 
+function getMatGround(width) {
 	mat_ground = new BABYLON.StandardMaterial("mat_ground");
 	mat_ground.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg");
-	mat_ground.diffuseTexture.uScale = 30/textureSize;
-	mat_ground.diffuseTexture.vScale = 30/textureSize;
+	mat_ground.diffuseTexture.uScale = width/textureSize;
+	mat_ground.diffuseTexture.vScale = width/textureSize;
+	return mat_ground;
 }
