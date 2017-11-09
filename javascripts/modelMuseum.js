@@ -152,7 +152,7 @@ function createFence(x, y, z, vertical, width, height) {
 	fence.material = mat;
 	setRotation(fence,0,180,0);
 	if (vertical) {
-		setRotation(fence,0,90,0);
+		setRotation(fence,0,270,0);
 	}
 }
 
@@ -271,8 +271,8 @@ function createStairs(x, y, z, width, height, depth, nb) {
 		stairsArray[i] = stair;
 	}
 	var stairs = BABYLON.Mesh.MergeMeshes(stairsArray);
-	//createWall(x, y, z, true, width, height, interieur);
-	//createFence(x, y, z, true, width, height);
+	createWall(x-width/2, y, z+0.5, true, width, height, true);
+	createFence(x-width/2, y+0.75*height, z+0.5, true, width, height/2);
 	stairs.checkCollisions = true;
 }
 
