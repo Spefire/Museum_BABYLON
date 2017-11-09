@@ -4,8 +4,8 @@
 //   File : modelMuseum.js      //
 // ---------------------------- //
 
-var wallTickness = 0.2;
 var wallHeight = 3.0;
+var wallTickness = 0.2;
 var floorTickness = 0.1;
 var textureSize = 2.5;
 var rotation0 = 0.0;
@@ -26,93 +26,93 @@ function createMuseum(scene){
 	var offset = wallHeight*0.0;
 
 	//Sol
-	createFloor(0,offset-wallHeight/2,0,30,floorTickness,30);
+	createFloor(0,offset-wallHeight/2,0,30,30);
 	//Mur ouest
-	createWall(15,offset,0,true,30,wallHeight,wallTickness,false) ;
+	createWall(15,offset,0,true,30,wallHeight,false) ;
 	//Mur est
-	createWall(-15,offset,4,true,22,wallHeight,wallTickness,false) ;
-	createGlassWall(-15,offset,-9,true,4,wallHeight,wallTickness,false) ;
-	createWall(-15,offset,-13,true,4,wallHeight,wallTickness,false) ;
+	createWall(-15,offset,4,true,22,wallHeight,false) ;
+	createGlassWall(-15,offset,-9,true,4,wallHeight,false) ;
+	createWall(-15,offset,-13,true,4,wallHeight,false) ;
 	//Mur nord
-	createWall(0,offset,15,false,30,wallHeight,wallTickness,false) ;
+	createWall(0,offset,15,false,30,wallHeight,false) ;
 	//Mur sud
-	createWall(-13,offset,-15,false,4,wallHeight,wallTickness,false) ;
-	createGlassWall(-9,offset,-15,false,4,wallHeight,wallTickness,false) ;
-	createWall(-6,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createGlassWall(-4,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createWall(-2,offset,-15,false,2,wallHeight,wallTickness,false) ;	
-	createDoor(0.5,offset,-15,false,1,wallHeight,wallTickness,false);
-	createDoor(-0.5,offset,-15,false,1,wallHeight,wallTickness,false);
-	createWall(2,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createGlassWall(4,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createWall(6,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createGlassWall(9,offset,-15,false,4,wallHeight,wallTickness,false) ;
-	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createWall(-13,offset,-15,false,4,wallHeight,false) ;
+	createGlassWall(-9,offset,-15,false,4,wallHeight,false) ;
+	createWall(-6,offset,-15,false,2,wallHeight,false) ;
+	createGlassWall(-4,offset,-15,false,2,wallHeight,false) ;
+	createWall(-2,offset,-15,false,2,wallHeight,false) ;	
+	createDoor(0.5,offset,-15,false,1,wallHeight,false);
+	createDoor(-0.5,offset,-15,false,1,wallHeight,false);
+	createWall(2,offset,-15,false,2,wallHeight,false) ;
+	createGlassWall(4,offset,-15,false,2,wallHeight,false) ;
+	createWall(6,offset,-15,false,2,wallHeight,false) ;
+	createGlassWall(9,offset,-15,false,4,wallHeight,false) ;
+	createWall(13,offset,-15,false,4,wallHeight,false) ;
 	//Murs interieurs sur Ox
-	createWall(-12,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(-8,offset,0,false,2,wallHeight,wallTickness,true,true);
-	createWall(-4,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(0,offset,0,false,2,wallHeight,wallTickness,true,true);
-	createWall(4,offset,0,false,6,wallHeight,wallTickness,true) ;
-	createDoor(8,offset,0,false,2,wallHeight,wallTickness,true,true);
-	createWall(12,offset,0,false,6,wallHeight,wallTickness,true) ;
+	createWall(-12,offset,0,false,6,wallHeight,true) ;
+	createDoor(-8,offset,0,false,2,wallHeight,true,true);
+	createWall(-4,offset,0,false,6,wallHeight,true) ;
+	createDoor(0,offset,0,false,2,wallHeight,true,true);
+	createWall(4,offset,0,false,6,wallHeight,true) ;
+	createDoor(8,offset,0,false,2,wallHeight,true,true);
+	createWall(12,offset,0,false,6,wallHeight,true) ;
 	//Murs interieurs sur Oz
-	createWall(-5,offset,14,true,2,wallHeight,wallTickness,true) ;
-	createDoor(-5,offset,12.5,true,1,wallHeight,wallTickness,true);
-	createWall(-5,offset,6,true,12,wallHeight,wallTickness,true) ;
-	createWall(5,offset,14,true,2,wallHeight,wallTickness,true) ;
-	createDoor(5,offset,12.5,true,1,wallHeight,wallTickness,true);
-	createWall(5,offset,6,true,12,wallHeight,wallTickness,true) ;
+	createWall(-5,offset,14,true,2,wallHeight,true) ;
+	createDoor(-5,offset,12.5,true,1,wallHeight,true);
+	createWall(-5,offset,6,true,12,wallHeight,true) ;
+	createWall(5,offset,14,true,2,wallHeight,true) ;
+	createDoor(5,offset,12.5,true,1,wallHeight,true);
+	createWall(5,offset,6,true,12,wallHeight,true) ;
 	//Escaliers et ascensceur
 	createStairs(13,offset,-2.5,4,wallHeight,5,15) ;
-	createElevator(-13,offset,-2,4,wallHeight,wallTickness, 4, scene);
+	createElevator(-13,offset,-2,4,wallHeight, 4, scene);
 
 	//----- Mezanine -----
 	offset = wallHeight*1.0;
 	
 	//Sol
-	createFloor(0,offset-wallHeight/2,7.5,30,floorTickness,15);
+	createFloor(0,offset-wallHeight/2,7.5,30,15);
 	//Barriere
 	createFence(0,offset-wallHeight/4,0,false,22,wallHeight/2);
 	//Mur est
-	createWall(15,offset,0,true,30,wallHeight,wallTickness,false) ;
+	createWall(15,offset,0,true,30,wallHeight,false) ;
 	//Mur ouest
-	createWall(-15,offset,4,true,22,wallHeight,wallTickness,false) ;
-	createGlassWall(-15,offset,-9,true,4,wallHeight,wallTickness,true) ;
-	createWall(-15,offset,-13,true,4,wallHeight,wallTickness,false) ;
+	createWall(-15,offset,4,true,22,wallHeight,false) ;
+	createGlassWall(-15,offset,-9,true,4,wallHeight,true) ;
+	createWall(-15,offset,-13,true,4,wallHeight,false) ;
 	//Mur nord
-	createWall(0,offset,15,false,30,wallHeight,wallTickness,false) ;
+	createWall(0,offset,15,false,30,wallHeight,false) ;
 	//Mur sud
-	createWall(-13,offset,-15,false,4,wallHeight,wallTickness,false) ;
-	createGlassWall(-9,offset,-15,false,4,wallHeight,wallTickness,true) ;
-	createWall(-6,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createGlassWall(-4,offset,-15,false,2,wallHeight,wallTickness,true) ;
-	createWall(0,offset,-15,false,6,wallHeight,wallTickness,false) ;
-	createGlassWall(4,offset,-15,false,2,wallHeight,wallTickness,true) ;
-	createWall(6,offset,-15,false,2,wallHeight,wallTickness,false) ;
-	createGlassWall(9,offset,-15,false,4,wallHeight,wallTickness,true) ;
-	createWall(13,offset,-15,false,4,wallHeight,wallTickness,false) ;
+	createWall(-13,offset,-15,false,4,wallHeight,false) ;
+	createGlassWall(-9,offset,-15,false,4,wallHeight,true) ;
+	createWall(-6,offset,-15,false,2,wallHeight,false) ;
+	createGlassWall(-4,offset,-15,false,2,wallHeight,true) ;
+	createWall(0,offset,-15,false,6,wallHeight,false) ;
+	createGlassWall(4,offset,-15,false,2,wallHeight,true) ;
+	createWall(6,offset,-15,false,2,wallHeight,false) ;
+	createGlassWall(9,offset,-15,false,4,wallHeight,true) ;
+	createWall(13,offset,-15,false,4,wallHeight,false) ;
 
 	//----- Toit -----
 	offset = wallHeight*1.75;
 	//Mur est
-	createWall(15,offset,0,true,30,wallHeight/2,wallTickness,false) ;
+	createWall(15,offset,0,true,30,wallHeight/2,false) ;
 	//Mur ouest
-	createWall(-15,offset,0,true,30,wallHeight/2,wallTickness,false) ;
+	createWall(-15,offset,0,true,30,wallHeight/2,false) ;
 	//Mur nord
-	createWall(0,offset,15,false,30,wallHeight/2,wallTickness,false) ;
+	createWall(0,offset,15,false,30,wallHeight/2,false) ;
 	//Mur sud
-	createWall(0,offset,-15,false,30,wallHeight/2,wallTickness,false) ;
+	createWall(0,offset,-15,false,30,wallHeight/2,false) ;
 	
 	offset = wallHeight*2.5;
 	//Structure
-	createRoof(0,offset-wallHeight*0.5,-6,30,floorTickness,18);
-	createRoof(-12,offset-wallHeight*0.5,7,6,floorTickness,8);
-	createGlassRoof(-5.5,offset-wallHeight*0.5,7,7,floorTickness,8);
-	createRoof(0,offset-wallHeight*0.5,7,4,floorTickness,8);
-	createGlassRoof(5.5,offset-wallHeight*0.5,7,7,floorTickness,8);
-	createRoof(12,offset-wallHeight*0.5,7,6,floorTickness,8);
-	createRoof(0,offset-wallHeight*0.5,13,30,floorTickness,4);
+	createRoof(0,offset-wallHeight*0.5,-6,30,18);
+	createRoof(-12,offset-wallHeight*0.5,7,6,8);
+	createGlassRoof(-5.5,offset-wallHeight*0.5,7,7,8);
+	createRoof(0,offset-wallHeight*0.5,7,4,8);
+	createGlassRoof(5.5,offset-wallHeight*0.5,7,7,8);
+	createRoof(12,offset-wallHeight*0.5,7,6,8);
+	createRoof(0,offset-wallHeight*0.5,13,30,4);
 	
 	//----- Elements du musée -----
 	createElementsMuseum(scene);
@@ -120,9 +120,9 @@ function createMuseum(scene){
 	return scene;
 }
 
-function createWall(x, y, z, vertical, width, height, depth, interieur) {
+function createWall(x, y, z, vertical, width, height, interieur) {
 
-	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: depth});
+	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height, depth: wallTickness});
 	wall.position = new BABYLON.Vector3(x,y,z) ;
 	wall.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("wall_mat");
@@ -152,13 +152,13 @@ function createFence(x, y, z, vertical, width, height) {
 	fence.material = mat;
 	setRotation(fence,0,180,0);
 	if (vertical) {
-		setRotation(fence,0,270,0);
+		setRotation(fence,0,90,0);
 	}
 }
 
-function createFloor(x, y, z, width, height, depth) {
+function createFloor(x, y, z, width, depth) {
 
-	var floor = BABYLON.MeshBuilder.CreateBox("floor", {width: width, height: height, depth: depth});
+	var floor = BABYLON.MeshBuilder.CreateBox("floor", {width: width, height: floorTickness, depth: depth});
 	floor.position = new BABYLON.Vector3(x,y,z) ;
 	floor.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("floor_mat");
@@ -169,9 +169,9 @@ function createFloor(x, y, z, width, height, depth) {
 	return floor;
 }
 
-function createDoor(x, y, z, vertical, width, height, depth, interieur, activated) {
+function createDoor(x, y, z, vertical, width, height, interieur, activated) {
 
-	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: depth},);
+	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: wallTickness},);
 	wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
 	var mat = new BABYLON.StandardMaterial("wall_mat");
 	if (interieur) {
@@ -188,7 +188,7 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, activate
 	}
 	
 	if (activated) {
-		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: depth/2},);
+		var door = BABYLON.MeshBuilder.CreateBox("door", {width: width, height: height*0.8, depth: wallTickness/2},);
 		door.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 		door.checkCollisions = true;
 		mat = new BABYLON.StandardMaterial("door_mat");
@@ -217,9 +217,9 @@ function createDoor(x, y, z, vertical, width, height, depth, interieur, activate
 	}
 }
 
-function createGlassWall(x, y, z, vertical, width, height, depth, upper) {
+function createGlassWall(x, y, z, vertical, width, height, upper) {
 
-	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: depth});
+	var wall = BABYLON.MeshBuilder.CreateBox("wall", {width: width, height: height*0.2, depth: wallTickness});
 	if (upper) {
 		wall.position = new BABYLON.Vector3(x,y+0.4*height,z) ;
 	} else {
@@ -232,7 +232,7 @@ function createGlassWall(x, y, z, vertical, width, height, depth, upper) {
 	wall.material = mat;
 	wall.checkCollisions = true;
 
-	var glass = BABYLON.MeshBuilder.CreateBox("glass", {width: width, height: height*0.8, depth: depth});
+	var glass = BABYLON.MeshBuilder.CreateBox("glass", {width: width, height: height*0.8, depth: wallTickness});
 	if (upper) {
 		glass.position = new BABYLON.Vector3(x,y-0.1*height,z) ;
 	} else {
@@ -271,11 +271,13 @@ function createStairs(x, y, z, width, height, depth, nb) {
 		stairsArray[i] = stair;
 	}
 	var stairs = BABYLON.Mesh.MergeMeshes(stairsArray);
+	//createWall(x, y, z, true, width, height, interieur);
+	//createFence(x, y, z, true, width, height);
 	stairs.checkCollisions = true;
 }
 
-function createRoof(x, y, z, width, height, depth) {
-	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth});
+function createRoof(x, y, z, width, depth) {
+	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: floorTickness, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("roof_mat");
@@ -285,8 +287,8 @@ function createRoof(x, y, z, width, height, depth) {
 	roof.material = mat;
 }
 
-function createGlassRoof(x, y, z, width, height, depth) {
-	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: height, depth: depth});
+function createGlassRoof(x, y, z, width, depth) {
+	var roof = BABYLON.MeshBuilder.CreateBox("roof", {width: width, height: floorTickness, depth: depth});
 	roof.position = new BABYLON.Vector3(x,y,z) ;
 	roof.checkCollisions = true;
 	var mat = new BABYLON.StandardMaterial("roof_mat");
@@ -297,22 +299,22 @@ function createGlassRoof(x, y, z, width, height, depth) {
 	roof.material = mat;
 }
 
-function createElevator(x, y, z, width, height, tickness, depth) {
+function createElevator(x, y, z, width, height, depth) {
 
-	createWall(x-width/4-0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
-	createDoor(x,y,z-depth/2,false,2,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.5,y,z-depth/2,false,width/2-1,height,tickness,false) ;
+	createWall(x-width/4-0.5,y,z-depth/2,false,width/2-1,height,false) ;
+	createDoor(x,y,z-depth/2,false,2,wallHeight,false);
+	createWall(x+width/4+0.5,y,z-depth/2,false,width/2-1,height,false) ;
 	
-	createWall(x,y+height,z-depth/2,false,width,height,tickness,false) ;
+	createWall(x,y+height,z-depth/2,false,width,height,false) ;
 
-	createWall(x-width/4-0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
-	createDoor(x,y+height,z+depth/2,false,2,wallHeight,wallTickness,false);
-	createWall(x+width/4+0.5,y+height,z+depth/2,false,width/2-1,height,tickness,false) ;
+	createWall(x-width/4-0.5,y+height,z+depth/2,false,width/2-1,height,false) ;
+	createDoor(x,y+height,z+depth/2,false,2,wallHeight,false);
+	createWall(x+width/4+0.5,y+height,z+depth/2,false,width/2-1,height,false) ;
 
-	createWall(x+width/2,y,z,true,width,height,tickness,false) ;
-	createWall(x+width/2,y+height,z,true,width,height,tickness,false) ;
+	createWall(x+width/2,y,z,true,width,height,false) ;
+	createWall(x+width/2,y+height,z,true,width,height,false) ;
 	
-	createRoof(x,y+height*1.5,z,width,floorTickness,depth);
+	createRoof(x,y+height*1.5,z,width,depth);
 	var buttonUp = createButtonUpElevator(x+width/2-0.1,y+0.2,z-depth/4,0.4,0.4,0.1,false);
 	var buttonDown = createButtonDownElevator(x+width/2-0.1,y+0.2,z+depth/4,0.4,0.4,0.1,false);
 	var buttonCallUp = createButtonUpElevator(x+width/3,y+height+0.2,z+depth/2+0.1,0.4,0.4,0.1,true);
