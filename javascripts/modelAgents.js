@@ -12,49 +12,53 @@ var k_sep = 1;
 var k_ali = 1;
 var k_coh = 1;
 var agents = [];
+var agentConductor;
 
-class Agent {
-	constructor(mesh) {
-		this.mesh = mesh;
-		this.vpos = new BABYLON.Vector3(0,0,0) ;
-		this.vrot = new BABYLON.Vector3(0,0,0) ;
-	}
+var Agent = function (m) {
 	
-	calculFsep(){
+	this.mesh = m;
+	this.vpos = new BABYLON.Vector3(0,0,0) ;
+	this.vrot = new BABYLON.Vector3(0,0,0) ;
+	
+	this.calculFsep = function(mesh){
 		var Fsep = new BABYLON.Vector3(0,0,0) ;
-		var environ = agents;
-		environ.forEach(function(element) {
-			var AiA = this.mesh.position.subtract(element.position);
-			var result = AiA.divide(BABYLON.Vector3.DistanceSquared(this.mesh.position, element.position));
-			Fsep.add(result);
-		});
+		var environ = [agentConductor];
+		environ.forEach(function(agent) {
+			var AiA = mesh.position.subtract(agent.mesh.position);
+			var AiAnorm = BABYLON.Vector3.DistanceSquared(mesh.position, agent.mesh.position);
+			var result = AiA.divide(new BABYLON.Vector3(AiAnorm,AiAnorm,AiAnorm));
+			Fsep = Fsep.add(result);
+		});		
 		return Fsep;
-	}
+	};
 	
-	calculFali(){
+	this.calculFali = function(){
 		return new BABYLON.Vector3(0,0,0) ;
-	}
+	};
 	
-	calculFcoh(){
+	this.calculFcoh = function(){
 		return new BABYLON.Vector3(0,0,0) ;
-	}
+	};
 	
-	updateFs(){
-		var fspos = k_sep*calculFsep() + k_coh*calculFcoh();
-		var fsrot = k_ali*calculFali();
-		move(fspos, fsrot);
-	}
-	
-	move(fspos, fsrot){
+	this.updateFs = function(){
+		var fspos = this.calculFsep(this.mesh);// + k_coh*this.calculFcoh;
+		//var fsrot = this.calculFali(this.mesh);
+		
 		this.mesh.position.x += fspos.x;
 		this.mesh.position.y += fspos.y;
 		this.mesh.position.z += fspos.z;
-		this.mesh.rotation.x += fsrot.x;
+		/*this.mesh.rotation.x += fsrot.x;
 		this.mesh.rotation.y += fsrot.y;
 		this.mesh.rotation.z += fsrot.z;
 		this.vpos=fspos;
-		this.vrot=fsrot;
-	}
+		this.vrot=fsrot;*/
+	};
+}
+
+function updateAgents() {
+	agents.forEach(function(agent) {
+		agent.updateFs();
+	});
 }
 
 function createAgents(){
@@ -62,8 +66,8 @@ function createAgents(){
 	agentConductorMesh.position = new BABYLON.Vector3(0, 1, -5) ;
 	agentConductorMesh.checkCollisions = true;
 	agentConductorMesh.material = mat_iron;
-	var agentConductor = new Agent(agentConductorMesh);
-	agents.push(agentConductor);
+	agentConductor = new Agent(agentConductorMesh);
+	//setRotation(agentConductorMesh,90,90,0);
 	
 	var agent01Mesh = BABYLON.MeshBuilder.CreateBox("agent01", {width: 1.0, height: 0.3, depth: 1.0});
 	agent01Mesh.position = new BABYLON.Vector3(0, 5, -5) ;
@@ -72,6 +76,6 @@ function createAgents(){
 	var agent01 = new Agent(agent01Mesh);
 	agents.push(agent01);
 	
-	var actionAgent01 = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, agent01.updateFs);
+	var actionAgent01 = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, updateAgents);
 	scene.actionManager.registerAction(actionAgent01);
 }
