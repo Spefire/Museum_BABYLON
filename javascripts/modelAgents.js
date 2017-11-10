@@ -45,12 +45,31 @@ var Agent = function (m) {
 		return Fali;
 	};
 	
-	this.calculFcoh = function(){
-		return new BABYLON.Vector3(0,0,0) ;
+	this.calculFcoh = function(mesh, vpos){
+		var N = 0;
+		var G = new BABYLON.Vector3(0,0,0) ;
+		var environ = [agentConductor];
+		environ.forEach(function(agent) {
+			G = G.add(agent.mesh.position);
+			N++;
+		});
+		G = G.divide(new BABYLON.Vector3(N,N,N));
+		console.log("G : "+G);
+		var PG = G.subtract(mesh.position);
+		var PGnorm = getDistance(G, mesh.position);
+		if (PGnorm != 0) {
+			var vd = PG.divide(new BABYLON.Vector3(PGnorm,PGnorm,PGnorm));
+			console.log("vd : "+vd);
+			vd = vd.scale(vmax);
+			var Fcosh = vd.subtract(vpos);
+			return Fcosh;
+		} else {
+			return new BABYLON.Vector3(0,0,0);
+		}
 	};
 	
 	this.updateFs = function(){
-		var fspos = this.calculFsep(this.mesh);// + k_coh*this.calculFcoh;
+		var fspos = this.calculFcoh(this.mesh, this.vpos);//this.calculFsep(this.mesh);
 		var fsrot = this.calculFali(this.mesh);
 		
 		this.mesh.position.x += fspos.x;
