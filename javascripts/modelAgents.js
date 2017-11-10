@@ -85,7 +85,6 @@ function updateAgents() {
 	agents.forEach(function(agent) {
 		if (agent != agentConductor) {
 			agent.updateFs();
-			console.log(agent.mesh.position);
 		}
 	});
 }
@@ -108,28 +107,56 @@ function createAgents(){
 	agentConductor = new Agent(agentConductorMesh);
 	agents.push(agentConductor);
 	
-	var agent01Mesh = BABYLON.MeshBuilder.CreateBox("agent01", {width: 1.0, height: 0.3, depth: 1.0});
+	var keysPos = []; 
+	keysPos.push({
+		frame: 0,
+		value: new BABYLON.Vector3(20, 5, 20)
+	});
+	keysPos.push({
+		frame: framesPerSecond*5,
+		value: new BABYLON.Vector3(20, 20, -20)
+	});
+	keysPos.push({
+		frame: framesPerSecond*10,
+		value: new BABYLON.Vector3(-20, 5, -20)
+	});
+	keysPos.push({
+		frame: framesPerSecond*15,
+		value: new BABYLON.Vector3(-20, 20, 20)
+	});
+	keysPos.push({
+		frame: framesPerSecond*20,
+		value: new BABYLON.Vector3(20, 5, 20)
+	});
+
+	var animationPos = new BABYLON.Animation("animationPos", "position", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	animationPos.setKeys(keysPos);
+	agentConductorMesh.animations = [];
+	agentConductorMesh.animations.push(animationPos);
+	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*20, true);
+	
+	var agent01Mesh = BABYLON.MeshBuilder.CreateBox("agent01", {width: 0.5, height: 0.3, depth: 0.25});
 	agent01Mesh.position = new BABYLON.Vector3(0, 10, -10) ;
 	agent01Mesh.checkCollisions = true;
 	agent01Mesh.material = mat_marble;
 	var agent01 = new Agent(agent01Mesh);
 	agents.push(agent01);
 	
-	var agent02Mesh = BABYLON.MeshBuilder.CreateBox("agent02", {width: 1.0, height: 0.3, depth: 1.0});
+	var agent02Mesh = BABYLON.MeshBuilder.CreateBox("agent02", {width: 0.5, height: 0.3, depth: 0.25});
 	agent02Mesh.position = new BABYLON.Vector3(0, 10, 10) ;
 	agent02Mesh.checkCollisions = true;
 	agent02Mesh.material = mat_marble;
 	var agent02 = new Agent(agent02Mesh);
 	agents.push(agent02);
 	
-	var agent03Mesh = BABYLON.MeshBuilder.CreateBox("agent03", {width: 1.0, height: 0.3, depth: 0.5});
+	var agent03Mesh = BABYLON.MeshBuilder.CreateBox("agent03", {width: 0.5, height: 0.3, depth: 0.25});
 	agent03Mesh.position = new BABYLON.Vector3(0, 0, -10) ;
 	agent03Mesh.checkCollisions = true;
 	agent03Mesh.material = mat_marble;
 	var agent03 = new Agent(agent03Mesh);
 	agents.push(agent03);
 	
-	var agent04Mesh = BABYLON.MeshBuilder.CreateBox("agent04", {width: 1.0, height: 0.3, depth: 0.5});
+	var agent04Mesh = BABYLON.MeshBuilder.CreateBox("agent04", {width: 0.5, height: 0.3, depth: 0.25});
 	agent04Mesh.position = new BABYLON.Vector3(0, 0, 10) ;
 	agent04Mesh.checkCollisions = true;
 	agent04Mesh.material = mat_marble;
