@@ -19,6 +19,7 @@ var mat_floor;
 var mat_glass;
 var mat_roof;
 var mat_ground;
+var mat_bird;
 
 function createMaterials(scene) {
 	mat_base = new BABYLON.StandardMaterial("mat_base");
@@ -44,6 +45,10 @@ function createMaterials(scene) {
 	mat_glass = new BABYLON.StandardMaterial("mat_glass");
 	mat_glass.diffuseTexture = new BABYLON.Texture("assets/batiment/glass.png");
 	mat_glass.alpha = 0.4;
+	
+	mat_bird = new BABYLON.StandardMaterial("mat_bird");
+	mat_bird.diffuseTexture = new BABYLON.Texture("assets/batiment/wing.png");
+	mat_bird.diffuseTexture.hasAlpha = true;
 }
 
 function getMatWall(width, speHeight) {

@@ -100,10 +100,19 @@ function getOtherAgents(thisAgent){
 }
 
 function createAgent() {
-	var agentMesh = BABYLON.MeshBuilder.CreateBox("agent", {width: 0.5, height: 0.3, depth: 0.25});
+	
+	var wings = [];
+	var wing01 = BABYLON.MeshBuilder.CreatePlane("wing01", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
+	wing01.material = mat_bird;
+	setRotation(wing01,30,0,0);
+	wings.push(wing01);
+	var wing02 = BABYLON.MeshBuilder.CreatePlane("wing02", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
+	wing02.material = mat_bird;
+	setRotation(wing02,-30,0,0);
+	wings.push(wing02);
+	
+	var agentMesh = BABYLON.Mesh.MergeMeshes(wings);
 	agentMesh.position = new BABYLON.Vector3(0, 0, 10) ;
-	agentMesh.checkCollisions = true;
-	agentMesh.material = mat_marble;
 	var a = new Agent(agentMesh);
 	agents.push(a);
 }
