@@ -99,25 +99,7 @@ function getOtherAgents(thisAgent){
 	return otherAgents;
 }
 
-function createAgent() {
-	
-	var wings = [];
-	var wing01 = BABYLON.MeshBuilder.CreatePlane("wing01", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
-	wing01.material = mat_bird;
-	setRotation(wing01,30,0,0);
-	wings.push(wing01);
-	var wing02 = BABYLON.MeshBuilder.CreatePlane("wing02", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
-	wing02.material = mat_bird;
-	setRotation(wing02,-30,0,0);
-	wings.push(wing02);
-	
-	var agentMesh = BABYLON.Mesh.MergeMeshes(wings);
-	agentMesh.position = new BABYLON.Vector3(0, 0, 10) ;
-	var a = new Agent(agentMesh);
-	agents.push(a);
-}
-
-function createAgents(){
+function createAgent(returnMesh) {
 	
 	//--- Aile 01 ---
 	var wings = [];
@@ -173,12 +155,21 @@ function createAgents(){
 	scene.beginAnimation(wing02, 0, framesPerSecond*2, true);
 	
 	//--- Body ---
-	var agentConductorMesh =BABYLON.MeshBuilder.CreateSphere('sphere', {segments:8, diameter:0.1});
-	agentConductorMesh.material = mat_empty;
-	wing01.parent = agentConductorMesh;
-	wing02.parent = agentConductorMesh;
-	agentConductor = new Agent(agentConductorMesh);
-	agents.push(agentConductor);
+	var body = BABYLON.MeshBuilder.CreateSphere('sphere', {segments:8, diameter:0.1});
+	body.material = mat_empty;
+	wing01.parent = body;
+	wing02.parent = body;
+
+	if (returnMesh) {
+		return body;
+	} else {
+		var a = new Agent(body);
+		agents.push(a);	
+		return a;
+	}
+}
+
+function createAgents(){
 	
 	var keysPos = []; 
 	keysPos.push({
@@ -186,19 +177,19 @@ function createAgents(){
 		value: new BABYLON.Vector3(20, 1, 20)
 	});
 	keysPos.push({
-		frame: framesPerSecond*5,
+		frame: framesPerSecond*7.5,
 		value: new BABYLON.Vector3(20, 5, -20)
 	});
 	keysPos.push({
-		frame: framesPerSecond*10,
+		frame: framesPerSecond*15,
 		value: new BABYLON.Vector3(-20, 1, -20)
 	});
 	keysPos.push({
-		frame: framesPerSecond*15,
+		frame: framesPerSecond*22.5,
 		value: new BABYLON.Vector3(-20, 5, 20)
 	});
 	keysPos.push({
-		frame: framesPerSecond*20,
+		frame: framesPerSecond*30,
 		value: new BABYLON.Vector3(20, 1, 20)
 	});
 	
@@ -207,43 +198,42 @@ function createAgents(){
 		frame: 0,
 		value: new BABYLON.Vector3(0, getRadian(180), 0)
 	});
-	/////
 	keysRot.push({
-		frame: framesPerSecond*2,
+		frame: framesPerSecond*1,
 		value: new BABYLON.Vector3(0, getRadian(270), 0)
 	});
 	keysRot.push({
-		frame: framesPerSecond*5,
+		frame: framesPerSecond*7.5,
 		value: new BABYLON.Vector3(0, getRadian(270), 0)
 	});
-	/////
 	keysRot.push({
-		frame: framesPerSecond*7,
+		frame: framesPerSecond*8.5,
 		value: new BABYLON.Vector3(0, getRadian(360), 0)
-	});
-	keysRot.push({
-		frame: framesPerSecond*10,
-		value: new BABYLON.Vector3(0, getRadian(360), 0)
-	});
-	/////
-	keysRot.push({
-		frame: framesPerSecond*12,
-		value: new BABYLON.Vector3(0, getRadian(90), 0)
 	});
 	keysRot.push({
 		frame: framesPerSecond*15,
+		value: new BABYLON.Vector3(0, getRadian(360), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*16,
 		value: new BABYLON.Vector3(0, getRadian(90), 0)
 	});
-	/////
 	keysRot.push({
-		frame: framesPerSecond*17,
+		frame: framesPerSecond*22.5,
+		value: new BABYLON.Vector3(0, getRadian(90), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*23.5,
 		value: new BABYLON.Vector3(0, getRadian(180), 0)
 	});
 	keysRot.push({
-		frame: framesPerSecond*20,
+		frame: framesPerSecond*30,
 		value: new BABYLON.Vector3(0, getRadian(180), 0)
 	});
 
+	agentConductorMesh = createAgent(true);
+	agentConductor = new Agent(agentConductorMesh);
+	agents.push(agentConductor);	
 	var animationPos = new BABYLON.Animation("animationPos", "position", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	animationPos.setKeys(keysPos);
 	var animationRot = new BABYLON.Animation("animationRot", "rotation", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
@@ -251,19 +241,13 @@ function createAgents(){
 	agentConductorMesh.animations = [];
 	agentConductorMesh.animations.push(animationPos);
 	agentConductorMesh.animations.push(animationRot);
-	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*20, true);	
+	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*30, true);	
 
-	/*createAgent();
-	createAgent();
-	createAgent();
-	createAgent();
-	createAgent();
-	
-	createAgent();
-	createAgent();
-	createAgent();
-	createAgent();
-	createAgent();*/
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
 	
 	var actionAgents = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, updateAgents);
 	scene.actionManager.registerAction(actionAgents);
