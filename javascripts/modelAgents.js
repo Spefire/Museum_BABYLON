@@ -6,7 +6,7 @@
 
 var vmax = 1.5;
 var k_sep = 0.25;
-var k_ali = 0.1;
+var k_ali = 0.25;
 var k_coh = 0.25;
 var agents = [];
 var agentConductor;
@@ -118,39 +118,91 @@ function createAgent() {
 }
 
 function createAgents(){
-	var agentConductorMesh = BABYLON.MeshBuilder.CreateBox("agentConductor", {width: 0.5, height: 0.3, depth: 0.25});
-	agentConductorMesh.position = new BABYLON.Vector3(0, 1, 0) ;
-	agentConductorMesh.checkCollisions = true;
-	agentConductorMesh.material = mat_iron;
+	var wings = [];
+	var wing01 = BABYLON.MeshBuilder.CreatePlane("wing01", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
+	wing01.material = mat_bird;
+	setRotation(wing01,30,0,0);
+	wings.push(wing01);
+	var wing02 = BABYLON.MeshBuilder.CreatePlane("wing02", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
+	wing02.material = mat_bird;
+	setRotation(wing02,-30,0,0);
+	wings.push(wing02);
+	
+	var agentConductorMesh = BABYLON.Mesh.MergeMeshes(wings);
 	agentConductor = new Agent(agentConductorMesh);
 	agents.push(agentConductor);
 	
 	var keysPos = []; 
 	keysPos.push({
 		frame: 0,
-		value: new BABYLON.Vector3(20, 5, 20)
+		value: new BABYLON.Vector3(20, 1, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*5,
-		value: new BABYLON.Vector3(20, 20, -20)
+		value: new BABYLON.Vector3(20, 5, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*10,
-		value: new BABYLON.Vector3(-20, 5, -20)
+		value: new BABYLON.Vector3(-20, 1, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*15,
-		value: new BABYLON.Vector3(-20, 20, 20)
+		value: new BABYLON.Vector3(-20, 5, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*20,
-		value: new BABYLON.Vector3(20, 5, 20)
+		value: new BABYLON.Vector3(20, 1, 20)
+	});
+	
+	var keysRot = []; 
+	keysRot.push({
+		frame: 0,
+		value: new BABYLON.Vector3(0, getRadian(180), 0)
+	});
+	/////
+	keysRot.push({
+		frame: framesPerSecond*2,
+		value: new BABYLON.Vector3(0, getRadian(270), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*5,
+		value: new BABYLON.Vector3(0, getRadian(270), 0)
+	});
+	/////
+	keysRot.push({
+		frame: framesPerSecond*7,
+		value: new BABYLON.Vector3(0, getRadian(360), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*10,
+		value: new BABYLON.Vector3(0, getRadian(360), 0)
+	});
+	/////
+	keysRot.push({
+		frame: framesPerSecond*12,
+		value: new BABYLON.Vector3(0, getRadian(90), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*15,
+		value: new BABYLON.Vector3(0, getRadian(90), 0)
+	});
+	/////
+	keysRot.push({
+		frame: framesPerSecond*17,
+		value: new BABYLON.Vector3(0, getRadian(180), 0)
+	});
+	keysRot.push({
+		frame: framesPerSecond*20,
+		value: new BABYLON.Vector3(0, getRadian(180), 0)
 	});
 
 	var animationPos = new BABYLON.Animation("animationPos", "position", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	animationPos.setKeys(keysPos);
+	var animationRot = new BABYLON.Animation("animationRot", "rotation", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	animationRot.setKeys(keysRot);
 	agentConductorMesh.animations = [];
 	agentConductorMesh.animations.push(animationPos);
+	agentConductorMesh.animations.push(animationRot);
 	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*20, true);	
 
 	createAgent();

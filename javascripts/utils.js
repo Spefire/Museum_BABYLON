@@ -10,6 +10,10 @@ function setRotation(obj, angleX, angleY, angleZ){
 	obj.rotation.z = angleZ * Math.PI / 180;
 }
 
+function getRadian(angle) {
+	return (angle * Math.PI / 180);
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
