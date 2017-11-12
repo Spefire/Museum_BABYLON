@@ -177,61 +177,61 @@ function createAgents(){
 	var keysPos = []; 
 	keysPos.push({
 		frame: 0,
-		value: new BABYLON.Vector3(20, 1, 20)
+		value: new BABYLON.Vector3(20, 5, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*7.5,
-		value: new BABYLON.Vector3(20, 5, -20)
+		value: new BABYLON.Vector3(20, 15, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*15,
-		value: new BABYLON.Vector3(-20, 1, -20)
+		value: new BABYLON.Vector3(-20, 5, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*22.5,
-		value: new BABYLON.Vector3(-20, 5, 20)
+		value: new BABYLON.Vector3(-20, 15, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*30,
-		value: new BABYLON.Vector3(20, 1, 20)
+		value: new BABYLON.Vector3(20, 5, 20)
 	});
 	
 	var keysRot = []; 
 	keysRot.push({
 		frame: 0,
-		value: new BABYLON.Vector3(0, getRadian(180), 0)
+		value: new BABYLON.Vector3(0, getRadian(180), getRadian(0))
 	});
 	keysRot.push({
 		frame: framesPerSecond*1,
-		value: new BABYLON.Vector3(0, getRadian(270), 0)
+		value: new BABYLON.Vector3(0, getRadian(270), getRadian(-30))
 	});
 	keysRot.push({
 		frame: framesPerSecond*7.5,
-		value: new BABYLON.Vector3(0, getRadian(270), 0)
+		value: new BABYLON.Vector3(0, getRadian(270), getRadian(0))
 	});
 	keysRot.push({
 		frame: framesPerSecond*8.5,
-		value: new BABYLON.Vector3(0, getRadian(360), 0)
+		value: new BABYLON.Vector3(0, getRadian(360), getRadian(30))
 	});
 	keysRot.push({
 		frame: framesPerSecond*15,
-		value: new BABYLON.Vector3(0, getRadian(360), 0)
+		value: new BABYLON.Vector3(0, getRadian(360), getRadian(0))
 	});
 	keysRot.push({
 		frame: framesPerSecond*16,
-		value: new BABYLON.Vector3(0, getRadian(90), 0)
+		value: new BABYLON.Vector3(0, getRadian(90), getRadian(-30))
 	});
 	keysRot.push({
 		frame: framesPerSecond*22.5,
-		value: new BABYLON.Vector3(0, getRadian(90), 0)
+		value: new BABYLON.Vector3(0, getRadian(90), getRadian(0))
 	});
 	keysRot.push({
 		frame: framesPerSecond*23.5,
-		value: new BABYLON.Vector3(0, getRadian(180), 0)
+		value: new BABYLON.Vector3(0, getRadian(180), getRadian(30))
 	});
 	keysRot.push({
 		frame: framesPerSecond*30,
-		value: new BABYLON.Vector3(0, getRadian(180), 0)
+		value: new BABYLON.Vector3(0, getRadian(180), getRadian(0))
 	});
 
 	agentConductorMesh = createAgent(true);
