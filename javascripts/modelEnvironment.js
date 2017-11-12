@@ -54,25 +54,21 @@ function createEnvironment(scene){
 	}
 	//Buissons
 	var heightB = 1;
-	createBush(-9,offset+heightB/2-0.1,-15.5,rotation0,heightB*5,heightB,1);
-	createBush(-4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
-	createBush(4,offset+heightB/2-0.1,-15.5,rotation0,heightB*4,heightB,1);
-	createBush(9,offset+heightB/2-0.1,-15.5,rotation0,heightB*5,heightB,1);
-	createBush(-15.5,offset+heightB/2-0.1,-9,rotation90,heightB*5,heightB,1);
+	createBush(-9,offset+heightB/2-0.15,-15.5,rotation0,heightB*5,heightB,1);
+	createBush(-4,offset+heightB/2-0.15,-15.5,rotation0,heightB*4,heightB,1);
+	createBush(4,offset+heightB/2-0.15,-15.5,rotation0,heightB*4,heightB,1);
+	createBush(9,offset+heightB/2-0.15,-15.5,rotation0,heightB*5,heightB,1);
+	createBush(-15.5,offset+heightB/2-0.15,-9,rotation90,heightB*5,heightB,1);
 	
 	return scene;
 }
 
 function createGround(x, y, z, width, height) {
-
+	
 	var ground = BABYLON.Mesh.CreateGround("ground", width, height, 10);
 	ground.position = new BABYLON.Vector3(x,y,z) ;
 	ground.checkCollisions = true;
-	var mat = new BABYLON.StandardMaterial("ground_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/grass.jpg");
-	mat.diffuseTexture.uScale = width/textureSize;
-	mat.diffuseTexture.vScale = width/textureSize;
-	ground.material = mat;
+	ground.material = getMatGround(width);
 }
 
 function createTree(x, y, z, width, height, numTree) {

@@ -4,6 +4,8 @@
 //   File : modelElements.js    //
 // ---------------------------- //
 
+var nextToPainting = false;
+
 function createElementsMuseum(scene){
 	
 	var depthRect = wallTickness/4;
@@ -16,7 +18,7 @@ function createElementsMuseum(scene){
 
 	//Sculptures
 	createSculpture01(4,offset,0,1) ;
-	createSculpture02(-4,offset,0,1,scene) ;
+	createSculpture02(-4,offset,0,1) ;
 	//Panneaux indicatoires
 	createPanel(0,offset+wallHeight,-15.1,rotation0,widthRect*2.5,wallHeight*0.4,depthRect,"main") ;
 	createPanel(-8,offset+wallHeight*0.4,-0.1,rotation0,widthRect*0.8,wallHeight*0.2,depthRect,"eric") ;
@@ -60,8 +62,7 @@ function createElementsMuseum(scene){
 	//----- Mezanine -----
 	offset = wallHeight*1.0;
 	hRect = offset+wallHeight*0.2;
-	var heightBench = 0.9;
-	var hBench = offset-wallHeight/2+heightBench/2;
+	var hBench = offset-wallHeight/2;
 	
 	//Tableaux
 	createRectPainting(-14.9,hRect,8,rotation270,widthRect,heightRect,depthRect,"francoise",1) ;
@@ -75,8 +76,8 @@ function createElementsMuseum(scene){
 	createSquarePainting(14.9,hRect,12.5,rotation90,heightRect,depthRect,"francoise",8) ;
 	createRectPainting(14.9,hRect,8,rotation90,widthRect,heightRect,depthRect,"francoise",2) ;
 	//Bancs
-	createBench(-9,hBench,8,1.25*heightBench,heightBench,4*heightBench,1);
-	createBench(9,hBench,8,1.25*heightBench,heightBench,4*heightBench,-1);
+	createBench(-9,hBench+0.5,8,1.25,0.75,4,1);
+	createBench(9,hBench+0.5,8,1.25,0.75,4,-1);
 	
 	return scene;
 }
@@ -100,6 +101,8 @@ function createRectPainting(x, y, z, rotation, width, height, depth, name, numPa
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/tab_"+name+".jpg");
 	indic.material = mat;
 	setRotation(indic,0,rotation,0);
+	
+	definePaintingActions(name, numPainting, painting);
 }
 
 function createSquarePainting(x, y, z, rotation, height, depth, name, numPainting) {
@@ -117,21 +120,102 @@ function createSquarePainting(x, y, z, rotation, height, depth, name, numPaintin
 	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/tab_"+name+".jpg");
 	indic.material = mat;
 	setRotation(indic,0,rotation,0);
+	
+	definePaintingActions(name, numPainting, painting);
+}
+
+function definePaintingActions(name, numPainting, painting) {
+	
+	//Liste des conditions pour l'affichage du nom, et de la description
+	var conditionsNameBefore = new BABYLON.PredicateCondition(scene.actionManager, function () {
+		var dist = getDistance(camera.position, painting.position);
+		if (!nextToPainting && (dist <= 2.5)) {
+			return true;
+		}
+		return false;
+	});
+	
+	var conditionsNameAfter = new BABYLON.PredicateCondition(scene.actionManager, function () {
+		var dist = getDistance(camera.position, painting.position)
+		return (dist > 2.5);
+	});
+	
+	//Liste des fonctions pour l'affichage du nom, et de la description
+	var displayName = function() {
+		var artistLabel;
+		switch(name) {
+		case "axelle":
+			artistLabel = "Axelle BOSLER";
+			break;
+		case "eric":
+			artistLabel = "Eric LE PAPE";
+			break;
+		case "robert":
+			artistLabel = "JM ROBERT";
+			break;
+		case "francoise":
+			artistLabel = "Françoise NIELLY";
+			break;
+		}
+		nextToPainting=true;
+		document.getElementById("infoPanel").style.display = "block";
+		document.getElementById("artistLabel").innerHTML = artistLabel;
+		document.getElementById("paintingLabel").innerHTML = "Tableau n°"+numPainting;
+	};
+	
+	var hideName = function() {
+		nextToPainting=false;
+		document.getElementById("infoPanel").style.display = "none";
+		document.getElementById("artistLabel").innerHTML = "";
+		document.getElementById("paintingLabel").innerHTML = "";
+	};	
+	
+	var displayDescription = function() {
+		var descriptionLabel;
+		switch(name) {
+		case "axelle":
+			descriptionLabel = "Axelle BOSLER";
+			break;
+		case "eric":
+			descriptionLabel = "Eric LE PAPE";
+			break;
+		case "robert":
+			descriptionLabel = "JM ROBERT";
+			break;
+		case "francoise":
+			descriptionLabel = "Françoise NIELLY";
+			break;
+		}
+		document.getElementById("descriptionLabel").innerHTML = "Ceci est la description du tableau de "+descriptionLabel+" que vous voyez actuellement.";
+	};
+	
+	var hideDescription = function() {
+		document.getElementById("descriptionLabel").innerHTML = "";
+	};
+		
+	//Application pour l'affichage du nom, et de la description
+	var actionNameBefore = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, displayName, conditionsNameBefore);
+	var actionNameAfter = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, hideName, conditionsNameAfter);
+	scene.actionManager.registerAction(actionNameBefore).then(actionNameAfter);
+	
+	var actionDescriptionBefore = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, displayDescription);
+	var actionDescriptionAfter = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, hideDescription);
+	painting.actionManager = new BABYLON.ActionManager(scene);
+	painting.actionManager.registerAction(actionDescriptionBefore);
+	painting.actionManager.registerAction(actionDescriptionAfter);
 }
 
 function createBench(x, y, z, width, height, depth, sens) {
 	
 	var benchTop = BABYLON.MeshBuilder.CreateBox("benchTop", {width: width, height: height*0.3, depth: depth});
 	benchTop.position = new BABYLON.Vector3(x,y+0.7*height/2,z) ;
-	var mat = new BABYLON.StandardMaterial("materiau_benchTop");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/moquette.jpg");
-	benchTop.material = mat;
+	benchTop.checkCollisions = true;
+	benchTop.material = mat_iron;
 	
 	var benchDown = BABYLON.MeshBuilder.CreateBox("benchDown", {width: width*0.8, height: height*0.7, depth: depth*0.9});
 	benchDown.position = new BABYLON.Vector3(x+sens*0.2*width/2,y-0.3*height/2,z) ;
-	var mat = new BABYLON.StandardMaterial("materiau_benchDown");
-	mat.diffuseTexture = new BABYLON.Texture("assets/batiment/wood.jpg");
-	benchDown.material = mat;
+	benchDown.checkCollisions = true;
+	benchDown.material = mat_base;
 }
 
 function createPanel(x, y, z, rotation, width, height, depth, name) {
@@ -148,9 +232,7 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 
 	var stick = BABYLON.MeshBuilder.CreateBox("stick", {width: depth, height: height/2, depth: depth});
 	stick.position = new BABYLON.Vector3(x,y-height/4,z) ;
-	var mat = new BABYLON.StandardMaterial("stick_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	stick.material = mat;
+	stick.material = mat_bigbase;
 	setRotation(stick,0,rotation,0);
 	
 	var panel = BABYLON.MeshBuilder.CreateBox("panel", {width: width, height: height, depth: depth});
@@ -161,118 +243,110 @@ function createBigPanel(x, y, z, rotation, width, height, depth, name) {
 	setRotation(panel,20,rotation,0);
 }
 
-function createSculptureBase(x, y, z, size, matElement){
+function createSculptureBase(x, y, z, size){
 	var structure = BABYLON.MeshBuilder.CreateBox("structure", {width: size*5.2, height: size*0.2, depth: size*2.8});
 	structure.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5) ;
-	var mat = new BABYLON.StandardMaterial("structure_mat");
-	mat.diffuseTexture = new BABYLON.Texture("assets/panneaux/bigbase.jpg");
-	structure.material = mat;	
+	structure.checkCollisions = true;
+	structure.material = mat_base;
 	
 	var structureBottom = BABYLON.MeshBuilder.CreateBox("structureBottom", {width: size*0.4, height: size*0.4, depth: size*5.1});
 	structureBottom.position = new BABYLON.Vector3(x,y-size*1.5,z-size*1.5-size*1.3) ;
+	structureBottom.checkCollisions = true;
 	setRotation(structureBottom,0,90,0);
-	structureBottom.material = matElement;
+	structureBottom.material = mat_marble;
 	
 	var structureLeft = BABYLON.MeshBuilder.CreateBox("structureLeft", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureLeft.position = new BABYLON.Vector3(x-2.7*size,y-size*1.5,z-size*1.5) ;
-	structureLeft.material = matElement;
+	structureLeft.checkCollisions = true;
+	structureLeft.material = mat_marble;
 	
 	var structureRight = BABYLON.MeshBuilder.CreateBox("structureRight", {width: size*0.3, height: size*0.4, depth: size*3.0});
 	structureRight.position = new BABYLON.Vector3(x+2.7*size,y-size*1.5,z-size*1.5) ;
-	structureRight.material = matElement;
+	structureRight.checkCollisions = true;
+	structureRight.material = mat_marble;
 }
 
 function createSculpture01(x, y, z, size) {
 	
-	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
-	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
-	matElement.diffuseTexture.uScale = 2.0;
-	matElement.diffuseTexture.vScale = 1.0;
-	
-	createSculptureBase(x, y, z, size, matElement);
+	createSculptureBase(x, y, z, size);
 	
 	var sphere01 = BABYLON.MeshBuilder.CreateSphere("sphere01", {diameter: size*1.4});
 	sphere01.position = new BABYLON.Vector3(x,y-size*0.7,z-size*1.5) ;
-	sphere01.material = matElement;
+	sphere01.material = mat_marble;
 	
 	var sphere02 = BABYLON.MeshBuilder.CreateSphere("sphere02", {diameter: size*0.6});
 	sphere02.position = new BABYLON.Vector3(x,y+size*0.3,z-size*1.5) ;
-	sphere02.material = matElement;
+	sphere02.material = mat_marble;
 	
 	var sphere03 = BABYLON.MeshBuilder.CreateSphere("sphere03", {diameter: size*0.2});
 	sphere03.position = new BABYLON.Vector3(x,y+size*0.7,z-size*1.5) ;
-	sphere03.material = matElement;
+	sphere03.material = mat_marble;
 	
 	var sphere11 = BABYLON.MeshBuilder.CreateSphere("sphere11", {diameter: size*0.6});
 	sphere11.position = new BABYLON.Vector3(x+size*1.75,y-size*1.1,z-size*1.5) ;
-	sphere11.material = matElement;
+	sphere11.material = mat_marble;
 	
 	var sphere12 = BABYLON.MeshBuilder.CreateSphere("sphere12", {diameter: size*0.2});
 	sphere12.position = new BABYLON.Vector3(x+size*1.75,y-size*0.7,z-size*1.5) ;
-	sphere12.material = matElement;
+	sphere12.material = mat_marble;
 	
 	var sphere21 = BABYLON.MeshBuilder.CreateSphere("sphere21", {diameter: size*0.6});
 	sphere21.position = new BABYLON.Vector3(x-size*1.75,y-size*1.1,z-size*1.5) ;
-	sphere21.material = matElement;
+	sphere21.material = mat_marble;
 	
 	var sphere22 = BABYLON.MeshBuilder.CreateSphere("sphere22", {diameter: size*0.2});
 	sphere22.position = new BABYLON.Vector3(x-size*1.75,y-size*0.7,z-size*1.5) ;
-	sphere22.material = matElement;
+	sphere22.material = mat_marble;
 }
 
-function createSculpture02(x, y, z, size, scene) {
+function createSculpture02(x, y, z, size) {
 
-	var matElement = new BABYLON.StandardMaterial("structure_element_mat");
-	matElement.diffuseTexture = new BABYLON.Texture("assets/batiment/marble.jpg");
-	matElement.diffuseTexture.uScale = 2.0;
-	matElement.diffuseTexture.vScale = 1.0;
-	
-	createSculptureBase(x, y, z, size, matElement);
+	createSculptureBase(x, y, z, size);
 	
 	for (var i = 0; i < 9; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});
 		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
-		box.material = matElement;
+		box.material = mat_marble;
 		var keys = []; 
 		keys.push({
 			frame: 0,
 			value: 0
 		});
 		keys.push({
-			frame: 500,
+			frame: framesPerSecond*8,
 			value: (20*i)* 18*2*Math.PI/360
 		});
 		keys.push({
-			frame: 1000,
+			frame: framesPerSecond*16,
 			value: 0
 		});
-		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 		animationBox.setKeys(keys);
 		box.animations = [];
 		box.animations.push(animationBox);
-		scene.beginAnimation(box, 0, 1000, true);
+		scene.beginAnimation(box, 0, framesPerSecond*16, true);
 	}
 	for (var i = 9; i < 19; i++) {
 		var box = BABYLON.MeshBuilder.CreateBox("box", {width: size*2, height: size*0.1, depth: size*0.25});
 		box.position = new BABYLON.Vector3(x,y-size*1.3+0.1*i,z-size*1.5) ;
-		box.material = matElement;		
+		box.material = mat_marble;
 		var keys = []; 
 		keys.push({
 			frame: 0,
 			value: 0
 		});
 		keys.push({
-			frame: 500,
+			frame: framesPerSecond*8,
 			value: (360-20*i)* 18*2*Math.PI/360
 		});
 		keys.push({
-			frame: 1000,
+			frame: framesPerSecond*16,
 			value: 0
 		});
-		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", 24, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var animationBox = new BABYLON.Animation("myAnimation", "rotation.y", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 		animationBox.setKeys(keys);
 		box.animations = [];
 		box.animations.push(animationBox);
-		scene.beginAnimation(box, 0, 1000, true);
+		scene.beginAnimation(box, 0, framesPerSecond*16, true);
 	}
 }
