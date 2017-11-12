@@ -118,17 +118,64 @@ function createAgent() {
 }
 
 function createAgents(){
+	
+	//--- Aile 01 ---
 	var wings = [];
 	var wing01 = BABYLON.MeshBuilder.CreatePlane("wing01", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	wing01.material = mat_bird;
 	setRotation(wing01,30,0,0);
 	wings.push(wing01);
+	
+	var keysWing01 = []; 
+	keysWing01.push({
+		frame: 0,
+		value: new BABYLON.Vector3(getRadian(10), 0, 0)
+	});
+	keysWing01.push({
+		frame: framesPerSecond*1,
+		value: new BABYLON.Vector3(getRadian(120), 0, 0)
+	});
+	keysWing01.push({
+		frame: framesPerSecond*2,
+		value: new BABYLON.Vector3(getRadian(10), 0, 0)
+	});
+	
+	var animationWing01 = new BABYLON.Animation("animationWing01", "rotation", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	animationWing01.setKeys(keysWing01);
+	wing01.animations = [];
+	wing01.animations.push(animationWing01);
+	scene.beginAnimation(wing01, 0, framesPerSecond*2, true);	
+	
+	//--- Aile 02 ---
 	var wing02 = BABYLON.MeshBuilder.CreatePlane("wing02", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
 	wing02.material = mat_bird;
 	setRotation(wing02,-30,0,0);
 	wings.push(wing02);
 	
-	var agentConductorMesh = BABYLON.Mesh.MergeMeshes(wings);
+	var keysWing02 = []; 
+	keysWing02.push({
+		frame: 0,
+		value: new BABYLON.Vector3(getRadian(-10), 0, 0)
+	});
+	keysWing02.push({
+		frame: framesPerSecond*1,
+		value: new BABYLON.Vector3(getRadian(-120), 0, 0)
+	});
+	keysWing02.push({
+		frame: framesPerSecond*2,
+		value: new BABYLON.Vector3(getRadian(-10), 0, 0)
+	});
+	
+	var animationWing02 = new BABYLON.Animation("animationWing02", "rotation", framesPerSecond, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	animationWing02.setKeys(keysWing02);
+	wing02.animations = [];
+	wing02.animations.push(animationWing02);
+	scene.beginAnimation(wing02, 0, framesPerSecond*2, true);
+	
+	//--- Body ---
+	var agentConductorMesh =BABYLON.MeshBuilder.CreateSphere('sphere', {segments:8, diameter:0.1});
+	wing01.parent = agentConductorMesh;
+	wing02.parent = agentConductorMesh;
 	agentConductor = new Agent(agentConductorMesh);
 	agents.push(agentConductor);
 	
@@ -205,7 +252,7 @@ function createAgents(){
 	agentConductorMesh.animations.push(animationRot);
 	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*20, true);	
 
-	createAgent();
+	/*createAgent();
 	createAgent();
 	createAgent();
 	createAgent();
@@ -215,7 +262,7 @@ function createAgents(){
 	createAgent();
 	createAgent();
 	createAgent();
-	createAgent();
+	createAgent();*/
 	
 	var actionAgents = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, updateAgents);
 	scene.actionManager.registerAction(actionAgents);
