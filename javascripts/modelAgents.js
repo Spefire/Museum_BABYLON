@@ -174,6 +174,7 @@ function createAgents(){
 	
 	//--- Body ---
 	var agentConductorMesh =BABYLON.MeshBuilder.CreateSphere('sphere', {segments:8, diameter:0.1});
+	agentConductorMesh.material = mat_empty;
 	wing01.parent = agentConductorMesh;
 	wing02.parent = agentConductorMesh;
 	agentConductor = new Agent(agentConductorMesh);
