@@ -4,10 +4,10 @@
 //   File : modelAgents.js       //
 // ---------------------------- //
 
-var vmax = 1.5;
-var k_sep = 0.25;
-var k_ali = 0.25;
-var k_coh = 0.25;
+var vmax = 2.5;
+var k_sep = 0.3;
+var k_ali = 0.2;
+var k_coh = 0.3;
 var agents = [];
 var agentConductor;
 
@@ -101,6 +101,9 @@ function getOtherAgents(thisAgent){
 
 function createAgent(returnMesh) {
 	
+	var time = getRandomInt(1, 3);
+	var amp = getRandomInt(90, 130);
+	
 	//--- Aile 01 ---
 	var wings = [];
 	var wing01 = BABYLON.MeshBuilder.CreatePlane("wing01", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
@@ -114,11 +117,11 @@ function createAgent(returnMesh) {
 		value: new BABYLON.Vector3(getRadian(10), 0, 0)
 	});
 	keysWing01.push({
-		frame: framesPerSecond*1,
-		value: new BABYLON.Vector3(getRadian(120), 0, 0)
+		frame: framesPerSecond*time/2,
+		value: new BABYLON.Vector3(getRadian(amp), 0, 0)
 	});
 	keysWing01.push({
-		frame: framesPerSecond*2,
+		frame: framesPerSecond*time,
 		value: new BABYLON.Vector3(getRadian(10), 0, 0)
 	});
 	
@@ -126,7 +129,7 @@ function createAgent(returnMesh) {
 	animationWing01.setKeys(keysWing01);
 	wing01.animations = [];
 	wing01.animations.push(animationWing01);
-	scene.beginAnimation(wing01, 0, framesPerSecond*2, true);	
+	scene.beginAnimation(wing01, 0, framesPerSecond*time, true);	
 	
 	//--- Aile 02 ---
 	var wing02 = BABYLON.MeshBuilder.CreatePlane("wing02", {width:1.0, height:1.0, sideOrientation:BABYLON.Mesh.DOUBLESIDE});
@@ -140,11 +143,11 @@ function createAgent(returnMesh) {
 		value: new BABYLON.Vector3(getRadian(-10), 0, 0)
 	});
 	keysWing02.push({
-		frame: framesPerSecond*1,
-		value: new BABYLON.Vector3(getRadian(-120), 0, 0)
+		frame: framesPerSecond*time/2,
+		value: new BABYLON.Vector3(getRadian(-amp), 0, 0)
 	});
 	keysWing02.push({
-		frame: framesPerSecond*2,
+		frame: framesPerSecond*time,
 		value: new BABYLON.Vector3(getRadian(-10), 0, 0)
 	});
 	
@@ -152,7 +155,7 @@ function createAgent(returnMesh) {
 	animationWing02.setKeys(keysWing02);
 	wing02.animations = [];
 	wing02.animations.push(animationWing02);
-	scene.beginAnimation(wing02, 0, framesPerSecond*2, true);
+	scene.beginAnimation(wing02, 0, framesPerSecond*time, true);
 	
 	//--- Body ---
 	var body = BABYLON.MeshBuilder.CreateSphere('sphere', {segments:8, diameter:0.1});
@@ -244,6 +247,18 @@ function createAgents(){
 	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*30, true);	
 
 	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	
+		createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	createAgent(false);
+	
+		createAgent(false);
 	createAgent(false);
 	createAgent(false);
 	createAgent(false);
