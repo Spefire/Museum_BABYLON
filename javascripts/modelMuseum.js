@@ -115,6 +115,7 @@ function createMuseum(scene){
 	
 	//----- Elements du musée -----
 	createElementsMuseum(scene);
+	createAgents();
 
 	return scene;
 }

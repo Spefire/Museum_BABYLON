@@ -36,7 +36,7 @@ function createSkybox() {
 }
 
 function createCamera(){
-	camera = new BABYLON.FreeCamera("cam",new BABYLON.Vector3(0, 4, 10), scene) ;
+	camera = new BABYLON.FreeCamera("cam",new BABYLON.Vector3(0, 1, -30), scene) ;
 	camera.ellipsoid = new BABYLON.Vector3(0.25, 1, 0.25);
 	camera.setTarget(BABYLON.Vector3.Zero());
 	camera.keysLeft = [81, 37]; //Q et <-
