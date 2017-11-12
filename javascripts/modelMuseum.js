@@ -22,7 +22,7 @@ function createMuseum(scene){
 	createEnvironment(scene);
 
 	//----- Rez de chaussée ------
-	/*var offset = wallHeight*0.0;
+	var offset = wallHeight*0.0;
 
 	//Sol
 	createFloor(0,offset-wallHeight/2,0,30,30);
@@ -111,10 +111,10 @@ function createMuseum(scene){
 	createRoof(0,offset-wallHeight*0.5,7,4,8);
 	createGlassRoof(5.5,offset-wallHeight*0.5,7,7,8);
 	createRoof(12,offset-wallHeight*0.5,7,6,8);
-	createRoof(0,offset-wallHeight*0.5,13,30,4);*/
+	createRoof(0,offset-wallHeight*0.5,13,30,4);
 	
 	//----- Elements du musée -----
-	//createElementsMuseum(scene);
+	createElementsMuseum(scene);
 	createAgents();
 
 	return scene;

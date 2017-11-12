@@ -11,7 +11,7 @@ function createEnvironment(scene){
 	//Sol herbeux
 	createGround(0,offset,0,100,100);
 	//Arbres de type 01
-	/*var heightT01 = 7;
+	var heightT01 = 7;
 	var nbT01 = 50;
 	for (var i = 0; i < nbT01; i++) {
 		var angle = getRandomAngle();
@@ -58,7 +58,7 @@ function createEnvironment(scene){
 	createBush(-4,offset+heightB/2-0.15,-15.5,rotation0,heightB*4,heightB,1);
 	createBush(4,offset+heightB/2-0.15,-15.5,rotation0,heightB*4,heightB,1);
 	createBush(9,offset+heightB/2-0.15,-15.5,rotation0,heightB*5,heightB,1);
-	createBush(-15.5,offset+heightB/2-0.15,-9,rotation90,heightB*5,heightB,1);*/
+	createBush(-15.5,offset+heightB/2-0.15,-9,rotation90,heightB*5,heightB,1);
 	
 	return scene;
 }

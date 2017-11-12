@@ -4,9 +4,9 @@
 //   File : modelAgents.js       //
 // ---------------------------- //
 
-var vmax = 2.5;
-var k_sep = 0.3;
-var k_ali = 0.2;
+var vmax = 5;
+var k_sep = 0.4;
+var k_ali = 0.25;
 var k_coh = 0.3;
 var agents = [];
 var agentConductor;
@@ -177,23 +177,23 @@ function createAgents(){
 	var keysPos = []; 
 	keysPos.push({
 		frame: 0,
-		value: new BABYLON.Vector3(20, 5, 20)
+		value: new BABYLON.Vector3(20, 10, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*7.5,
-		value: new BABYLON.Vector3(20, 15, -20)
+		value: new BABYLON.Vector3(20, 20, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*15,
-		value: new BABYLON.Vector3(-20, 5, -20)
+		value: new BABYLON.Vector3(-20, 10, -20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*22.5,
-		value: new BABYLON.Vector3(-20, 15, 20)
+		value: new BABYLON.Vector3(-20, 20, 20)
 	});
 	keysPos.push({
 		frame: framesPerSecond*30,
-		value: new BABYLON.Vector3(20, 5, 20)
+		value: new BABYLON.Vector3(20, 10, 20)
 	});
 	
 	var keysRot = []; 
@@ -247,18 +247,6 @@ function createAgents(){
 	scene.beginAnimation(agentConductorMesh, 0, framesPerSecond*30, true);	
 
 	createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	
-		createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	createAgent(false);
-	
-		createAgent(false);
 	createAgent(false);
 	createAgent(false);
 	createAgent(false);
